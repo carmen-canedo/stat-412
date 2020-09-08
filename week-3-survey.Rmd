@@ -1,0 +1,103 @@
+---
+title: "Week 3 Survey"
+author: "Carmen Canedo"
+date: "8 September 2020"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+# Loading libraries
+```{r}
+library(tidyverse)
+```
+
+## 1. Assign the value 10 to variable x
+```{r}
+x <- 10
+```
+
+## 2. Assign names to variable called names
+This is a character vector.
+```{r}
+names <- c("Alex", "Bob", "Chris", "Donna")
+```
+
+## 3. Whic value is greater?
+$ (log(5^5)) / 2 $ is greater.
+```{r}
+(log10(5^5) / 2)
+
+pi / 2
+```
+
+## 4. Storing logical value
+```{r}
+test <- (log10(5^5) / 2) > pi / 2
+```
+
+## 5. Descriibe differences in data stypes
+  * **Scalars** are just a single variable
+  * **Vectors** are a collection of items of the same type - similar to lists but they can only hold one class
+  * **Lists** are a collection of any type of objects
+  * **Matrices** are two dimensional collections of data all of the same class
+  * **Data frames** are also two dimensional but can hold any type of data 
+  
+## 6. Create a list
+```{r}
+collection <- list(x, names, test)
+collection
+```
+
+## 7. Create data frame
+```{r}
+# Making vectors of the data
+new_names <- c("Alex", "Bob", "Chris", "Donna")
+age <- c(25, 21, 29, 32)
+likes_pizza <- c(TRUE, TRUE, FALSE, FALSE)
+
+# Creating tibble
+pizza <- tibble(name = new_names, Age = age, likes_pizza = likes_pizza)
+pizza
+```
+
+## 8. Fix column name and add column
+```{r}
+# Collecting height data
+height = c(65, 72, 74, 68)
+
+pizza <- pizza %>% 
+  rename(age = Age) %>% 
+  mutate(height = height)
+
+pizza
+```
+
+## 9. Create function called marketability
+```{r}
+marketability <- function(age, height, likes_pizza = TRUE) {
+  if (likes_pizza == TRUE) {
+    score <- (height / 60) * (height / 55)^2
+    score
+  } else {
+    score <- (height / 15) * (height / 55)^2
+    score
+  }
+}
+```
+
+## 10. Which individuals shouldn't be targets of the campagin?
+```{r}
+# Calculating score
+alex <- marketability(25, 65)
+bob <- marketability(21, 72)
+chris <- marketability(29, 74, likes_pizza = FALSE)
+donna <- marketability(32, 68, likes_pizza = FALSE)
+
+# Checking to see if score is less than 6
+alex < 6
+bob < 6
+chris < 6
+donna < 6
+```
+Because Alex and Bob's marketability scores are less than 6, they should not be targets of the campaign.
