@@ -1,0 +1,36 @@
+---
+title: "Excercise 1"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+# Loading in data
+```{r}
+deck <- read.csv("deck.csv")
+
+write.csv(deck, file = "cards.csv", row.names = FALSE)
+```
+
+# Deal a Card
+```{r}
+deal <- function(cards) {
+  cards[1, ]
+}
+
+deal(deck)
+```
+
+# Shuffle the Deck
+```{r}
+deck_2 <- deck[1:52, ]
+
+head(deck_2)
+```
+```{r}
+deck3 <- deck[c(2, 1, 3:52), ]
+
+head(deck3)
+```
+
+
