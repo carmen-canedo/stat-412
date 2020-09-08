@@ -2,13 +2,15 @@
 title: "Week 3 Survey"
 author: "Carmen Canedo"
 date: "8 September 2020"
-output: html_notebook
-editor_options: 
+output:
+  pdf_document: default
+  html_notebook: default
+editor_options:
   chunk_output_type: inline
 ---
 
 # Loading libraries
-```{r}
+```{r, message=FALSE}
 library(tidyverse)
 ```
 
@@ -24,7 +26,7 @@ names <- c("Alex", "Bob", "Chris", "Donna")
 ```
 
 ## 3. Whic value is greater?
-$ (log(5^5)) / 2 $ is greater.
+The first expression is greater.
 ```{r}
 (log10(5^5) / 2)
 
