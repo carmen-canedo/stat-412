@@ -9,3 +9,25 @@ editor_options:
 library(tidyverse)
 ```
 
+# Loading data
+```{r, message=FALSE}
+airbnb_df <- read_csv("abb_nyc_2019.csv")
+
+head(airbnb_df)
+```
+
+# Getting started
+```{r}
+ggplot(airbnb_df) +
+  geom_point(aes(x = longitude, y = latitude))
+```
+
+```{r}
+ggplot(airbnb_df) +
+  geom_point(aes(x = longitude, y = latitude, color = neighbourhood_group))
+```
+
+```{r}
+ggplot()
+```
+
