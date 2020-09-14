@@ -1,0 +1,15 @@
+---
+title: "Homework 2"
+author: "Carmen Canedo"
+date: "14 September 2020"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+# Libraries
+Below are the libraries required to run this code.
+```{r, message=FALSE}
+library(tidyverse)
+```
+
