@@ -99,6 +99,17 @@ play()
 play()
 ```
 
+# Homework 2 Section
 
+## 1. Create `play2()`
+
+## 2. Creatue `number_of_turns()`
+
+## 3. Which game allows for the most turns on average?
+
+## 4. Supporting analysis for recommendation
+Don't show code! (echo?)
+
+## 5. Plot that compares the distribution of results from each game
 
 
