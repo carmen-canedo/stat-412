@@ -13,3 +13,92 @@ Below are the libraries required to run this code.
 library(tidyverse)
 ```
 
+## Randomly generate three symbols
+The following function generates three slot machine symbols:
+  + DD - diamonds
+  + 7 - sevens
+  + BBB - triple bars
+  + BB - double bars
+  + B - single bars
+  + C - cherries
+  + 0 - zeroes
+  
+```{r}
+# Function to get three random symbols
+get_symbols <- function() {
+  
+  # Creating character vector containing symbol options
+  wheel <- c("DD", "7", "BBB", "BB", "B", "C", "0")
+  
+  # Producing random sample of symbols, given specific probabilities
+  wheel %>% 
+    sample(size = 3, replace = TRUE,
+           prob = c(0.03, 0.03, 0.06, 0.1, 0.25, 0.01, 0.52))
+}
+```
+
+## Calculate score
+```{r}
+score <- function(symbols) {
+  # Identifying the case
+  same <- symbols[1] == symbols[2] && symbols[2] == symbols[3]
+  bars <- symbols %in% c("B", "BB", "BBB")
+  
+  # Get prize
+  if (same) {
+    
+    # Listing payouts
+    payouts <- c("DD" = 100, "7" = 80, "BBB" = 40, "BB" = 25, "B" = 10, "C" = 10, "0" = 0)
+    
+    # Assigning prize from payouts vector
+    prize <- unname(payouts[symbols[1]])
+    
+  } else if (all(bars)) {
+    
+    # Prize if all symbols are bars
+    prize <- 5
+    
+  } else {
+    # Counting number of cherries
+    cherries <- sum(symbols =="C")
+    
+    # Assigning prize given number of cherries
+    prize <- c(0, 2, 5)[cherries + 1]
+    
+  }
+  
+  # Adjust for diamonds
+  diamonds <- sum(symbols == "DD")
+  prize * 2 ^ diamonds
+  
+}
+```
+
+
+## Full slot machine
+```{r}
+play <- function() {
+  
+  # Generate symbols
+  symbols <- get_symbols()
+  
+  # Display the symbols
+  print(symbols)
+  
+  # Score the symbols
+  score(symbols)
+}
+```
+
+# Playing the slot machine
+```{r}
+play()
+
+play()
+
+play()
+```
+
+
+
+

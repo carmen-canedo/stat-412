@@ -1781,10 +1781,108 @@ x dplyr::lag()    masks stats::lag()</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<div id="randomly-generate-three-symbols" class="section level2">
+<h2>Randomly generate three symbols</h2>
+<p>The following function generates three slot machine symbols: + DD - diamonds + 7 - sevens + BBB - triple bars + BB - double bars + B - single bars + C - cherries + 0 - zeroes</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBGdW5jdGlvbiB0byBnZXQgdGhyZWUgcmFuZG9tIHN5bWJvbHNcbmdldF9zeW1ib2xzIDwtIGZ1bmN0aW9uKCkge1xuICBcbiAgIyBDcmVhdGluZyBjaGFyYWN0ZXIgdmVjdG9yIGNvbnRhaW5pbmcgc3ltYm9sIG9wdGlvbnNcbiAgd2hlZWwgPC0gYyhcIkREXCIsIFwiN1wiLCBcIkJCQlwiLCBcIkJCXCIsIFwiQlwiLCBcIkNcIiwgXCIwXCIpXG4gIFxuICAjIFByb2R1Y2luZyByYW5kb20gc2FtcGxlIG9mIHN5bWJvbHMsIGdpdmVuIHNwZWNpZmljIHByb2JhYmlsaXRpZXNcbiAgd2hlZWwgJT4lIFxuICAgIHNhbXBsZShzaXplID0gMywgcmVwbGFjZSA9IFRSVUUsXG4gICAgICAgICAgIHByb2IgPSBjKDAuMDMsIDAuMDMsIDAuMDYsIDAuMSwgMC4yNSwgMC4wMSwgMC41MikpXG59XG5gYGAifQ== -->
+<pre class="r"><code># Function to get three random symbols
+get_symbols &lt;- function() {
+  
+  # Creating character vector containing symbol options
+  wheel &lt;- c(&quot;DD&quot;, &quot;7&quot;, &quot;BBB&quot;, &quot;BB&quot;, &quot;B&quot;, &quot;C&quot;, &quot;0&quot;)
+  
+  # Producing random sample of symbols, given specific probabilities
+  wheel %&gt;% 
+    sample(size = 3, replace = TRUE,
+           prob = c(0.03, 0.03, 0.06, 0.1, 0.25, 0.01, 0.52))
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="calculate-score" class="section level2">
+<h2>Calculate score</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2NvcmUgPC0gZnVuY3Rpb24oc3ltYm9scykge1xuICAjIElkZW50aWZ5aW5nIHRoZSBjYXNlXG4gIHNhbWUgPC0gc3ltYm9sc1sxXSA9PSBzeW1ib2xzWzJdICYmIHN5bWJvbHNbMl0gPT0gc3ltYm9sc1szXVxuICBiYXJzIDwtIHN5bWJvbHMgJWluJSBjKFwiQlwiLCBcIkJCXCIsIFwiQkJCXCIpXG4gIFxuICAjIEdldCBwcml6ZVxuICBpZiAoc2FtZSkge1xuICAgIFxuICAgICMgTGlzdGluZyBwYXlvdXRzXG4gICAgcGF5b3V0cyA8LSBjKFwiRERcIiA9IDEwMCwgXCI3XCIgPSA4MCwgXCJCQkJcIiA9IDQwLCBcIkJCXCIgPSAyNSwgXCJCXCIgPSAxMCwgXCJDXCIgPSAxMCwgXCIwXCIgPSAwKVxuICAgIFxuICAgICMgQXNzaWduaW5nIHByaXplIGZyb20gcGF5b3V0cyB2ZWN0b3JcbiAgICBwcml6ZSA8LSB1bm5hbWUocGF5b3V0c1tzeW1ib2xzWzFdXSlcbiAgICBcbiAgfSBlbHNlIGlmIChhbGwoYmFycykpIHtcbiAgICBcbiAgICAjIFByaXplIGlmIGFsbCBzeW1ib2xzIGFyZSBiYXJzXG4gICAgcHJpemUgPC0gNVxuICAgIFxuICB9IGVsc2Uge1xuICAgICMgQ291bnRpbmcgbnVtYmVyIG9mIGNoZXJyaWVzXG4gICAgY2hlcnJpZXMgPC0gc3VtKHN5bWJvbHMgPT1cIkNcIilcbiAgICBcbiAgICAjIEFzc2lnbmluZyBwcml6ZSBnaXZlbiBudW1iZXIgb2YgY2hlcnJpZXNcbiAgICBwcml6ZSA8LSBjKDAsIDIsIDUpW2NoZXJyaWVzICsgMV1cbiAgICBcbiAgfVxuICBcbiAgIyBBZGp1c3QgZm9yIGRpYW1vbmRzXG4gIGRpYW1vbmRzIDwtIHN1bShzeW1ib2xzID09IFwiRERcIilcbiAgcHJpemUgKiAyIF4gZGlhbW9uZHNcbiAgXG59XG5gYGAifQ== -->
+<pre class="r"><code>score &lt;- function(symbols) {
+  # Identifying the case
+  same &lt;- symbols[1] == symbols[2] &amp;&amp; symbols[2] == symbols[3]
+  bars &lt;- symbols %in% c(&quot;B&quot;, &quot;BB&quot;, &quot;BBB&quot;)
+  
+  # Get prize
+  if (same) {
+    
+    # Listing payouts
+    payouts &lt;- c(&quot;DD&quot; = 100, &quot;7&quot; = 80, &quot;BBB&quot; = 40, &quot;BB&quot; = 25, &quot;B&quot; = 10, &quot;C&quot; = 10, &quot;0&quot; = 0)
+    
+    # Assigning prize from payouts vector
+    prize &lt;- unname(payouts[symbols[1]])
+    
+  } else if (all(bars)) {
+    
+    # Prize if all symbols are bars
+    prize &lt;- 5
+    
+  } else {
+    # Counting number of cherries
+    cherries &lt;- sum(symbols ==&quot;C&quot;)
+    
+    # Assigning prize given number of cherries
+    prize &lt;- c(0, 2, 5)[cherries + 1]
+    
+  }
+  
+  # Adjust for diamonds
+  diamonds &lt;- sum(symbols == &quot;DD&quot;)
+  prize * 2 ^ diamonds
+  
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="full-slot-machine" class="section level2">
+<h2>Full slot machine</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxheSA8LSBmdW5jdGlvbigpIHtcbiAgXG4gICMgR2VuZXJhdGUgc3ltYm9sc1xuICBzeW1ib2xzIDwtIGdldF9zeW1ib2xzKClcbiAgXG4gICMgRGlzcGxheSB0aGUgc3ltYm9sc1xuICBwcmludChzeW1ib2xzKVxuICBcbiAgIyBTY29yZSB0aGUgc3ltYm9sc1xuICBzY29yZShzeW1ib2xzKVxufVxuYGBgIn0= -->
+<pre class="r"><code>play &lt;- function() {
+  
+  # Generate symbols
+  symbols &lt;- get_symbols()
+  
+  # Display the symbols
+  print(symbols)
+  
+  # Score the symbols
+  score(symbols)
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="playing-the-slot-machine" class="section level1">
+<h1>Playing the slot machine</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxheSgpXG5cbmBgYCJ9 -->
+<pre class="r"><code>play()
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiMFwiIFwiQlwiIFwiQlwiXG5bMV0gMFxuIn0= -->
+<pre><code>[1] &quot;0&quot; &quot;B&quot; &quot;B&quot;
+[1] 0</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiSG9tZXdvcmsgMiIKYXV0aG9yOiAiQ2FybWVuIENhbmVkbyIKZGF0ZTogIjE0IFNlcHRlbWJlciAyMDIwIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKZWRpdG9yX29wdGlvbnM6IAogIGNodW5rX291dHB1dF90eXBlOiBpbmxpbmUKLS0tCgojIExpYnJhcmllcwpCZWxvdyBhcmUgdGhlIGxpYnJhcmllcyByZXF1aXJlZCB0byBydW4gdGhpcyBjb2RlLgpgYGB7ciwgbWVzc2FnZT1GQUxTRX0KbGlicmFyeSh0aWR5dmVyc2UpCmBgYAoK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiSG9tZXdvcmsgMiIKYXV0aG9yOiAiQ2FybWVuIENhbmVkbyIKZGF0ZTogIjE0IFNlcHRlbWJlciAyMDIwIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKZWRpdG9yX29wdGlvbnM6IAogIGNodW5rX291dHB1dF90eXBlOiBpbmxpbmUKLS0tCgojIExpYnJhcmllcwpCZWxvdyBhcmUgdGhlIGxpYnJhcmllcyByZXF1aXJlZCB0byBydW4gdGhpcyBjb2RlLgpgYGB7ciwgbWVzc2FnZT1GQUxTRX0KbGlicmFyeSh0aWR5dmVyc2UpCmBgYAoKIyMgUmFuZG9tbHkgZ2VuZXJhdGUgdGhyZWUgc3ltYm9scwpUaGUgZm9sbG93aW5nIGZ1bmN0aW9uIGdlbmVyYXRlcyB0aHJlZSBzbG90IG1hY2hpbmUgc3ltYm9sczoKICArIEREIC0gZGlhbW9uZHMKICArIDcgLSBzZXZlbnMKICArIEJCQiAtIHRyaXBsZSBiYXJzCiAgKyBCQiAtIGRvdWJsZSBiYXJzCiAgKyBCIC0gc2luZ2xlIGJhcnMKICArIEMgLSBjaGVycmllcwogICsgMCAtIHplcm9lcwogIApgYGB7cn0KIyBGdW5jdGlvbiB0byBnZXQgdGhyZWUgcmFuZG9tIHN5bWJvbHMKZ2V0X3N5bWJvbHMgPC0gZnVuY3Rpb24oKSB7CiAgCiAgIyBDcmVhdGluZyBjaGFyYWN0ZXIgdmVjdG9yIGNvbnRhaW5pbmcgc3ltYm9sIG9wdGlvbnMKICB3aGVlbCA8LSBjKCJERCIsICI3IiwgIkJCQiIsICJCQiIsICJCIiwgIkMiLCAiMCIpCiAgCiAgIyBQcm9kdWNpbmcgcmFuZG9tIHNhbXBsZSBvZiBzeW1ib2xzLCBnaXZlbiBzcGVjaWZpYyBwcm9iYWJpbGl0aWVzCiAgd2hlZWwgJT4lIAogICAgc2FtcGxlKHNpemUgPSAzLCByZXBsYWNlID0gVFJVRSwKICAgICAgICAgICBwcm9iID0gYygwLjAzLCAwLjAzLCAwLjA2LCAwLjEsIDAuMjUsIDAuMDEsIDAuNTIpKQp9CmBgYAoKIyMgQ2FsY3VsYXRlIHNjb3JlCmBgYHtyfQpzY29yZSA8LSBmdW5jdGlvbihzeW1ib2xzKSB7CiAgIyBJZGVudGlmeWluZyB0aGUgY2FzZQogIHNhbWUgPC0gc3ltYm9sc1sxXSA9PSBzeW1ib2xzWzJdICYmIHN5bWJvbHNbMl0gPT0gc3ltYm9sc1szXQogIGJhcnMgPC0gc3ltYm9scyAlaW4lIGMoIkIiLCAiQkIiLCAiQkJCIikKICAKICAjIEdldCBwcml6ZQogIGlmIChzYW1lKSB7CiAgICAKICAgICMgTGlzdGluZyBwYXlvdXRzCiAgICBwYXlvdXRzIDwtIGMoIkREIiA9IDEwMCwgIjciID0gODAsICJCQkIiID0gNDAsICJCQiIgPSAyNSwgIkIiID0gMTAsICJDIiA9IDEwLCAiMCIgPSAwKQogICAgCiAgICAjIEFzc2lnbmluZyBwcml6ZSBmcm9tIHBheW91dHMgdmVjdG9yCiAgICBwcml6ZSA8LSB1bm5hbWUocGF5b3V0c1tzeW1ib2xzWzFdXSkKICAgIAogIH0gZWxzZSBpZiAoYWxsKGJhcnMpKSB7CiAgICAKICAgICMgUHJpemUgaWYgYWxsIHN5bWJvbHMgYXJlIGJhcnMKICAgIHByaXplIDwtIDUKICAgIAogIH0gZWxzZSB7CiAgICAjIENvdW50aW5nIG51bWJlciBvZiBjaGVycmllcwogICAgY2hlcnJpZXMgPC0gc3VtKHN5bWJvbHMgPT0iQyIpCiAgICAKICAgICMgQXNzaWduaW5nIHByaXplIGdpdmVuIG51bWJlciBvZiBjaGVycmllcwogICAgcHJpemUgPC0gYygwLCAyLCA1KVtjaGVycmllcyArIDFdCiAgICAKICB9CiAgCiAgIyBBZGp1c3QgZm9yIGRpYW1vbmRzCiAgZGlhbW9uZHMgPC0gc3VtKHN5bWJvbHMgPT0gIkREIikKICBwcml6ZSAqIDIgXiBkaWFtb25kcwogIAp9CmBgYAoKCiMjIEZ1bGwgc2xvdCBtYWNoaW5lCmBgYHtyfQpwbGF5IDwtIGZ1bmN0aW9uKCkgewogIAogICMgR2VuZXJhdGUgc3ltYm9scwogIHN5bWJvbHMgPC0gZ2V0X3N5bWJvbHMoKQogIAogICMgRGlzcGxheSB0aGUgc3ltYm9scwogIHByaW50KHN5bWJvbHMpCiAgCiAgIyBTY29yZSB0aGUgc3ltYm9scwogIHNjb3JlKHN5bWJvbHMpCn0KYGBgCgojIFBsYXlpbmcgdGhlIHNsb3QgbWFjaGluZQpgYGB7cn0KcGxheSgpCgpwbGF5KCkKCnBsYXkoKQpgYGAKCgoKCg==</div>
 
 
 
