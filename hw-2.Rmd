@@ -86,7 +86,9 @@ play <- function() {
   print(symbols)
   
   # Score the symbols
-  score(symbols)
+  score(symbols) %>% 
+    print()
+  
 }
 ```
 
@@ -106,7 +108,7 @@ In this section, I am going to modify the play function and add a function that 
 `play2()` changes the probabilities of triple bars, zeroes, and cherries, and it adds the values for three single bars. In order to change the probabilities, we need to reassign them in `get_symbols()` above.
 ```{r}
 # Function to get three random symbols
-get_symbols <- function() {
+get_symbols2 <- function() {
   
   # Creating character vector containing symbol options
   wheel <- c("DD", "7", "BBB", "BB", "B", "C", "0")
@@ -118,43 +120,69 @@ get_symbols <- function() {
 }
 ```
 
-Next, we are going to create a new function that returns the number of turns played before running out of money.
-```{r}
-number_of_turns <- function(initial_funds, cost, which_game) {
-  funds <- seq(0, initial_funds)
-  print("Your funds are:")
-    for (i in funds) {
-      if (initial_funds >= 0) {
-        print(initial_funds)
-        initial_funds <- initial_funds - cost
-      }
-    }
-}
-```
-
-```{r}
-number_of_turns(initial_funds = 100, cost = 25)
-```
-
 
 ```{r}
 play2 <- function() {
   
   # Generate symbols
-  symbols <- get_symbols()
+  symbols <- get_symbols2()
   
   # Display the symbols
   print(symbols)
   
   # Score the symbols
-  score(symbols)
+  score(symbols) %>% 
+    print()
 }
 ```
 
 
 ## 2. Create `number_of_turns()`
+Next, we are going to create a new function that returns the number of turns played before running out of money.
+```{r}
+number_of_turns <- function(initial_funds, cost, which_game) {
+  
+  # Placing the result of the slot machine within the scope of the function
+  result <- which_game()
+  
+  # Adding any points won from score() to funds
+   if (result > 0) {
+     initial_funds <- initial_funds + result
+  }
+  
+  # Making a list to iterate over that is the length of initial funds
+  funds <- seq(0, initial_funds)
+  
+  # Initializing variable to count the number of turns
+  turns <- 0
+  
+  # Creating for loop to iterate through length of funds sequence
+    for (i in funds) {
+      
+      # Loop runs as long as initial funds is greater than 0
+      if (initial_funds > 0) {
+        
+        # Incrementing value of turns
+        turns <- turns + 1
+        
+        # Updating initial funds value
+        initial_funds <- initial_funds - cost
+      }
+    }
+  
+  # Printing number of turns
+  print("Total turns: ")
+  turns
+}
+```
 
 ## 3. Which game allows for the most turns on average?
+```{r}
+number_of_turns(initial_funds = 100, cost = 2, which_game = play)
+
+number_of_turns(initial_funds = 100, cost = 2, which_game = play2)
+```
+
 
 ## 4. Supporting analysis for recommendation
 Don't show code! (echo?)

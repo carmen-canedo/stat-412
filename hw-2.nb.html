@@ -1848,7 +1848,7 @@ get_symbols &lt;- function() {
 <h2>Full slot machine</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxheSA8LSBmdW5jdGlvbigpIHtcbiAgXG4gICMgR2VuZXJhdGUgc3ltYm9sc1xuICBzeW1ib2xzIDwtIGdldF9zeW1ib2xzKClcbiAgXG4gICMgRGlzcGxheSB0aGUgc3ltYm9sc1xuICBwcmludChzeW1ib2xzKVxuICBcbiAgIyBTY29yZSB0aGUgc3ltYm9sc1xuICBzY29yZShzeW1ib2xzKVxufVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxheSA8LSBmdW5jdGlvbigpIHtcbiAgXG4gICMgR2VuZXJhdGUgc3ltYm9sc1xuICBzeW1ib2xzIDwtIGdldF9zeW1ib2xzKClcbiAgXG4gICMgRGlzcGxheSB0aGUgc3ltYm9sc1xuICBwcmludChzeW1ib2xzKVxuICBcbiAgIyBTY29yZSB0aGUgc3ltYm9sc1xuICBzY29yZShzeW1ib2xzKSAlPiUgXG4gICAgcHJpbnQoKVxuICBcbn1cbmBgYCJ9 -->
 <pre class="r"><code>play &lt;- function() {
   
   # Generate symbols
@@ -1858,7 +1858,9 @@ get_symbols &lt;- function() {
   print(symbols)
   
   # Score the symbols
-  score(symbols)
+  score(symbols) %&gt;% 
+    print()
+  
 }</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -1873,8 +1875,8 @@ get_symbols &lt;- function() {
 <pre class="r"><code>play()
 </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiMFwiIFwiQlwiIFwiQlwiXG5bMV0gMFxuIn0= -->
-<pre><code>[1] &quot;0&quot; &quot;B&quot; &quot;B&quot;
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiQkJcIiBcIkJcIiAgXCI3XCIgXG5bMV0gMFxuIn0= -->
+<pre><code>[1] &quot;BB&quot; &quot;B&quot;  &quot;7&quot; 
 [1] 0</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
@@ -1888,9 +1890,9 @@ get_symbols &lt;- function() {
 <p><code>play2()</code> changes the probabilities of triple bars, zeroes, and cherries, and it adds the values for three single bars. In order to change the probabilities, we need to reassign them in <code>get_symbols()</code> above.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBGdW5jdGlvbiB0byBnZXQgdGhyZWUgcmFuZG9tIHN5bWJvbHNcbmdldF9zeW1ib2xzIDwtIGZ1bmN0aW9uKCkge1xuICBcbiAgIyBDcmVhdGluZyBjaGFyYWN0ZXIgdmVjdG9yIGNvbnRhaW5pbmcgc3ltYm9sIG9wdGlvbnNcbiAgd2hlZWwgPC0gYyhcIkREXCIsIFwiN1wiLCBcIkJCQlwiLCBcIkJCXCIsIFwiQlwiLCBcIkNcIiwgXCIwXCIpXG4gIFxuICAjIE1vZGlmeWluZyBwcm9iYWJpbGl0ZXMgZm9yIHRyaXBsZSBiYXJzLCB6ZXJvZXMsIGFuZCBjaGVycmllc1xuICB3aGVlbCAlPiUgXG4gICAgc2FtcGxlKHNpemUgPSAzLCByZXBsYWNlID0gVFJVRSxcbiAgICAgICAgICAgcHJvYiA9IGMoMC4wMywgMC4wMywgMC4wNzUsIDAuMSwgMC4yNSwgMC4wMTUsIDAuNSkpXG59XG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBGdW5jdGlvbiB0byBnZXQgdGhyZWUgcmFuZG9tIHN5bWJvbHNcbmdldF9zeW1ib2xzMiA8LSBmdW5jdGlvbigpIHtcbiAgXG4gICMgQ3JlYXRpbmcgY2hhcmFjdGVyIHZlY3RvciBjb250YWluaW5nIHN5bWJvbCBvcHRpb25zXG4gIHdoZWVsIDwtIGMoXCJERFwiLCBcIjdcIiwgXCJCQkJcIiwgXCJCQlwiLCBcIkJcIiwgXCJDXCIsIFwiMFwiKVxuICBcbiAgIyBNb2RpZnlpbmcgcHJvYmFiaWxpdGVzIGZvciB0cmlwbGUgYmFycywgemVyb2VzLCBhbmQgY2hlcnJpZXNcbiAgd2hlZWwgJT4lIFxuICAgIHNhbXBsZShzaXplID0gMywgcmVwbGFjZSA9IFRSVUUsXG4gICAgICAgICAgIHByb2IgPSBjKDAuMDMsIDAuMDMsIDAuMDc1LCAwLjEsIDAuMjUsIDAuMDE1LCAwLjUpKVxufVxuYGBgIn0= -->
 <pre class="r"><code># Function to get three random symbols
-get_symbols &lt;- function() {
+get_symbols2 &lt;- function() {
   
   # Creating character vector containing symbol options
   wheel &lt;- c(&quot;DD&quot;, &quot;7&quot;, &quot;BBB&quot;, &quot;BB&quot;, &quot;B&quot;, &quot;C&quot;, &quot;0&quot;)
@@ -1903,52 +1905,20 @@ get_symbols &lt;- function() {
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Next, we are going to create a new function that returns the number of turns played before running out of money.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubnVtYmVyX29mX3R1cm5zIDwtIGZ1bmN0aW9uKGluaXRpYWxfZnVuZHMsIGNvc3QsIHdoaWNoX2dhbWUpIHtcbiAgZnVuZHMgPC0gc2VxKDAsIGluaXRpYWxfZnVuZHMpXG4gIHByaW50KFwiWW91ciBmdW5kcyBhcmU6XCIpXG4gICAgZm9yIChpIGluIGZ1bmRzKSB7XG4gICAgICBpZiAoaW5pdGlhbF9mdW5kcyA+PSAwKSB7XG4gICAgICAgIHByaW50KGluaXRpYWxfZnVuZHMpXG4gICAgICAgIGluaXRpYWxfZnVuZHMgPC0gaW5pdGlhbF9mdW5kcyAtIGNvc3RcbiAgICAgIH1cbiAgICB9XG59XG5gYGAifQ== -->
-<pre class="r"><code>number_of_turns &lt;- function(initial_funds, cost, which_game) {
-  funds &lt;- seq(0, initial_funds)
-  print(&quot;Your funds are:&quot;)
-    for (i in funds) {
-      if (initial_funds &gt;= 0) {
-        print(initial_funds)
-        initial_funds &lt;- initial_funds - cost
-      }
-    }
-}</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubnVtYmVyX29mX3R1cm5zKGluaXRpYWxfZnVuZHMgPSAxMDAsIGNvc3QgPSAyNSlcblxuYGBgIn0= -->
-<pre class="r"><code>number_of_turns(initial_funds = 100, cost = 25)
-</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiWW91ciBmdW5kcyBhcmU6XCJcblsxXSAxMDBcblsxXSA3NVxuWzFdIDUwXG5bMV0gMjVcblsxXSAwXG4ifQ== -->
-<pre><code>[1] &quot;Your funds are:&quot;
-[1] 100
-[1] 75
-[1] 50
-[1] 25
-[1] 0</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxheTIgPC0gZnVuY3Rpb24oKSB7XG4gIFxuICAjIEdlbmVyYXRlIHN5bWJvbHNcbiAgc3ltYm9scyA8LSBnZXRfc3ltYm9scygpXG4gIFxuICAjIERpc3BsYXkgdGhlIHN5bWJvbHNcbiAgcHJpbnQoc3ltYm9scylcbiAgXG4gICMgU2NvcmUgdGhlIHN5bWJvbHNcbiAgc2NvcmUoc3ltYm9scylcbn1cbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxheTIgPC0gZnVuY3Rpb24oKSB7XG4gIFxuICAjIEdlbmVyYXRlIHN5bWJvbHNcbiAgc3ltYm9scyA8LSBnZXRfc3ltYm9sczIoKVxuICBcbiAgIyBEaXNwbGF5IHRoZSBzeW1ib2xzXG4gIHByaW50KHN5bWJvbHMpXG4gIFxuICAjIFNjb3JlIHRoZSBzeW1ib2xzXG4gIHNjb3JlKHN5bWJvbHMpICU+JSBcbiAgICBwcmludCgpXG59XG5gYGAifQ== -->
 <pre class="r"><code>play2 &lt;- function() {
   
   # Generate symbols
-  symbols &lt;- get_symbols()
+  symbols &lt;- get_symbols2()
   
   # Display the symbols
   print(symbols)
   
   # Score the symbols
-  score(symbols)
+  score(symbols) %&gt;% 
+    print()
 }</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -1956,9 +1926,56 @@ get_symbols &lt;- function() {
 </div>
 <div id="create-number_of_turns" class="section level2">
 <h2>2. Create <code>number_of_turns()</code></h2>
+<p>Next, we are going to create a new function that returns the number of turns played before running out of money.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubnVtYmVyX29mX3R1cm5zIDwtIGZ1bmN0aW9uKGluaXRpYWxfZnVuZHMsIGNvc3QsIHdoaWNoX2dhbWUpIHtcbiAgcmVzdWx0IDwtIHdoaWNoX2dhbWUoKVxuICBcbiAgIGlmIChyZXN1bHQgPiAwKSB7XG4gICAgIGluaXRpYWxfZnVuZHMgPC0gaW5pdGlhbF9mdW5kcyArIHJlc3VsdFxuICB9XG4gIFxuICBmdW5kcyA8LSBzZXEoMCwgaW5pdGlhbF9mdW5kcylcbiAgdHVybnMgPC0gMFxuICAgIGZvciAoaSBpbiBmdW5kcykge1xuICAgICAgaWYgKGluaXRpYWxfZnVuZHMgPiAwKSB7XG4gICAgICAgIHR1cm5zIDwtIHR1cm5zICsgMVxuICAgICAgICBpbml0aWFsX2Z1bmRzIDwtIGluaXRpYWxfZnVuZHMgLSBjb3N0XG4gICAgICB9XG4gICAgfVxuICBwcmludChcIlRvdGFsIHR1cm5zOiBcIilcbiAgdHVybnNcbn1cbmBgYCJ9 -->
+<pre class="r"><code>number_of_turns &lt;- function(initial_funds, cost, which_game) {
+  result &lt;- which_game()
+  
+   if (result &gt; 0) {
+     initial_funds &lt;- initial_funds + result
+  }
+  
+  funds &lt;- seq(0, initial_funds)
+  turns &lt;- 0
+    for (i in funds) {
+      if (initial_funds &gt; 0) {
+        turns &lt;- turns + 1
+        initial_funds &lt;- initial_funds - cost
+      }
+    }
+  print(&quot;Total turns: &quot;)
+  turns
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
 <div id="which-game-allows-for-the-most-turns-on-average" class="section level2">
 <h2>3. Which game allows for the most turns on average?</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubnVtYmVyX29mX3R1cm5zKGluaXRpYWxfZnVuZHMgPSAxMDAsIGNvc3QgPSAyLCB3aGljaF9nYW1lID0gcGxheSlcbmBgYCJ9 -->
+<pre class="r"><code>number_of_turns(initial_funds = 100, cost = 2, which_game = play)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiQkJcIiBcIjBcIiAgXCJCXCIgXG5bMV0gMFxuWzFdIFwiVG90YWwgdHVybnM6IFwiXG5bMV0gNTBcbiJ9 -->
+<pre><code>[1] &quot;BB&quot; &quot;0&quot;  &quot;B&quot; 
+[1] 0
+[1] &quot;Total turns: &quot;
+[1] 50</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubnVtYmVyX29mX3R1cm5zKGluaXRpYWxfZnVuZHMgPSAxMDAsIGNvc3QgPSAyLCB3aGljaF9nYW1lID0gcGxheTIpXG5gYGAifQ== -->
+<pre class="r"><code>number_of_turns(initial_funds = 100, cost = 2, which_game = play2)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiQkJcIiBcIkJcIiAgXCJCQlwiXG5bMV0gNVxuWzFdIFwiVG90YWwgdHVybnM6IFwiXG5bMV0gNTNcbiJ9 -->
+<pre><code>[1] &quot;BB&quot; &quot;B&quot;  &quot;BB&quot;
+[1] 5
+[1] &quot;Total turns: &quot;
+[1] 53</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
 <div id="supporting-analysis-for-recommendation" class="section level2">
 <h2>4. Supporting analysis for recommendation</h2>
@@ -1970,7 +1987,7 @@ get_symbols &lt;- function() {
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiSG9tZXdvcmsgMiIKYXV0aG9yOiAiQ2FybWVuIENhbmVkbyIKZGF0ZTogIjE0IFNlcHRlbWJlciAyMDIwIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKZWRpdG9yX29wdGlvbnM6IAogIGNodW5rX291dHB1dF90eXBlOiBpbmxpbmUKLS0tCgojIExpYnJhcmllcwpCZWxvdyBhcmUgdGhlIGxpYnJhcmllcyByZXF1aXJlZCB0byBydW4gdGhpcyBjb2RlLgpgYGB7ciwgbWVzc2FnZT1GQUxTRX0KbGlicmFyeSh0aWR5dmVyc2UpCmBgYAoKIyMgUmFuZG9tbHkgZ2VuZXJhdGUgdGhyZWUgc3ltYm9scwpUaGUgZm9sbG93aW5nIGZ1bmN0aW9uIGdlbmVyYXRlcyB0aHJlZSBzbG90IG1hY2hpbmUgc3ltYm9sczoKICArIEREIC0gZGlhbW9uZHMKICArIDcgLSBzZXZlbnMKICArIEJCQiAtIHRyaXBsZSBiYXJzCiAgKyBCQiAtIGRvdWJsZSBiYXJzCiAgKyBCIC0gc2luZ2xlIGJhcnMKICArIEMgLSBjaGVycmllcwogICsgMCAtIHplcm9lcwogIApgYGB7cn0KIyBGdW5jdGlvbiB0byBnZXQgdGhyZWUgcmFuZG9tIHN5bWJvbHMKZ2V0X3N5bWJvbHMgPC0gZnVuY3Rpb24oKSB7CiAgCiAgIyBDcmVhdGluZyBjaGFyYWN0ZXIgdmVjdG9yIGNvbnRhaW5pbmcgc3ltYm9sIG9wdGlvbnMKICB3aGVlbCA8LSBjKCJERCIsICI3IiwgIkJCQiIsICJCQiIsICJCIiwgIkMiLCAiMCIpCiAgCiAgIyBQcm9kdWNpbmcgcmFuZG9tIHNhbXBsZSBvZiBzeW1ib2xzLCBnaXZlbiBzcGVjaWZpYyBwcm9iYWJpbGl0aWVzCiAgd2hlZWwgJT4lIAogICAgc2FtcGxlKHNpemUgPSAzLCByZXBsYWNlID0gVFJVRSwKICAgICAgICAgICBwcm9iID0gYygwLjAzLCAwLjAzLCAwLjA2LCAwLjEsIDAuMjUsIDAuMDEsIDAuNTIpKQp9CmBgYAoKIyMgQ2FsY3VsYXRlIHNjb3JlCmBgYHtyfQpzY29yZSA8LSBmdW5jdGlvbihzeW1ib2xzKSB7CiAgIyBJZGVudGlmeWluZyB0aGUgY2FzZQogIHNhbWUgPC0gc3ltYm9sc1sxXSA9PSBzeW1ib2xzWzJdICYmIHN5bWJvbHNbMl0gPT0gc3ltYm9sc1szXQogIGJhcnMgPC0gc3ltYm9scyAlaW4lIGMoIkIiLCAiQkIiLCAiQkJCIikKICAKICAjIEdldCBwcml6ZQogIGlmIChzYW1lKSB7CiAgICAKICAgICMgTGlzdGluZyBwYXlvdXRzCiAgICBwYXlvdXRzIDwtIGMoIkREIiA9IDEwMCwgIjciID0gODAsICJCQkIiID0gNDAsICJCQiIgPSAyNSwgIkIiID0gMTAsICJDIiA9IDEwLCAiMCIgPSAwKQogICAgCiAgICAjIEFzc2lnbmluZyBwcml6ZSBmcm9tIHBheW91dHMgdmVjdG9yCiAgICBwcml6ZSA8LSB1bm5hbWUocGF5b3V0c1tzeW1ib2xzWzFdXSkKICAgIAogIH0gZWxzZSBpZiAoYWxsKGJhcnMpKSB7CiAgICAKICAgICMgUHJpemUgaWYgYWxsIHN5bWJvbHMgYXJlIGJhcnMKICAgIHByaXplIDwtIDUKICAgIAogIH0gZWxzZSB7CiAgICAjIENvdW50aW5nIG51bWJlciBvZiBjaGVycmllcwogICAgY2hlcnJpZXMgPC0gc3VtKHN5bWJvbHMgPT0iQyIpCiAgICAKICAgICMgQXNzaWduaW5nIHByaXplIGdpdmVuIG51bWJlciBvZiBjaGVycmllcwogICAgcHJpemUgPC0gYygwLCAyLCA1KVtjaGVycmllcyArIDFdCiAgICAKICB9CiAgCiAgIyBBZGp1c3QgZm9yIGRpYW1vbmRzCiAgZGlhbW9uZHMgPC0gc3VtKHN5bWJvbHMgPT0gIkREIikKICBwcml6ZSAqIDIgXiBkaWFtb25kcwogIAp9CmBgYAoKCiMjIEZ1bGwgc2xvdCBtYWNoaW5lCmBgYHtyfQpwbGF5IDwtIGZ1bmN0aW9uKCkgewogIAogICMgR2VuZXJhdGUgc3ltYm9scwogIHN5bWJvbHMgPC0gZ2V0X3N5bWJvbHMoKQogIAogICMgRGlzcGxheSB0aGUgc3ltYm9scwogIHByaW50KHN5bWJvbHMpCiAgCiAgIyBTY29yZSB0aGUgc3ltYm9scwogIHNjb3JlKHN5bWJvbHMpCn0KYGBgCgojIFBsYXlpbmcgdGhlIHNsb3QgbWFjaGluZQpgYGB7cn0KcGxheSgpCgpwbGF5KCkKCnBsYXkoKQpgYGAKCiMgSG9tZXdvcmsgMiBTZWN0aW9uCkluIHRoaXMgc2VjdGlvbiwgSSBhbSBnb2luZyB0byBtb2RpZnkgdGhlIHBsYXkgZnVuY3Rpb24gYW5kIGFkZCBhIGZ1bmN0aW9uIHRoYXQgY291bnRzIHRoZSBudW1iZXIgb2YgdHVybnMgYmVmb3JlIGEgcGxheWVyIHJ1bnMgb3V0IG9mIG1vbmV5LgoKIyMgMS4gQ3JlYXRlIGBwbGF5MigpYApgcGxheTIoKWAgY2hhbmdlcyB0aGUgcHJvYmFiaWxpdGllcyBvZiB0cmlwbGUgYmFycywgemVyb2VzLCBhbmQgY2hlcnJpZXMsIGFuZCBpdCBhZGRzIHRoZSB2YWx1ZXMgZm9yIHRocmVlIHNpbmdsZSBiYXJzLiBJbiBvcmRlciB0byBjaGFuZ2UgdGhlIHByb2JhYmlsaXRpZXMsIHdlIG5lZWQgdG8gcmVhc3NpZ24gdGhlbSBpbiBgZ2V0X3N5bWJvbHMoKWAgYWJvdmUuCmBgYHtyfQojIEZ1bmN0aW9uIHRvIGdldCB0aHJlZSByYW5kb20gc3ltYm9scwpnZXRfc3ltYm9scyA8LSBmdW5jdGlvbigpIHsKICAKICAjIENyZWF0aW5nIGNoYXJhY3RlciB2ZWN0b3IgY29udGFpbmluZyBzeW1ib2wgb3B0aW9ucwogIHdoZWVsIDwtIGMoIkREIiwgIjciLCAiQkJCIiwgIkJCIiwgIkIiLCAiQyIsICIwIikKICAKICAjIE1vZGlmeWluZyBwcm9iYWJpbGl0ZXMgZm9yIHRyaXBsZSBiYXJzLCB6ZXJvZXMsIGFuZCBjaGVycmllcwogIHdoZWVsICU+JSAKICAgIHNhbXBsZShzaXplID0gMywgcmVwbGFjZSA9IFRSVUUsCiAgICAgICAgICAgcHJvYiA9IGMoMC4wMywgMC4wMywgMC4wNzUsIDAuMSwgMC4yNSwgMC4wMTUsIDAuNSkpCn0KYGBgCgpOZXh0LCB3ZSBhcmUgZ29pbmcgdG8gY3JlYXRlIGEgbmV3IGZ1bmN0aW9uIHRoYXQgcmV0dXJucyB0aGUgbnVtYmVyIG9mIHR1cm5zIHBsYXllZCBiZWZvcmUgcnVubmluZyBvdXQgb2YgbW9uZXkuCmBgYHtyfQpudW1iZXJfb2ZfdHVybnMgPC0gZnVuY3Rpb24oaW5pdGlhbF9mdW5kcywgY29zdCwgd2hpY2hfZ2FtZSkgewogIGZ1bmRzIDwtIHNlcSgwLCBpbml0aWFsX2Z1bmRzKQogIHByaW50KCJZb3VyIGZ1bmRzIGFyZToiKQogICAgZm9yIChpIGluIGZ1bmRzKSB7CiAgICAgIGlmIChpbml0aWFsX2Z1bmRzID49IDApIHsKICAgICAgICBwcmludChpbml0aWFsX2Z1bmRzKQogICAgICAgIGluaXRpYWxfZnVuZHMgPC0gaW5pdGlhbF9mdW5kcyAtIGNvc3QKICAgICAgfQogICAgfQp9CmBgYAoKYGBge3J9Cm51bWJlcl9vZl90dXJucyhpbml0aWFsX2Z1bmRzID0gMTAwLCBjb3N0ID0gMjUpCmBgYAoKCmBgYHtyfQpwbGF5MiA8LSBmdW5jdGlvbigpIHsKICAKICAjIEdlbmVyYXRlIHN5bWJvbHMKICBzeW1ib2xzIDwtIGdldF9zeW1ib2xzKCkKICAKICAjIERpc3BsYXkgdGhlIHN5bWJvbHMKICBwcmludChzeW1ib2xzKQogIAogICMgU2NvcmUgdGhlIHN5bWJvbHMKICBzY29yZShzeW1ib2xzKQp9CmBgYAoKCiMjIDIuIENyZWF0ZSBgbnVtYmVyX29mX3R1cm5zKClgCgojIyAzLiBXaGljaCBnYW1lIGFsbG93cyBmb3IgdGhlIG1vc3QgdHVybnMgb24gYXZlcmFnZT8KCiMjIDQuIFN1cHBvcnRpbmcgYW5hbHlzaXMgZm9yIHJlY29tbWVuZGF0aW9uCkRvbid0IHNob3cgY29kZSEgKGVjaG8/KQoKIyMgNS4gUGxvdCB0aGF0IGNvbXBhcmVzIHRoZSBkaXN0cmlidXRpb24gb2YgcmVzdWx0cyBmcm9tIGVhY2ggZ2FtZQoKCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiSG9tZXdvcmsgMiIKYXV0aG9yOiAiQ2FybWVuIENhbmVkbyIKZGF0ZTogIjE0IFNlcHRlbWJlciAyMDIwIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKZWRpdG9yX29wdGlvbnM6IAogIGNodW5rX291dHB1dF90eXBlOiBpbmxpbmUKLS0tCgojIExpYnJhcmllcwpCZWxvdyBhcmUgdGhlIGxpYnJhcmllcyByZXF1aXJlZCB0byBydW4gdGhpcyBjb2RlLgpgYGB7ciwgbWVzc2FnZT1GQUxTRX0KbGlicmFyeSh0aWR5dmVyc2UpCmBgYAoKIyMgUmFuZG9tbHkgZ2VuZXJhdGUgdGhyZWUgc3ltYm9scwpUaGUgZm9sbG93aW5nIGZ1bmN0aW9uIGdlbmVyYXRlcyB0aHJlZSBzbG90IG1hY2hpbmUgc3ltYm9sczoKICArIEREIC0gZGlhbW9uZHMKICArIDcgLSBzZXZlbnMKICArIEJCQiAtIHRyaXBsZSBiYXJzCiAgKyBCQiAtIGRvdWJsZSBiYXJzCiAgKyBCIC0gc2luZ2xlIGJhcnMKICArIEMgLSBjaGVycmllcwogICsgMCAtIHplcm9lcwogIApgYGB7cn0KIyBGdW5jdGlvbiB0byBnZXQgdGhyZWUgcmFuZG9tIHN5bWJvbHMKZ2V0X3N5bWJvbHMgPC0gZnVuY3Rpb24oKSB7CiAgCiAgIyBDcmVhdGluZyBjaGFyYWN0ZXIgdmVjdG9yIGNvbnRhaW5pbmcgc3ltYm9sIG9wdGlvbnMKICB3aGVlbCA8LSBjKCJERCIsICI3IiwgIkJCQiIsICJCQiIsICJCIiwgIkMiLCAiMCIpCiAgCiAgIyBQcm9kdWNpbmcgcmFuZG9tIHNhbXBsZSBvZiBzeW1ib2xzLCBnaXZlbiBzcGVjaWZpYyBwcm9iYWJpbGl0aWVzCiAgd2hlZWwgJT4lIAogICAgc2FtcGxlKHNpemUgPSAzLCByZXBsYWNlID0gVFJVRSwKICAgICAgICAgICBwcm9iID0gYygwLjAzLCAwLjAzLCAwLjA2LCAwLjEsIDAuMjUsIDAuMDEsIDAuNTIpKQp9CmBgYAoKIyMgQ2FsY3VsYXRlIHNjb3JlCmBgYHtyfQpzY29yZSA8LSBmdW5jdGlvbihzeW1ib2xzKSB7CiAgIyBJZGVudGlmeWluZyB0aGUgY2FzZQogIHNhbWUgPC0gc3ltYm9sc1sxXSA9PSBzeW1ib2xzWzJdICYmIHN5bWJvbHNbMl0gPT0gc3ltYm9sc1szXQogIGJhcnMgPC0gc3ltYm9scyAlaW4lIGMoIkIiLCAiQkIiLCAiQkJCIikKICAKICAjIEdldCBwcml6ZQogIGlmIChzYW1lKSB7CiAgICAKICAgICMgTGlzdGluZyBwYXlvdXRzCiAgICBwYXlvdXRzIDwtIGMoIkREIiA9IDEwMCwgIjciID0gODAsICJCQkIiID0gNDAsICJCQiIgPSAyNSwgIkIiID0gMTAsICJDIiA9IDEwLCAiMCIgPSAwKQogICAgCiAgICAjIEFzc2lnbmluZyBwcml6ZSBmcm9tIHBheW91dHMgdmVjdG9yCiAgICBwcml6ZSA8LSB1bm5hbWUocGF5b3V0c1tzeW1ib2xzWzFdXSkKICAgIAogIH0gZWxzZSBpZiAoYWxsKGJhcnMpKSB7CiAgICAKICAgICMgUHJpemUgaWYgYWxsIHN5bWJvbHMgYXJlIGJhcnMKICAgIHByaXplIDwtIDUKICAgIAogIH0gZWxzZSB7CiAgICAjIENvdW50aW5nIG51bWJlciBvZiBjaGVycmllcwogICAgY2hlcnJpZXMgPC0gc3VtKHN5bWJvbHMgPT0iQyIpCiAgICAKICAgICMgQXNzaWduaW5nIHByaXplIGdpdmVuIG51bWJlciBvZiBjaGVycmllcwogICAgcHJpemUgPC0gYygwLCAyLCA1KVtjaGVycmllcyArIDFdCiAgICAKICB9CiAgCiAgIyBBZGp1c3QgZm9yIGRpYW1vbmRzCiAgZGlhbW9uZHMgPC0gc3VtKHN5bWJvbHMgPT0gIkREIikKICBwcml6ZSAqIDIgXiBkaWFtb25kcwogIAp9CmBgYAoKCiMjIEZ1bGwgc2xvdCBtYWNoaW5lCmBgYHtyfQpwbGF5IDwtIGZ1bmN0aW9uKCkgewogIAogICMgR2VuZXJhdGUgc3ltYm9scwogIHN5bWJvbHMgPC0gZ2V0X3N5bWJvbHMoKQogIAogICMgRGlzcGxheSB0aGUgc3ltYm9scwogIHByaW50KHN5bWJvbHMpCiAgCiAgIyBTY29yZSB0aGUgc3ltYm9scwogIHNjb3JlKHN5bWJvbHMpICU+JSAKICAgIHByaW50KCkKICAKfQpgYGAKCiMgUGxheWluZyB0aGUgc2xvdCBtYWNoaW5lCmBgYHtyfQpwbGF5KCkKCnBsYXkoKQoKcGxheSgpCmBgYAoKIyBIb21ld29yayAyIFNlY3Rpb24KSW4gdGhpcyBzZWN0aW9uLCBJIGFtIGdvaW5nIHRvIG1vZGlmeSB0aGUgcGxheSBmdW5jdGlvbiBhbmQgYWRkIGEgZnVuY3Rpb24gdGhhdCBjb3VudHMgdGhlIG51bWJlciBvZiB0dXJucyBiZWZvcmUgYSBwbGF5ZXIgcnVucyBvdXQgb2YgbW9uZXkuCgojIyAxLiBDcmVhdGUgYHBsYXkyKClgCmBwbGF5MigpYCBjaGFuZ2VzIHRoZSBwcm9iYWJpbGl0aWVzIG9mIHRyaXBsZSBiYXJzLCB6ZXJvZXMsIGFuZCBjaGVycmllcywgYW5kIGl0IGFkZHMgdGhlIHZhbHVlcyBmb3IgdGhyZWUgc2luZ2xlIGJhcnMuIEluIG9yZGVyIHRvIGNoYW5nZSB0aGUgcHJvYmFiaWxpdGllcywgd2UgbmVlZCB0byByZWFzc2lnbiB0aGVtIGluIGBnZXRfc3ltYm9scygpYCBhYm92ZS4KYGBge3J9CiMgRnVuY3Rpb24gdG8gZ2V0IHRocmVlIHJhbmRvbSBzeW1ib2xzCmdldF9zeW1ib2xzMiA8LSBmdW5jdGlvbigpIHsKICAKICAjIENyZWF0aW5nIGNoYXJhY3RlciB2ZWN0b3IgY29udGFpbmluZyBzeW1ib2wgb3B0aW9ucwogIHdoZWVsIDwtIGMoIkREIiwgIjciLCAiQkJCIiwgIkJCIiwgIkIiLCAiQyIsICIwIikKICAKICAjIE1vZGlmeWluZyBwcm9iYWJpbGl0ZXMgZm9yIHRyaXBsZSBiYXJzLCB6ZXJvZXMsIGFuZCBjaGVycmllcwogIHdoZWVsICU+JSAKICAgIHNhbXBsZShzaXplID0gMywgcmVwbGFjZSA9IFRSVUUsCiAgICAgICAgICAgcHJvYiA9IGMoMC4wMywgMC4wMywgMC4wNzUsIDAuMSwgMC4yNSwgMC4wMTUsIDAuNSkpCn0KYGBgCgoKYGBge3J9CnBsYXkyIDwtIGZ1bmN0aW9uKCkgewogIAogICMgR2VuZXJhdGUgc3ltYm9scwogIHN5bWJvbHMgPC0gZ2V0X3N5bWJvbHMyKCkKICAKICAjIERpc3BsYXkgdGhlIHN5bWJvbHMKICBwcmludChzeW1ib2xzKQogIAogICMgU2NvcmUgdGhlIHN5bWJvbHMKICBzY29yZShzeW1ib2xzKSAlPiUgCiAgICBwcmludCgpCn0KYGBgCgoKIyMgMi4gQ3JlYXRlIGBudW1iZXJfb2ZfdHVybnMoKWAKTmV4dCwgd2UgYXJlIGdvaW5nIHRvIGNyZWF0ZSBhIG5ldyBmdW5jdGlvbiB0aGF0IHJldHVybnMgdGhlIG51bWJlciBvZiB0dXJucyBwbGF5ZWQgYmVmb3JlIHJ1bm5pbmcgb3V0IG9mIG1vbmV5LgpgYGB7cn0KbnVtYmVyX29mX3R1cm5zIDwtIGZ1bmN0aW9uKGluaXRpYWxfZnVuZHMsIGNvc3QsIHdoaWNoX2dhbWUpIHsKICAKICAjIFBsYWNpbmcgdGhlIHJlc3VsdCBvZiB0aGUgc2xvdCBtYWNoaW5lIHdpdGhpbiB0aGUgc2NvcGUgb2YgdGhlIGZ1bmN0aW9uCiAgcmVzdWx0IDwtIHdoaWNoX2dhbWUoKQogIAogICMgQWRkaW5nIGFueSBwb2ludHMgd29uIGZyb20gc2NvcmUoKSB0byBmdW5kcwogICBpZiAocmVzdWx0ID4gMCkgewogICAgIGluaXRpYWxfZnVuZHMgPC0gaW5pdGlhbF9mdW5kcyArIHJlc3VsdAogIH0KICAKICAjIE1ha2luZyBhIGxpc3QgdG8gaXRlcmF0ZSBvdmVyIHRoYXQgaXMgdGhlIGxlbmd0aCBvZiBpbml0aWFsIGZ1bmRzCiAgZnVuZHMgPC0gc2VxKDAsIGluaXRpYWxfZnVuZHMpCiAgCiAgIyBJbml0aWFsaXppbmcgdmFyaWFibGUgdG8gY291bnQgdGhlIG51bWJlciBvZiB0dXJucwogIHR1cm5zIDwtIDAKICAKICAjIENyZWF0aW5nIGZvciBsb29wIHRvIGl0ZXJhdGUgdGhyb3VnaCBsZW5ndGggb2YgZnVuZHMgc2VxdWVuY2UKICAgIGZvciAoaSBpbiBmdW5kcykgewogICAgICAKICAgICAgIyBMb29wIHJ1bnMgYXMgbG9uZyBhcyBpbml0aWFsIGZ1bmRzIGlzIGdyZWF0ZXIgdGhhbiAwCiAgICAgIGlmIChpbml0aWFsX2Z1bmRzID4gMCkgewogICAgICAgIAogICAgICAgICMgSW5jcmVtZW50aW5nIHZhbHVlIG9mIHR1cm5zCiAgICAgICAgdHVybnMgPC0gdHVybnMgKyAxCiAgICAgICAgCiAgICAgICAgIyBVcGRhdGluZyBpbml0aWFsIGZ1bmRzIHZhbHVlCiAgICAgICAgaW5pdGlhbF9mdW5kcyA8LSBpbml0aWFsX2Z1bmRzIC0gY29zdAogICAgICB9CiAgICB9CiAgCiAgIyBQcmludGluZyBudW1iZXIgb2YgdHVybnMKICBwcmludCgiVG90YWwgdHVybnM6ICIpCiAgdHVybnMKfQpgYGAKCiMjIDMuIFdoaWNoIGdhbWUgYWxsb3dzIGZvciB0aGUgbW9zdCB0dXJucyBvbiBhdmVyYWdlPwpgYGB7cn0KbnVtYmVyX29mX3R1cm5zKGluaXRpYWxfZnVuZHMgPSAxMDAsIGNvc3QgPSAyLCB3aGljaF9nYW1lID0gcGxheSkKCm51bWJlcl9vZl90dXJucyhpbml0aWFsX2Z1bmRzID0gMTAwLCBjb3N0ID0gMiwgd2hpY2hfZ2FtZSA9IHBsYXkyKQpgYGAKCgojIyA0LiBTdXBwb3J0aW5nIGFuYWx5c2lzIGZvciByZWNvbW1lbmRhdGlvbgpEb24ndCBzaG93IGNvZGUhIChlY2hvPykKCiMjIDUuIFBsb3QgdGhhdCBjb21wYXJlcyB0aGUgZGlzdHJpYnV0aW9uIG9mIHJlc3VsdHMgZnJvbSBlYWNoIGdhbWUKCgo=</div>
 
 
 
