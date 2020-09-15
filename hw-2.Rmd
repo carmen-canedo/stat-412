@@ -2,18 +2,19 @@
 title: "Homework 2"
 author: "Carmen Canedo"
 date: "14 September 2020"
-output: html_notebook
-editor_options: 
+output:
+  pdf_document: default
+  html_notebook: default
+editor_options:
   chunk_output_type: inline
 ---
 
 Don't show code! (echo?)
 
 # Libraries
-Below are the libraries required to run this code.
-```{r, message=FALSE, warning=FALSE}
+I will use the `tidyverse` package to run this code.
+```{r, include=FALSE}
 library(tidyverse)
-library(RColorBrewer)
 ```
 
 ## Randomly generate three symbols
@@ -26,7 +27,7 @@ The following function generates three slot machine symbols:
   + C - cherries
   + 0 - zeroes
   
-```{r}
+```{r, include=FALSE}
 # Function to get three random symbols
 get_symbols <- function() {
   
@@ -41,7 +42,7 @@ get_symbols <- function() {
 ```
 
 ## Calculate score
-```{r}
+```{r, include=FALSE}
 score <- function(symbols) {
   # Identifying the case
   same <- symbols[1] == symbols[2] && symbols[2] == symbols[3]
@@ -79,7 +80,7 @@ score <- function(symbols) {
 
 
 ## Full slot machine
-```{r}
+```{r, include=FALSE}
 play <- function() {
   
   # Generate symbols
@@ -96,7 +97,7 @@ play <- function() {
 ```
 
 # Playing the slot machine
-```{r}
+```{r, echo=FALSE}
 play()
 
 play()
@@ -109,7 +110,7 @@ In this section, I am going to modify the play function and add a function that 
 
 ## 1. Create `play2()`
 `play2()` changes the probabilities of triple bars, zeroes, and cherries, and it adds the values for three single bars. In order to change the probabilities, we need to reassign them in `get_symbols()` above.
-```{r}
+```{r, include=FALSE}
 # Function to get three random symbols
 get_symbols2 <- function() {
   
@@ -124,7 +125,7 @@ get_symbols2 <- function() {
 ```
 
 
-```{r}
+```{r, include=FALSE}
 play2 <- function() {
   
   # Generate symbols
@@ -142,7 +143,7 @@ play2 <- function() {
 
 ## 2. Create `number_of_turns()`
 Next, we are going to create a new function that returns the number of turns played before running out of money.
-```{r}
+```{r, include=FALSE}
 number_of_turns <- function(initial_funds = 100, cost = 2, which_game) {
   
   # Placing the result of the slot machine within the scope of the function
@@ -179,14 +180,14 @@ number_of_turns <- function(initial_funds = 100, cost = 2, which_game) {
 ```
 
 ## 3. Which game allows for the most turns on average?
-```{r}
+```{r, echo=FALSE}
 # Confirming number of turns works for both functions
 number_of_turns(which_game = play)
 
 number_of_turns(which_game = play2)
 ```
 
-```{r}
+```{r, include=FALSE}
 # Replicating the average of both functions 100 times
 game_results1 <- replicate(100,
                            mean(number_of_turns(which_game = play))
@@ -198,7 +199,9 @@ game_results2 <- replicate(100,
 
 # Saving results into dataframe
 results <- tibble(avg_play = game_results1, avg_play2 = game_results2)
+```
 
+```{r, echo=FALSE}
 # Calculating the mean for both samples
 mean(game_results1)
 
@@ -208,11 +211,11 @@ mean(game_results2)
 ## 4. Supporting analysis for recommendation
 Given the results of 100 replications of both slot machines, I have noticed that `play2()` tends to have a higher average mean than `play()`.
 
-```{r}
+```{r, echo=FALSE}
 avg_mean1 <- results %>% 
   ggplot(aes(x = avg_play)) +
   geom_bar() +
-  labs(title = "Average Number of Turns for `play()` Slot Machine",
+  labs(title = "Average Number of Turns for `play()` Slot Machine over 100 Repetitions",
        x = "Number of Turns",
        y = "Count of the Averages",
        caption = "STAT-412 | Fall 2020")  +
@@ -221,11 +224,11 @@ avg_mean1 <- results %>%
 avg_mean1
 ```
 
-```{r}
+```{r, echo=FALSE}
 avg_mean2 <- results %>% 
   ggplot(aes(x = avg_play2)) +
   geom_bar() +
-  labs(title = "Average Number of Turns for `play2()` Slot Machine",
+  labs(title = "Average Number of Turns for `play2()` Slot Machine over 100 Repetitions",
        x = "Number of Turns",
        y = "Count of the Averages",
        caption = "STAT-412 | Fall 2020")  +
