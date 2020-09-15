@@ -100,10 +100,59 @@ play()
 ```
 
 # Homework 2 Section
+In this section, I am going to modify the play function and add a function that counts the number of turns before a player runs out of money.
 
 ## 1. Create `play2()`
+`play2()` changes the probabilities of triple bars, zeroes, and cherries, and it adds the values for three single bars. In order to change the probabilities, we need to reassign them in `get_symbols()` above.
+```{r}
+# Function to get three random symbols
+get_symbols <- function() {
+  
+  # Creating character vector containing symbol options
+  wheel <- c("DD", "7", "BBB", "BB", "B", "C", "0")
+  
+  # Modifying probabilites for triple bars, zeroes, and cherries
+  wheel %>% 
+    sample(size = 3, replace = TRUE,
+           prob = c(0.03, 0.03, 0.075, 0.1, 0.25, 0.015, 0.5))
+}
+```
 
-## 2. Creatue `number_of_turns()`
+Next, we are going to create a new function that returns the number of turns played before running out of money.
+```{r}
+number_of_turns <- function(initial_funds, cost, which_game) {
+  funds <- seq(0, initial_funds)
+  print("Your funds are:")
+    for (i in funds) {
+      if (initial_funds >= 0) {
+        print(initial_funds)
+        initial_funds <- initial_funds - cost
+      }
+    }
+}
+```
+
+```{r}
+number_of_turns(initial_funds = 100, cost = 25)
+```
+
+
+```{r}
+play2 <- function() {
+  
+  # Generate symbols
+  symbols <- get_symbols()
+  
+  # Display the symbols
+  print(symbols)
+  
+  # Score the symbols
+  score(symbols)
+}
+```
+
+
+## 2. Create `number_of_turns()`
 
 ## 3. Which game allows for the most turns on average?
 
