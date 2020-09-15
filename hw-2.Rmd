@@ -7,10 +7,13 @@ editor_options:
   chunk_output_type: inline
 ---
 
+Don't show code! (echo?)
+
 # Libraries
 Below are the libraries required to run this code.
-```{r, message=FALSE}
+```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
+library(RColorBrewer)
 ```
 
 ## Randomly generate three symbols
@@ -140,7 +143,7 @@ play2 <- function() {
 ## 2. Create `number_of_turns()`
 Next, we are going to create a new function that returns the number of turns played before running out of money.
 ```{r}
-number_of_turns <- function(initial_funds, cost, which_game) {
+number_of_turns <- function(initial_funds = 100, cost = 2, which_game) {
   
   # Placing the result of the slot machine within the scope of the function
   result <- which_game()
@@ -171,21 +174,66 @@ number_of_turns <- function(initial_funds, cost, which_game) {
     }
   
   # Printing number of turns
-  print("Total turns: ")
-  turns
+  print(turns)
 }
 ```
 
 ## 3. Which game allows for the most turns on average?
 ```{r}
-number_of_turns(initial_funds = 100, cost = 2, which_game = play)
+# Confirming number of turns works for both functions
+number_of_turns(which_game = play)
 
-number_of_turns(initial_funds = 100, cost = 2, which_game = play2)
+number_of_turns(which_game = play2)
 ```
 
+```{r}
+# Replicating the average of both functions 100 times
+game_results1 <- replicate(100,
+                           mean(number_of_turns(which_game = play))
+                           )
+
+game_results2 <- replicate(100, 
+                           mean(number_of_turns(which_game = play2))
+                           )
+
+# Saving results into dataframe
+results <- tibble(avg_play = game_results1, avg_play2 = game_results2)
+
+# Calculating the mean for both samples
+mean(game_results1)
+
+mean(game_results2)
+```
 
 ## 4. Supporting analysis for recommendation
-Don't show code! (echo?)
+Given the results of 100 replications of both slot machines, I have noticed that `play2()` tends to have a higher average mean than `play()`.
+
+```{r}
+avg_mean1 <- results %>% 
+  ggplot(aes(x = avg_play)) +
+  geom_bar() +
+  labs(title = "Average Number of Turns for `play()` Slot Machine",
+       x = "Number of Turns",
+       y = "Count of the Averages",
+       caption = "STAT-412 | Fall 2020")  +
+  theme_bw()
+
+avg_mean1
+```
+
+```{r}
+avg_mean2 <- results %>% 
+  ggplot(aes(x = avg_play2)) +
+  geom_bar() +
+  labs(title = "Average Number of Turns for `play2()` Slot Machine",
+       x = "Number of Turns",
+       y = "Count of the Averages",
+       caption = "STAT-412 | Fall 2020")  +
+  theme_bw()
+
+avg_mean2
+```
+
 
 ## 5. Plot that compares the distribution of results from each game
 
