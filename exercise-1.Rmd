@@ -6,6 +6,7 @@ editor_options:
 ---
 
 ```{r}
+library(tidyverse)
 library(scales)
 library(ggrepel)
 library(ggthemes)
@@ -15,5 +16,30 @@ library(wesanderson)
 
 ```{r}
 fifa <- read.csv("fifa19_cleaned.csv")
+```
+
+```{r}
+fifa %>% 
+  ggplot() +
+  geom_histogram(aes(x = Overall,
+                     y = ..count../sum(..count..),
+                     fill = Preferred.Foot),
+                 bins = 100,
+                 alpha = 0.5) +
+  scale_y_continuous(labels = percent,
+                     breaks = seq(0, 0.07, 0.01)) +
+  scale_x_continuous() +
+  coord_cartesian(xlim = c(40, 100),
+                  ylim = c(0, 0.07),
+                  expand = 0) +
+  facet_wrap(~Position_Type, nrow = 1) +
+  labs(title = "Distribution of Overall Player Ratings by Position Type and Preferred Foot",
+       subtitle = "What is the takeaway?",
+       x = "Overall Player Rating",
+       y = "Frequency of Occurence",
+       caption = "Source: where did the data come from?") +
+  theme_clean() +
+  theme(legend.position = "bottom",
+        plot.title = element_text(size = 10))
 ```
 
