@@ -41,5 +41,6 @@ fifa %>%
   theme_clean() +
   theme(legend.position = "bottom",
         plot.title = element_text(size = 10)) +
+  scale_fill_manual(values = wes_palette(n = 2, name = "Rushmore"))
 ```
 
