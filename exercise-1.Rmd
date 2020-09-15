@@ -1,0 +1,19 @@
+---
+title: "Exercise 1"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r}
+library(scales)
+library(ggrepel)
+library(ggthemes)
+library(RColorBrewer)
+library(wesanderson)
+```
+
+```{r}
+fifa <- read.csv("fifa19_cleaned.csv")
+```
+
