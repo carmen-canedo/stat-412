@@ -1,0 +1,86 @@
+---
+title: "R Notebook"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+
+```{r Load, message=FALSE, warning=FALSE, include=FALSE}
+library(tidyverse)
+library(reshape2)
+df = read.csv("Sports Data - MajorSports.csv")
+df$Boys = as.numeric(df$Boys)
+df$Girls = as.numeric(df$Girls)
+df$Year = as.character(df$Year)
+
+df.year = df %>% 
+  group_by(Year) %>% 
+  summarise(TotalBoys = sum(Boys),TotalGirls = sum(Girls)) %>%
+  ungroup()
+df.year.melt = melt(df.year)
+
+df.year.melt = df.year.melt %>%
+  group_by(variable) %>% 
+  arrange(Year, .by_group = TRUE) %>%
+  mutate(pct_change = (value/lag(value) - 1) * 100)
+
+
+df.sport = melt(df)
+df.sport = df.sport %>%
+  group_by(Sport,variable) %>% 
+  arrange(Year, .by_group = TRUE) %>%
+  mutate(pct_change = (value/lag(value) - 1) * 100)
+
+df.sport$Year = as.numeric(df.sport$Year)
+df.sport = df.sport %>%
+  na.omit()
+
+df.sport = df.sport %>%
+  filter(variable != "Girls" | Sport != "Baseball") %>%
+  filter(variable != "Girls" | Sport != "Football")
+df.sport$Year = as.Date(as.character(df.sport$Year),"%Y")
+
+df.SB = read.csv("Sports Data - Football Viewership.csv")
+df.SB$Date = as.Date(df.SB$Date,"%B %d,%Y")
+df.SB$Year = lubridate::year(df.SB$Date)
+
+
+df.SB$Viewers = gsub(",","",df.SB$Viewers)
+df.SB$Viewers = as.numeric(df.SB$Viewers)
+df.SB = df.SB %>%
+  arrange(Year, .by_group = TRUE) %>%
+  mutate(pct_change = (Viewers/lag(Viewers) - 1) * 100) %>%
+  filter(Year %in% df$Year)
+```
+
+#1. Project Description  
+
+Sports play a massive role in American Culture. However, over the past two years there has been a 2% decresase in both male and female athletes who participate in althetics at the high school level. This reasearch will explore hypotheses as to why invovlement with sports has decreseased by analyzing participation in the four major US sports; football, baseball, soccer and basketball. 
+
+```{r Graph 1, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(df.year.melt) + 
+  geom_line(aes(x=Year,y=pct_change,color = variable))
+```
+
+
+#2. Initial Hypotheses
+ 
+```{r Graph 2, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(df.sport) +
+  geom_line(aes(x=Year,y = pct_change,color = Sport)) +
+  facet_wrap(~variable)
+```
+ 
+Initial observations for boy's sports shows that football had the most consistent decrease in participation from year to year. Soccer, for both boys and girls sports, was the only sport to have an increase in participation consistently year over year. The largest negative change in participation was for the girls basketball in 2018 and 2019. 
+
+```{r Graph 3, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(df.SB) +
+  geom_line(aes(x=Year,y = pct_change)) 
+```
+
+One initial hypothesis is that national popularity of a given professional sport will indicate high school participation. The plot above demonstrates a similar trend in NFL superbowl viewership change year by year as high school football participation. Professional soccer could be gaining popularity year by year and could be a good explainer as to why its consistently gaining popularity on the high school level.   
+
+# Potential Data Sources
+
+To complete the research, data reresenting the popularity of all four major professional US sports will be collected. Secondly, injury statistics will introduced to observe if higher risk sports are becoming less popular year by year. This data could be used to describe why Football is becoming much less popular. Finally, data surrounding the cost to play each sport will be introduced. More expensive sports may becoming less and less popular. 
