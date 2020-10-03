@@ -1,0 +1,31 @@
+---
+title: "Homework 5"
+author: "Carmen Canedo"
+date: "2 October 2020"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+## Exercise 2.1 Why does tidy data lend itself to vectorised operations?
+
+## Exercise 2.2 How coudl you tidy the SAT data from last week? Which of the data sets below are tidy? What's wrong with the non-tidy data sets?
+
+## Exercise 2.3 Use `pivot_longer()` to tidy data frame
+
+## Exercise 2.4 Tidy the data from blackboard
+
+## Exercise 2.5 Use `pivot_wider()` to tidy `tidyr::fishencounters`
+
+## Exercise 2.6 Tidy flowers1 data set
+
+## Exercise 2.7 Use `separate` to tidy the flowers2 data set
+
+## Exercise 2.8 Read the help file for `unite` and correct the code above to get rid of underscore in `year` column
+
+## Exercise 2.9 Turn implicit missing values in the data frame
+
+## Exercise 2.10 Tidy the `tidyr::billboard` data set
+### 1: Gather up all the week entries into a row for each week for each song where there is an entry
+### 2: Convert the week variable to a number and figure out the date corresponding to each week on the chart
+### 3: Sort the data by artist, track, and week
