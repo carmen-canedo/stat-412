@@ -2,16 +2,46 @@
 title: "Homework 5"
 author: "Carmen Canedo"
 date: "2 October 2020"
-output: html_notebook
-editor_options: 
+output:
+  pdf_document: default
+  html_notebook: default
+editor_options:
   chunk_output_type: inline
 ---
 
 ## Exercise 2.1 Why does tidy data lend itself to vectorised operations?
+Tidy data ensures that an observation is always correctly paired with the variables
 
-## Exercise 2.2 How coudl you tidy the SAT data from last week? Which of the data sets below are tidy? What's wrong with the non-tidy data sets?
+## Exercise 2.2 How could you tidy the SAT data from last week? Which of the data sets below are tidy? What's wrong with the non-tidy data sets?
+After reading in the SAT data from the .csv, I placed my data into a tibble. Each variable is in a column, each observation has its own row, and each value has its own cell. To make the SAT data tidy, I would also make all variable names names use snake case (all lowercase letters and underscore instead of spaces), and use title case for all the name of the high schools for consistency.
+
+The only table that is tidy:
+
+ + Table 1
+ 
+The following **are not** tidy:
+
+  + Table 2
+    + `rate` contains two variables. To fix this we can separate them into `num_cases` and `total_population`, and if we still wanted to include the rate, we could use `mutate()` to divide the two and store the values in `rate`.
+    
+  + Table 3
+    + `2000` and `1999` belong to one variable `year`, but in this table, they are spread across two columns. To fix this, we can use `pivot_longer()` and assign column names to `year` and the values to a separate column, `num_cases`.
+    
+  + Table 4
+    + The observations (country names) in the rows are repeated, so we can use `pivot_wider()` to split `type` into `num_cases` and `total_population`
+    
 
 ## Exercise 2.3 Use `pivot_longer()` to tidy data frame
+```{r}
+relig_income %>%
+  head(n = 6)
+```
+```{r}
+# Pivoting longer, using all columns but religion
+relig_income %>% 
+  pivot_longer(cols = !religion, names_to = "income", values_to = "count")
+```
+
 
 ## Exercise 2.4 Tidy the data from blackboard
 
