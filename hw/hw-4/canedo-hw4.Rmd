@@ -1,0 +1,242 @@
+---
+title: 'New York City SAT Scores: Exploratory Data Analysis'
+author: "Carmen Canedo"
+date: "28 September 2020"
+output: pdf_document
+---
+
+```{r, include=FALSE}
+# Global option to hide all code but still show results
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+```{r, message=FALSE, warning=FALSE}
+# Accessing R file with our functions
+source("setup.R")
+
+# Creating new subdirectories
+create_subdirectories(c("Data", "Results"))
+
+# Reading in and cleaning the data
+SAT_tbl <- get_data("NYC_SAT_Data.csv",
+                    "Data",
+                    "https://data.cityofnewyork.us/api/views/zt9s-n5aj/rows.csv?accessType=DOWNLOAD") %>% 
+  transform_data()
+```
+
+## 1. & 2. Box plots of SAT distributions by borough
+```{r}
+# Plotting reading boxplot
+box_reading <- SAT_tbl %>% 
+  # Setting y axis as critical reading mean
+  ggplot(aes(x = 1,
+             y = Critical_Reading_Mean)) +
+  # Creating bocplot and setting colors
+  geom_boxplot(fill = "#ffe380",
+               color = "#e6c345",
+               alpha = 0.8) +
+  # Faceting by Borough
+  facet_grid(~ Borough) +
+  # Adjusting y axis scal
+  scale_y_continuous(breaks = seq(200, 800, 50)) +
+  # Setting theme
+  theme_bw() +
+  # Getting rid of text on x axis, changing color of facet rectangles, and changing font
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        strip.background = element_rect(fill = "#7dc760"),
+        text = element_text(family = "serif")) +
+  # Writing out labels
+  labs(y = "Average Crtitical Reading Scores",
+       title = "Distribution of Average Critical Reading Scores for the SAT by NYC Borough",
+       caption = "Source: https://data.cityofnewyork.us/")
+
+# Plotting reading boxplot
+box_math <- SAT_tbl %>% 
+  ggplot(aes(y = Mathematics_Mean)) +
+  geom_boxplot(fill = "#809cff",
+               color = "#4568e6",
+               alpha = 0.8) +
+  facet_grid(~ Borough) +
+  scale_y_continuous(breaks = seq(200, 800, 50)) +
+  theme_bw() +
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        strip.background = element_rect(fill = "#7dc760"),
+        text = element_text(family = "serif")) +
+  labs(y = "Average Math Scores",
+       title = "Distribution of Average Math Scores for the SAT by NYC Borough",
+       caption = "Source: https://data.cityofnewyork.us/")
+
+# Plotting reading boxplot
+box_writing <- SAT_tbl %>% 
+  ggplot(aes(y = Writing_Mean)) +
+  geom_boxplot(fill = "#e380ff",
+               color = "#c345e6",
+               alpha = 0.8) +
+  facet_grid(~ Borough) +
+  scale_y_continuous(breaks = seq(200, 800, 50)) +
+  theme_bw() +
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        strip.background = element_rect(fill = "#7dc760"),
+        text = element_text(family = "serif")) +
+  labs(y = "Average Writing Scores",
+       title = "Distribution of Average Writing Scores for the SAT by NYC Borough",
+       caption = "Source: https://data.cityofnewyork.us/")
+```
+
+```{r}
+# Collect highest scoring schools
+high_scores <- SAT_tbl %>% 
+  arrange(desc(Critical_Reading_Mean, Mathematics_Mean, Writing_Mean)) %>% 
+  distinct(Borough, .keep_all = TRUE)
+```
+
+```{r}
+# Adding annotation of the schools with the highest mean scores
+# Collection of schools and Boroughs to use as labels
+data_text <- data.frame(
+  label = c("Stuyvesant HS",
+            "HS of American Studies",
+            "Brooklyn Tech HS",
+            "Townsend Harris HS",
+            "Staten Island Tech"),
+  Borough = c("Manhattan",
+              "Bronx",
+              "Brooklyn",
+              "Queens",
+              "Staten Island"))
+
+# Adding label to boxplots created above
+box_reading <- box_reading +
+  geom_text(data = data_text,
+            mapping = aes(x = Inf, y = Inf, label = label),
+            hjust = 1.1,
+            vjust = 1.5,
+            size = 2.5) +
+  theme(axis.title.x = element_blank())
+
+box_math <- box_math +
+    geom_text(data = data_text,
+            mapping = aes(x = Inf, y = Inf, label = label),
+            hjust = 1.1,
+            vjust = 1.5,
+            size = 2.5) +
+  theme(axis.title.x = element_blank())
+
+box_writing <- box_writing +
+  geom_text(data = data_text,
+            mapping = aes(x = Inf, y = Inf, label = label),
+            hjust = 1.1,
+            vjust = 1.5,
+            size = 2.5) +
+  theme(axis.title.x = element_blank())
+```
+
+```{r, fig.width=7, fig.height=3}
+# Calling plots
+box_reading
+box_math
+box_writing
+```
+
+## 3. Summary stats of scores for each section of the SAT in each borough
+```{r message=FALSE}
+# Calculating stats for reading scores
+stats_reading <- SAT_tbl %>% 
+  group_by(Borough) %>% 
+  summarise(mean_reading = mean(Critical_Reading_Mean), median_reading = median(Critical_Reading_Mean), sd_reading = sd(Critical_Reading_Mean))
+
+# Stats for math scores
+stats_math <- SAT_tbl %>% 
+  group_by(Borough) %>% 
+  summarise(mean_math = mean(Mathematics_Mean), median_math = median(Mathematics_Mean), sd_math = sd(Mathematics_Mean))
+
+# Stats for writing scores
+stats_writing <- SAT_tbl %>% 
+  group_by(Borough) %>% 
+  summarise(mean_writing = mean(Writing_Mean), median_writing = median(Writing_Mean), sd_writing = sd(Writing_Mean))
+
+# Joining all tables
+interim <- left_join(stats_reading, stats_math, by = "Borough")
+stats_total <- left_join(interim, stats_writing, by = "Borough")
+
+# Rename columns =
+stats_total <- stats_total %>% 
+  rename(`Mean ` = mean_reading,
+         `Median ` = median_reading,
+         `SD ` = sd_reading,
+         `Mean  ` = mean_math,
+         `Median  ` = median_math,
+         `SD  ` = sd_math,
+         ` Mean ` = mean_writing,
+         ` Median ` = median_writing,
+         ` SD ` = sd_writing)
+```
+
+```{r}
+# Creating table with summary statistics
+kable(stats_total) %>% 
+  add_header_above(c(" " = 1, "Reading Scores" = 3, "Math Scores" = 3, "Writing Scores" = 3))
+```
+
+
+## 4. Exploring the relationship between the number of test takers and SAT scores for each section and across the five boroughs.
+```{r}
+# Creating scatterplot for reading scores
+viz_reading_avg <- SAT_tbl %>% 
+  ggplot(aes(x = Number_of_Test_Takers, y = Critical_Reading_Mean, color = Borough)) +
+  geom_jitter() +
+  geom_point() +
+  scale_x_continuous(breaks = seq(0, 1500, 150)) +
+  scale_y_continuous(breaks = seq(200, 800, 50)) +
+  theme_bw() +
+  theme(text = element_text(family = "serif")) +
+  labs(x = "Number of Test Takers",
+       y = "Average Reading Scores",
+       title = "Average Reading Scores for the SAT by Number of Test Takers in NYC",
+       caption = "Source: https://data.cityofnewyork.us/")
+
+# Calling plot
+viz_reading_avg
+
+# Scatterplot for math
+viz_math_avg <- SAT_tbl %>% 
+  ggplot(aes(x = Number_of_Test_Takers, y = Mathematics_Mean, color = Borough)) +
+  geom_jitter() +
+  geom_point() +
+  scale_x_continuous(breaks = seq(0, 1500, 150)) +
+  scale_y_continuous(breaks = seq(200, 800, 50)) +
+  theme_bw() +
+  theme(text = element_text(family = "serif")) +
+  labs(x = "Number of Test Takers",
+       y = "Average Math Scores",
+       title = "Average Math Scores for the SAT by Number of Test Takers in NYC",
+       caption = "Source: https://data.cityofnewyork.us/")
+
+# Calling plot
+viz_math_avg
+
+# Scatterplot for writing
+viz_writing_avg <- SAT_tbl %>% 
+  ggplot(aes(x = Number_of_Test_Takers, y = Writing_Mean, color = Borough)) +
+  geom_jitter() +
+  geom_point() +
+  scale_x_continuous(breaks = seq(0, 1500, 150)) +
+  scale_y_continuous(breaks = seq(200, 800, 50)) +
+  theme_bw() +
+  theme(text = element_text(family = "serif")) +
+  labs(x = "Number of Test Takers",
+       y = "Average Writing Scores",
+       title = "Average Writing Scores for the SAT by Number of Test Takers in NYC",
+       caption = "Source: https://data.cityofnewyork.us/")
+
+# Calling plot
+viz_writing_avg
+```
+
+
+## 5. Results of analysis
+In my analysis, I have found that Staten Island schools tended to preform higher on individual sections of the ACT, but Manhattan had the greatest variance and the highest scores came from Stuyvesant. It appears that there is not much correlation between the number of test takers and the average scores by subject. Perhaps in a further study I can examine factors such as age, race, or socio-economic backgrounds to see if this has any influence on test results.

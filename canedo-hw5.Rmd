@@ -9,6 +9,12 @@ editor_options:
   chunk_output_type: inline
 ---
 
+```{r, include=FALSE}
+# Loading libraries via R file
+source("setup.R")
+```
+
+
 ## Exercise 2.1 Why does tidy data lend itself to vectorised operations?
 Tidy data ensures that an observation is always correctly paired with the variables
 
@@ -44,6 +50,10 @@ relig_income %>%
 
 
 ## Exercise 2.4 Tidy the data from blackboard
+```{r}
+Reading
+```
+
 
 ## Exercise 2.5 Use `pivot_wider()` to tidy `tidyr::fishencounters`
 
