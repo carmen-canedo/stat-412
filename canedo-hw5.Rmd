@@ -39,9 +39,11 @@ The following **are not** tidy:
 
 ## Exercise 2.3 Use `pivot_longer()` to tidy data frame
 ```{r}
+# Looking at data frame
 relig_income %>%
   head(n = 6)
 ```
+
 ```{r}
 # Pivoting longer, using all columns but religion
 relig_income %>% 
@@ -54,6 +56,7 @@ relig_income %>%
 # Reading in data
 monkey <- read_csv("monkey_mem.csv")
 
+# Pivoting longer
 monkey %>% 
   pivot_longer(cols = starts_with("W"), names_to = "week", values_to = "accuracy")
 ```
@@ -61,15 +64,19 @@ monkey %>%
 
 ## Exercise 2.5 Use `pivot_wider()` to tidy `tidyr::fishencounters`
 ```{r}
+# Pivoting wider
 fish_encounters %>% 
   pivot_wider(names_from = station, values_from = seen)
 ```
 
 ## Exercise 2.6 Tidy flowers1 data set
 ```{r}
+#Reading in flowers data
 flowers1 <- read_delim("flowers1.csv", delim = ";")
 ```
+
 ```{r}
+# Pivoting wider
 flowers1 %>% 
   pivot_wider(names_from = Variable, values_from = Value)
 ```
@@ -77,10 +84,12 @@ flowers1 %>%
 
 ## Exercise 2.7 Use `separate` to tidy the flowers2 data set
 ```{r}
+# Reading in flowers 2 data
 flowers2 <- read_delim("flowers2.csv", delim = ";")
 ```
 
 ```{r}
+# Getting rid of /
 flowers2 %>% 
   separate(`Flowers/Intensity`,
            into = c("flowers", "intensity"),
@@ -91,6 +100,7 @@ flowers2 %>%
 
 ## Exercise 2.8 Read the help file for `unite` and correct the code above to get rid of underscore in `year` column
 ```{r}
+# Getting rid of underscore
 table5 %>% 
   unite("year",
         c(century, year),
@@ -99,6 +109,7 @@ table5 %>%
 
 ## Exercise 2.9 Turn implicit missing values explicit in the data frame
 ```{r}
+# Creating tibble
 output <- tibble(treatment = c("a", "b", "a", "c", "b"),
                  gender = factor(c("M", "F", "F", "M", "M"),
                                  levels = c("M", "F", "O")),
@@ -107,13 +118,42 @@ output <- tibble(treatment = c("a", "b", "a", "c", "b"),
 
 output
 ```
+
 ```{r}
+# Making missing values explicit
 output %>% 
-  complete()
+  complete(treatment, nesting(gender, return ))
 ```
 
 
 ## Exercise 2.10 Tidy the `tidyr::billboard` data set
 ### 1: Gather up all the week entries into a row for each week for each song where there is an entry
+```{r}
+# Pivoting longer and renaming date entered
+billboard_tidy <- billboard %>% 
+  rename("date_entered" = "date.entered") %>% 
+  pivot_longer(starts_with("w"), names_to = "week", values_to = "position")
+```
+
 ### 2: Convert the week variable to a number and figure out the date corresponding to each week on the chart
+```{r}
+# Parsing numbers from week values, converting date, getting rid of date_entered
+billboard_tidy <- billboard_tidy %>% 
+  mutate(week = parse_number(week),
+         date = as.Date(date_entered) + 7 * (week - 1)) %>% 
+  select(-date_entered)
+```
+
 ### 3: Sort the data by artist, track, and week
+```{r}
+# Sorting data
+billboard_tidy <- billboard_tidy %>% 
+  drop_na() %>% 
+  arrange(artist, track, week)
+```
+
+```{r}
+# Output
+billboard_tidy
+```
+
