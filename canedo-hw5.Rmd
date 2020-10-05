@@ -51,19 +51,67 @@ relig_income %>%
 
 ## Exercise 2.4 Tidy the data from blackboard
 ```{r}
-Reading
+# Reading in data
+monkey <- read_csv("monkey_mem.csv")
+
+monkey %>% 
+  pivot_longer(cols = starts_with("W"), names_to = "week", values_to = "accuracy")
 ```
 
 
 ## Exercise 2.5 Use `pivot_wider()` to tidy `tidyr::fishencounters`
+```{r}
+fish_encounters %>% 
+  pivot_wider(names_from = station, values_from = seen)
+```
 
 ## Exercise 2.6 Tidy flowers1 data set
+```{r}
+flowers1 <- read_delim("flowers1.csv", delim = ";")
+```
+```{r}
+flowers1 %>% 
+  pivot_wider(names_from = Variable, values_from = Value)
+```
+
 
 ## Exercise 2.7 Use `separate` to tidy the flowers2 data set
+```{r}
+flowers2 <- read_delim("flowers2.csv", delim = ";")
+```
+
+```{r}
+flowers2 %>% 
+  separate(`Flowers/Intensity`,
+           into = c("flowers", "intensity"),
+           sep = "/",
+           convert = TRUE)
+```
+
 
 ## Exercise 2.8 Read the help file for `unite` and correct the code above to get rid of underscore in `year` column
+```{r}
+table5 %>% 
+  unite("year",
+        c(century, year),
+        sep = "")
+```
 
-## Exercise 2.9 Turn implicit missing values in the data frame
+## Exercise 2.9 Turn implicit missing values explicit in the data frame
+```{r}
+output <- tibble(treatment = c("a", "b", "a", "c", "b"),
+                 gender = factor(c("M", "F", "F", "M", "M"),
+                                 levels = c("M", "F", "O")),
+                 return = c(1.5, 0.75, 0.5, 1.8, NA)
+)
+
+output
+```
+```{r}
+output %>% 
+  complete()
+```
+
 
 ## Exercise 2.10 Tidy the `tidyr::billboard` data set
 ### 1: Gather up all the week entries into a row for each week for each song where there is an entry
