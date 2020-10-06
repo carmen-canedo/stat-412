@@ -1,0 +1,211 @@
+---
+title: "Lab 1"
+author: "Carmen Canedo"
+date: "6 October 2020"
+output:
+  pdf_document: default
+  html_notebook: default
+editor_options:
+  chunk_output_type: inline
+---
+
+```{r Setup File, include=FALSE, message=FALSE}
+# Loading libraries
+source("setup.R")
+```
+
+# Exercise 1
+Read in `avocadoes.csv` and save into data fram.
+```{r Reading Avocados .csv}
+# Reading in avocados.csv
+avocados <- read_csv("avocados.csv")
+```
+
+# Exercise 2
+Change column names to small, large, and extra large.
+```{r Rename Avo Cols}
+# Renaming columns to appropriate size
+avocados <- avocados %>% 
+  rename(small = `4046`,
+         large = `4225`,
+         extra_large = `4770`)
+```
+
+# Excercise 3
+The data is tidy because each variable is a column and each observation is a row.
+
+# Exercise 4
+Create a function to read in the avocado data, renames columns, writes the transformed, and returns transformed data
+```{r Function to read in avo .csv}
+# Creating subdirectories
+create_subdirectories <- function(subdirectory_names) {
+  
+  n_subdirectories <- length(subdirectory_names)
+  
+  for (i in 1:n_subdirectories) {
+    if (!dir.exists(subdirectory_names[i])) {
+      dir.create(subdirectory_names[i])
+    }
+  }
+}
+
+# Cleaning data
+clean_data <- function(tbl) {
+      tbl <- tbl %>% 
+        rename(small = `4046`,
+               large = `4225`,
+               extra_large = `4770`)
+}
+
+# Load data
+load_data <- function(data_file, data_dir) {
+  data_loc <- paste(data_dir, "/", data_file, sep = "")
+  
+ # print(data_loc)
+  
+ # break
+  
+  tbl <- read_csv(data_loc)
+  
+  tbl <- tbl %>% 
+    clean_data()
+  
+  return(tbl)
+}
+```
+
+```{r Confirm Function Works}
+## Note to Professor: I got stuck here, kept getting an error from `write_delim()` saying path argument is missing. Tried to show my work if that's helpful
+
+# create_subdirectories("data")
+#avocados_test <- load_clean_data("avocados.csv", "data")
+```
+
+# Exercise 5
+Create table with top 5 geographies with highest total yearly sales of large avocados in 2019
+```{r Kable Table}
+# Creating table
+avocados %>% 
+  # Showing only 2019
+  filter(year == 2019) %>% 
+  # Selecting only necessary columns
+  select(large, geography) %>%
+  # From highest to lowest
+  arrange(desc(large)) %>% 
+  # Rename columns
+  rename(`Total Yearly Sales` = large,
+         `Location` = geography) %>% 
+  # Show top 5
+  head(n = 5) %>% 
+  # Make table
+  kable()
+```
+
+# Exercise 6
+Create a plot showing daily sales volume in California for different avocado types and sizes.
+```{r Cali Scatterplot 1}
+# Subsetting data with only necessary info
+cali_avo <- avocados %>% 
+  filter(geography == "California") %>% 
+  select(-year, -average_price)
+
+# Marking base scatterplots for each size
+small <- cali_avo %>% 
+  ggplot(aes(x = date, y = small)) +
+  geom_point() +
+  geom_jitter() +
+  facet_grid(~ type, scales = "free_y")
+
+large <- cali_avo %>% 
+  ggplot(aes(x = date, y = large)) +
+  geom_point() +
+  geom_jitter() +
+  facet_grid(~ type, scales = "free_y")
+
+extra_large <- cali_avo %>% 
+  ggplot(aes(x = date, y = extra_large)) +
+  geom_point() +
+  geom_jitter() +
+  facet_grid(~ type, scales = "free_y")
+```
+
+```{r Cali Scatterplot 2}
+# Adding details to each graph
+small <- small +
+  labs(title = "Daily Sales Volume in California",
+       subtitle = "Size: Small",
+       x = "Date",
+       y = "Number of avocados sold") +
+  theme_light()
+
+large <- large +
+    labs(title = "Daily Sales Volume in California",
+       subtitle = "Size: Large",
+       x = "Date",
+       y = "Number of avocados sold") +
+  theme_light()
+
+extra_large <- extra_large +
+    labs(title = "Daily Sales Volume in California",
+       subtitle = "Size: Extra Large",
+       x = "Date",
+       y = "Number of avocados sold") +
+  theme_light()
+```
+
+
+```{r Printing Cali Scatterplots}
+## Note: if I had more time, I would fix the issue with the y scale on the organic facet - tried using "free_y" but wasn't changing
+
+# Printing graphs
+small
+large
+extra_large
+```
+
+# Exercise 7
+Load `heart.txt`
+```{r Read in heart data}
+## Ran into error when trying to use col_factor()
+
+# Loading data
+heart <- read_delim("heart.txt",
+                    delim = "\t" #,
+                    # col_types = cols(
+                    #   DEATH_EVENT = col_factor(),
+                    #   sex = col_factor(),
+                    #   smoking = col_factor(),
+                    #   high_blood_pressure = col_factor(),
+                    #   diabetes = col_factor(),
+                    #   anaemia = col_factor()
+                    #)
+                    )
+```
+
+# Exercise 8
+```{r Heart boxplot 1}
+# Creating labels to rename facet titles
+smoker_labs <- c("Non-Smoker", "Smoker")
+names(smoker_labs) <- c("No", "Yes")
+
+# Making base boxplot
+heart_box <- heart %>% 
+  ggplot(aes(x = DEATH_EVENT, y = ejection_fraction)) +
+  geom_boxplot(aes(fill = anaemia)) +
+  facet_wrap(~ smoking, labeller = labeller(smoking = smoker_labs))
+```
+
+```{r Heart boxplot 2}
+# Adding text
+heart_box <- heart_box +
+  labs(title = "Event of Death from Ejection Fraction",
+       x = "Event of Death",
+       y = "Ejection Fraction")
+```
+
+
+```{r Print boxplots}
+# Printing final graph
+heart_box
+```
+
