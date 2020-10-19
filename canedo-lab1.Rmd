@@ -155,8 +155,6 @@ extra_large <- extra_large +
 
 
 ```{r Printing Cali Scatterplots}
-## Note: if I had more time, I would fix the issue with the y scale on the organic facet - tried using "free_y" but wasn't changing
-
 # Printing graphs
 small
 large
@@ -166,19 +164,17 @@ extra_large
 # Exercise 7
 Load `heart.txt`
 ```{r Read in heart data}
-## Ran into error when trying to use col_factor()
-
 # Loading data
 heart <- read_delim("heart.txt",
-                    delim = "\t" #,
-                    # col_types = cols(
-                    #   DEATH_EVENT = col_factor(),
-                    #   sex = col_factor(),
-                    #   smoking = col_factor(),
-                    #   high_blood_pressure = col_factor(),
-                    #   diabetes = col_factor(),
-                    #   anaemia = col_factor()
-                    #)
+                    delim = "\t" ,
+                     col_types = cols(
+                       anaemia = readr::col_factor(levels = c("Yes", "No")),
+                       DEATH_EVENT = readr::col_factor(levels = c("Yes", "No")),
+                       sex = readr::col_factor(levels = c("Male", "Female")),
+                       smoking = readr::col_factor(levels = c("Yes", "No")),
+                       high_blood_pressure = readr::col_factor(levels = c("Yes", "No")),
+                       diabetes = readr::col_factor(levels = c("Yes", "No"))
+                    )
                     )
 ```
 
