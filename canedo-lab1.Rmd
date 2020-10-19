@@ -32,7 +32,7 @@ avocados <- avocados %>%
 ```
 
 # Excercise 3
-The data is tidy because each variable is a column and each observation is a row.
+The data is not tidy, I will need to use `pivot_longer()` to tidy it. The size variable is split into small, large, and extra large.
 
 # Exercise 4
 Create a function to read in the avocado data, renames columns, writes the transformed, and returns transformed data
