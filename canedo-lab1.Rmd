@@ -142,56 +142,21 @@ cali_avo <- avocados %>%
   filter(geography == "California") %>% 
   select(-year, -average_price)
 
-# Marking base scatterplots for each size
-small <- cali_avo %>% 
-  ggplot(aes(x = date, y = small)) +
+# Creating base graph
+cali_plot <- cali_avo %>% 
+  ggplot(aes(x = date, y = sales_volume, color = type)) +
   geom_point() +
-  geom_jitter() +
-  facet_grid(~ type, scales = "free_y")
-
-large <- cali_avo %>% 
-  ggplot(aes(x = date, y = large)) +
-  geom_point() +
-  geom_jitter() +
-  facet_grid(~ type, scales = "free_y")
-
-extra_large <- cali_avo %>% 
-  ggplot(aes(x = date, y = extra_large)) +
-  geom_point() +
-  geom_jitter() +
-  facet_grid(~ type, scales = "free_y")
+  facet_grid(~size)
 ```
 
 ```{r Cali Scatterplot 2}
 # Adding details to each graph
-small <- small +
-  labs(title = "Daily Sales Volume in California",
-       subtitle = "Size: Small",
+cali_plot +
+  labs(title = "Daily Sales Volume in California by Size and Type",
        x = "Date",
-       y = "Number of avocados sold") +
+       y = "Sales Volume") +
+  guides(color = guide_legend(title = "Type")) +
   theme_light()
-
-large <- large +
-    labs(title = "Daily Sales Volume in California",
-       subtitle = "Size: Large",
-       x = "Date",
-       y = "Number of avocados sold") +
-  theme_light()
-
-extra_large <- extra_large +
-    labs(title = "Daily Sales Volume in California",
-       subtitle = "Size: Extra Large",
-       x = "Date",
-       y = "Number of avocados sold") +
-  theme_light()
-```
-
-
-```{r Printing Cali Scatterplots}
-# Printing graphs
-# small
-# large
-# extra_large
 ```
 
 # Exercise 7
@@ -238,7 +203,10 @@ heart_box <- heart_box +
 heart_box
 ```
 
+# Exercise 9
+Create a segmented bar chart where the bars represent one of the factor variables and `DEATH_EVENT` is the fill.
 ```{r}
 ### Ran out of time
 ```
 
+Takeaway: 
