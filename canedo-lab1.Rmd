@@ -33,51 +33,54 @@ avocados <- avocados %>%
 
 # Excercise 3
 The data is not tidy, I will need to use `pivot_longer()` to tidy it. The size variable is split into small, large, and extra large.
+```{r}
+avocados <- avocados %>% 
+  pivot_longer(cols = c(small, large, extra_large), names_to = "size", values_to = "sales_volume")
+```
+
 
 # Exercise 4
 Create a function to read in the avocado data, renames columns, writes the transformed, and returns transformed data
 ```{r Function to read in avo .csv}
-# Creating subdirectories
-create_subdirectories <- function(subdirectory_names) {
+load_clean_data <- function(file, subdirectory_name) {
   
-  n_subdirectories <- length(subdirectory_names)
+  # Read in the avocado data
+  tbl <- read_csv(file)
+  
+  # Renames avocado size columns
+  tbl <- tbl %>% 
+    rename(small = `4046`,
+         large = `4225`,
+         extra_large = `4770`)
+  
+  # Tidies data
+  tbl <- tbl %>% 
+    pivot_longer(cols = c(small, large, extra_large), names_to = "size", values_to = "sales_volume")
+  
+  # Check if directory exists, creates it if not
+  n_subdirectories <- length(subdirectory_name)
   
   for (i in 1:n_subdirectories) {
     if (!dir.exists(subdirectory_names[i])) {
       dir.create(subdirectory_names[i])
     }
   }
-}
-
-# Cleaning data
-clean_data <- function(tbl) {
-      tbl <- tbl %>% 
-        rename(small = `4046`,
-               large = `4225`,
-               extra_large = `4770`)
-}
-
-# Load data
-load_data <- function(data_file, data_dir) {
-  data_loc <- paste(data_dir, "/", data_file, sep = "")
   
- # print(data_loc)
+  # Write .csv of file in specified location
+  data_location <- paste(subdirectory_name, "/", file, sep = "")
   
- # break
+  #  Check file doesn't exist at location
+  if(!file.exists(data_loc)) {
+      write_csv(tbl, path = data_location)
+  }
   
-  tbl <- read_csv(data_loc)
+  tbl_final <- read_csv(data_loc)
   
-  tbl <- tbl %>% 
-    clean_data()
-  
-  return(tbl)
+  return(tbl_final)
 }
 ```
 
 ```{r Confirm Function Works}
-## Note to Professor: I got stuck here, kept getting an error from `write_delim()` saying path argument is missing. Tried to show my work if that's helpful
-
-# create_subdirectories("data")
 #avocados_test <- load_clean_data("avocados.csv", "data")
 ```
 
