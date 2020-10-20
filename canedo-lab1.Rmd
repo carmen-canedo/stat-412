@@ -194,7 +194,8 @@ heart_box <- heart %>%
 heart_box <- heart_box +
   labs(title = "Event of Death from Ejection Fraction",
        x = "Event of Death",
-       y = "Ejection Fraction")
+       y = "Ejection Fraction") +
+  guides(fill = guide_legend(title = "Anaemia"))
 ```
 
 
@@ -206,7 +207,14 @@ heart_box
 # Exercise 9
 Create a segmented bar chart where the bars represent one of the factor variables and `DEATH_EVENT` is the fill.
 ```{r}
-### Ran out of time
+heart %>% 
+  ggplot(aes(x = high_blood_pressure, fill = DEATH_EVENT)) +
+  geom_bar(position = "fill") +
+    labs(title = "Event of Death among Patients with High Blood Pressure",
+       x = "High Blood Pressure",
+       y = "Percent of Occurence") +
+  guides(fill = guide_legend(title = "Event of Death")) +
+  theme_light()
 ```
 
-Takeaway: 
+Takeaway: From this plot we can see that patients with high blood pressure are more likely to die than patients who did not have high blood pressure.
