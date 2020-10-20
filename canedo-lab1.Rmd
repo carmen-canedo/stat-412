@@ -61,8 +61,8 @@ load_clean_data <- function(file, subdirectory_name) {
   n_subdirectories <- length(subdirectory_name)
   
   for (i in 1:n_subdirectories) {
-    if (!dir.exists(subdirectory_names[i])) {
-      dir.create(subdirectory_names[i])
+    if (!dir.exists(subdirectory_name[i])) {
+      dir.create(subdirectory_name[i])
     }
   }
   
@@ -70,18 +70,18 @@ load_clean_data <- function(file, subdirectory_name) {
   data_location <- paste(subdirectory_name, "/", file, sep = "")
   
   #  Check file doesn't exist at location
-  if(!file.exists(data_loc)) {
+  if(!file.exists(data_location)) {
       write_csv(tbl, path = data_location)
   }
   
-  tbl_final <- read_csv(data_loc)
+  tbl_final <- read_csv(data_location)
   
   return(tbl_final)
 }
 ```
 
 ```{r Confirm Function Works}
-#avocados_test <- load_clean_data("avocados.csv", "data")
+avocados_test <- load_clean_data("avocados.csv", "avo_data")
 ```
 
 # Exercise 5
