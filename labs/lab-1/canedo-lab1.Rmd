@@ -218,3 +218,33 @@ heart %>%
 ```
 
 Takeaway: From this plot we can see that patients with high blood pressure are more likely to die than patients who did not have high blood pressure.
+
+# Exercise 10
+Create a function that takes the heart data tibble and a categorical variable as inputs. This will return a line plot showing the cumulative incidence of death (cumulative number of deaths / cumulative number of events) by age. The categorical variable will be the `fill` aesthetic.
+
+```{r}
+# Adding row where death == 1
+heart <- heart %>% 
+  arrange(age) %>% 
+  mutate(death_numeric = ifelse(DEATH_EVENT == "Yes", 1, 0))
+
+# Cumulative sum of death occurrences
+heart <- heart %>% 
+  mutate(num_deaths_cumulative = cumsum(heart$death_numeric))
+
+# Count of total number of events
+heart <- heart %>% 
+  mutate(num_events_cumulative = seq(1:299))
+
+# Calculating death rate
+heart <- heart %>% 
+  mutate(death_rate = num_deaths_cumulative / num_events_cumulative)
+```
+
+```{r}
+# Professor - really got stuck here. Maybe I was over thinking how to do the cumulative sum part? Was not sure how to make the cumulative line graph at all. Could you go over this in class?
+
+# heart %>% 
+#   ggplot(aes(x = age, y = death_rate, fill = high_blood_pressure)) +
+#   geom_line()
+```
