@@ -1759,8 +1759,213 @@ summary {
 
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5cbmBgYCJ9 -->
+<pre class="r"><code>library(tidyverse)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUmVnaXN0ZXJlZCBTMyBtZXRob2RzIG92ZXJ3cml0dGVuIGJ5ICdkYnBseXInOlxuICBtZXRob2QgICAgICAgICBmcm9tXG4gIHByaW50LnRibF9sYXp5ICAgICBcbiAgcHJpbnQudGJsX3NxbCAgICAgIFxu4pSA4pSAIEF0dGFjaGluZyBwYWNrYWdlcyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAgdGlkeXZlcnNlIDEuMy4wIOKUgOKUgFxu4pyTIGdncGxvdDIgMy4zLjIgICAgIOKckyBwdXJyciAgIDAuMy40XG7inJMgdGliYmxlICAzLjAuNCAgICAg4pyTIGRwbHlyICAgMS4wLjJcbuKckyB0aWR5ciAgIDEuMS4yICAgICDinJMgc3RyaW5nciAxLjQuMFxu4pyTIHJlYWRyICAgMS40LjAgICAgIOKckyBmb3JjYXRzIDAuNS4wXG7ilIDilIAgQ29uZmxpY3RzIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCB0aWR5dmVyc2VfY29uZmxpY3RzKCkg4pSA4pSAXG54IGRwbHlyOjpmaWx0ZXIoKSBtYXNrcyBzdGF0czo6ZmlsdGVyKClcbnggZHBseXI6OmxhZygpICAgIG1hc2tzIHN0YXRzOjpsYWcoKVxuIn0= -->
+<pre><code>Registered S3 methods overwritten by &#39;dbplyr&#39;:
+  method         from
+  print.tbl_lazy     
+  print.tbl_sql      
+── Attaching packages ───────────────── tidyverse 1.3.0 ──
+✓ ggplot2 3.3.2     ✓ purrr   0.3.4
+✓ tibble  3.0.4     ✓ dplyr   1.0.2
+✓ tidyr   1.1.2     ✓ stringr 1.4.0
+✓ readr   1.4.0     ✓ forcats 0.5.0
+── Conflicts ──────────────────── tidyverse_conflicts() ──
+x dplyr::filter() masks stats::filter()
+x dplyr::lag()    masks stats::lag()</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="exercise-1" class="section level1">
+<h1>Exercise 1</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud3JpdGVMaW5lcyhcIlxcXFxcXFwiXFxcXFwiKVxuXG5gYGAifQ== -->
+<pre class="r"><code>writeLines(&quot;\\\&quot;\\&quot;)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXFxcIlxcXG4ifQ== -->
+<pre><code>\&quot;\</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="exercise-2" class="section level1">
+<h1>Exercise 2</h1>
+<div id="str_length---get-length" class="section level2">
+<h2><code>str_length()</code> - get length</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibnJvdyI6MywibmNvbCI6M30sInJkZiI6Ikg0c0lBQUFBQUFBQUExMVFUVS9ETUF6MTJnYTBTcHNtOFR0YUNlM0NMcWdGeEpFRGdtazNsSFhaRmhHU0tVMkI0MzRxZjRRVnAwbVFsa2lXbjU4L25wM25oOVU4WCtVQWtFS0dsaEtFUUY1Zkhvc2JnQ3pCWUlTSnNmWGZXSFExVkFMTWZJZE5rUHU5NW0wSWFzRWI1b1AwVHEzUlRTMnM2cU1kRGRVQ25MK0Y4RnllL1RqK3JYSitlZlRwc3kySXBCK3NqVGJJbnBBTW12VXVRUEpKUmNlaUFXT3R2c293WklLV1dKMis3MzlqcFViUU5pZ0ZNdDlRUTh1dHRub0FwNmpsVWgwTVZ4S2JFdnRSSkdvZTZZaVlkZEp1c2ltYWZTZmZpK3U1VlJqeTdrMDhUcyt4MVV4NlA0djRXUmRNN3JqOFAxM1FOUk0rbU9MSnc4WGxRWE5wd2luSXRxVlJob2E2dkZFaU1NTnhjUG9EVExCaUd5QUNBQUE9In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Age"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["value"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Chris","2":"35","3":"175"},{"1":"Alice","2":"25","3":"125"},{"1":"Bob","2":"30","3":"90"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[3]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="exercise-3" class="section level1">
+<h1>Exercise 3</h1>
+<div id="str_c---concatenate" class="section level2">
+<h2><code>str_c</code> - concatenate</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3RyX2MoXCIoXCIsIGFyZWFfY29kZXMsIFwiKSBcIiwgcGhvbmVfbnVtcywgc2VwID0gXCJcIilcblxuYGBgIn0= -->
+<pre class="r"><code>str_c(&quot;(&quot;, area_codes, &quot;) &quot;, phone_nums, sep = &quot;&quot;)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiKDcwMykgNTU1MTIxMlwiIFwiKDg2MykgMTIzNDU2N1wiIFwiKDQwNCkgNzg5MTIzNFwiXG5bNF0gXCIoMjAyKSA0Nzk5NzQ3XCJcbiJ9 -->
+<pre><code>[1] &quot;(703) 5551212&quot; &quot;(863) 1234567&quot; &quot;(404) 7891234&quot;
+[4] &quot;(202) 4799747&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="exercise-4" class="section level1">
+<h1>Exercise 4</h1>
+<div id="str_sub---extract-character-subsets" class="section level2">
+<h2><code>str_sub()</code> - extract character subsets</h2>
+</div>
+<div id="str_trim---removes-whitespace-from-start-andor-end" class="section level2">
+<h2><code>str_trim()</code> - removes whitespace from start and/or end</h2>
+</div>
+<div id="str_squish---reduces-repeated-whitespace-inside-a-string" class="section level2">
+<h2><code>str_squish()</code> - reduces repeated whitespace inside a string</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCA8LSBcIiAgICBIZWxwIG1lIHRvICAgICBnZXQgcmlkICAgICBvZiBleHRyYSBzcGFjZXM/ICAgICAgXCJcblxuc3RyX3RyaW0oeCwgc2lkZSA9IFwibGVmdFwiKVxuYGBgIn0= -->
+<pre class="r"><code>x &lt;- &quot;    Help me to     get rid     of extra spaces?      &quot;
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiRXhlcmNpc2UgMSIKb3V0cHV0OiBodG1sX25vdGVib29rCmVkaXRvcl9vcHRpb25zOiAKICBjaHVua19vdXRwdXRfdHlwZTogaW5saW5lCi0tLQoK</div>
+str_trim(x, side = &quot;left&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiSGVscCBtZSB0byAgICAgZ2V0IHJpZCAgICAgb2YgZXh0cmEgc3BhY2VzPyAgICAgIFwiXG4ifQ== -->
+<pre><code>[1] &quot;Help me to     get rid     of extra spaces?      &quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3RyX3RyaW0oeCwgc2lkZSA9IFwicmlnaHRcIilcbmBgYCJ9 -->
+<pre class="r"><code>str_trim(x, side = &quot;right&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiICAgIEhlbHAgbWUgdG8gICAgIGdldCByaWQgICAgIG9mIGV4dHJhIHNwYWNlcz9cIlxuIn0= -->
+<pre><code>[1] &quot;    Help me to     get rid     of extra spaces?&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3RyX3RyaW0oeCwgc2lkZSA9IFwiYm90aFwiKVxuYGBgIn0= -->
+<pre class="r"><code>str_trim(x, side = &quot;both&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiSGVscCBtZSB0byAgICAgZ2V0IHJpZCAgICAgb2YgZXh0cmEgc3BhY2VzP1wiXG4ifQ== -->
+<pre><code>[1] &quot;Help me to     get rid     of extra spaces?&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3RyX3NxdWlzaCh4KVxuYGBgIn0= -->
+<pre class="r"><code>str_squish(x)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiSGVscCBtZSB0byBnZXQgcmlkIG9mIGV4dHJhIHNwYWNlcz9cIlxuIn0= -->
+<pre><code>[1] &quot;Help me to get rid of extra spaces?&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="exercise-5" class="section level1">
+<h1>Exercise 5</h1>
+<div id="use-str_length-and-str_sub-to-extract-the-middle-character-from-a-string." class="section level2">
+<h2>Use <code>str_length()</code> and <code>str_sub()</code> to extract the middle character from a string.</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWlkZGxlX2NoYXJhY3RlciA8LSBmdW5jdGlvbih3b3JkKSB7XG4gIFxuICAjIEdldCBsZW5ndGggb2Ygd29yZFxuICBsZW4gPC0gc3RyX2xlbmd0aCh3b3JkKVxuICBcbiAgIyBEaXZpZGUgYnkgdHdvIHRvIGZpbmQgbWlkZGxlIGxldHRlclxuICBtaWRkbGUgPC0gKGxlbiArIDEpIC8gMlxuICBldmVuX21pZCA8LSAobGVuKSAvIDIgKyAxXG4gIFxuICAjIENhc2UgZm9yIGV2ZW4gbnVtYmVyXG4gIGlmIChsZW4gJSUgMiA9PSAwKSB7XG4gICAgc3RyX3N1Yih3b3JkLCBtaWRkbGUsIGV2ZW5fbWlkKVxuICB9XG4gIGVsc2Uge1xuICAgICMgRXh0cmFjdCBtaWRkbGUgY2hhcmFjdGVyXG4gIHN0cl9zdWIod29yZCwgbWlkZGxlLCBtaWRkbGUpXG4gIH1cbn1cbmBgYCJ9 -->
+<pre class="r"><code>middle_character &lt;- function(word) {
+  
+  # Get length of word
+  len &lt;- str_length(word)
+  
+  # Divide by two to find middle letter
+  middle &lt;- (len + 1) / 2
+  even_mid &lt;- (len) / 2 + 1
+  
+  # Case for even number
+  if (len %% 2 == 0) {
+    str_sub(word, middle, even_mid)
+  }
+  else {
+    # Extract middle character
+  str_sub(word, middle, middle)
+  }
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWlkZGxlX2NoYXJhY3RlcihcImhhbWJ1cmdlclwiKVxubWlkZGxlX2NoYXJhY3RlcihcImhvdGRvZ1wiKVxuYGBgIn0= -->
+<pre class="r"><code>middle_character(&quot;hamburger&quot;)
+middle_character(&quot;hotdog&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="matching-patterns" class="section level1">
+<h1>3. Matching Patterns</h1>
+<div id="str_view-and-str_view_all---find-a-given-pattern" class="section level2">
+<h2><code>str_view()</code> and <code>str_view_all()</code> - find a given pattern</h2>
+</div>
+</div>
+<div id="exercise-6" class="section level1">
+<h1>Exercise 6</h1>
+<p>Match this sequence: &quot;’?</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucyA8LSBzdHJfYyhcInNvbWUgc3R1ZmZcIiwgXCJcXFwiJ1xcXFw/XCIsIFwibW9yZSFcIilcblxuYGBgIn0= -->
+<pre class="r"><code>s &lt;- str_c(&quot;some stuff&quot;, &quot;\&quot;&#39;\\?&quot;, &quot;more!&quot;)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3I6IHVuZXhwZWN0ZWQgc3ltYm9sIGluOlxuXCJzdHJfdmlldyhzLCBcIlxcXCJcXCdcXFxcXFxcIilcbnMgPC0gc3RyX2MoXCJzb21lXCJcbiJ9 -->
+<pre><code>Error: unexpected symbol in:
+&quot;str_view(s, &quot;\&quot;\&#39;\\\&quot;)
+s &lt;- str_c(&quot;some&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3RyX3ZpZXcocywgXCJcXFwiXFwnXFxcXFxcXFwuXCIpXG5gYGAifQ== -->
+<pre class="r"><code>str_view(s, &quot;\&quot;\&#39;\\\\.&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="exercise-7" class="section level1">
+<h1>Exercise 7</h1>
+<div id="starts-with" class="section level2">
+<h2>^ - starts with</h2>
+</div>
+<div id="end-with" class="section level2">
+<h2>$ - end with</h2>
+</div>
+<div id="start-and-end-with" class="section level2">
+<h2>^start and end with$</h2>
+<p>Create regular expressions that find all words that start with “y” and end with “x” using <code>stringr::words</code>.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud29yZHMgJT4lIFxuICBzdHJfdmlld19hbGwoXCJeeVwiLCBtYXRjaCA9IFRSVUUpXG5cbndvcmRzICU+JSBcbiAgc3RyX3ZpZXdfYWxsKFwieCRcIiwgbWF0Y2ggPSBUUlVFKVxuYGBgIn0= -->
+<pre class="r"><code>words %&gt;% 
+  str_view_all(&quot;^y&quot;, match = TRUE)
+
+words %&gt;% 
+  str_view_all(&quot;x$&quot;, match = TRUE)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+</div>
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiRXhlcmNpc2UgMSIKb3V0cHV0OiBodG1sX25vdGVib29rCmVkaXRvcl9vcHRpb25zOiAKICBjaHVua19vdXRwdXRfdHlwZTogaW5saW5lCi0tLQoKYGBge3IsIG1lc3NhZ2U9RkFMU0V9CmxpYnJhcnkodGlkeXZlcnNlKQpgYGAKCgojIEV4ZXJjaXNlIDEKYGBge3J9Cm5ld19zdHJpbmcgPC0gIkphbmUgc2F5cyBcInRoYW5rcyFcIiIKCnByaW50KG5ld19zdHJpbmcpCgp3cml0ZUxpbmVzKG5ld19zdHJpbmcpCgp3cml0ZUxpbmVzKCJcXFwiXFwiKQpgYGAKCiMgRXhlcmNpc2UgMgojIyBgc3RyX2xlbmd0aCgpYCAtIGdldCBsZW5ndGgKYGBge3J9CmV4ZXJjaXNlMl90YmwgPC0gdHJpYmJsZSgKICAgICAgICAgICAgICAgICAgICAgICAgIH5OYW1lLCB+QWdlLCAKICAgICAgICAgICAgICAgICAgICAgICAgICJBbGljZSIsIDI1LAogICAgICAgICAgICAgICAgICAgICAgICAgIkJvYiIsICAgMzAsCiAgICAgICAgICAgICAgICAgICAgICAgICAiQ2hyaXMiLCAzNQopCgpleGVyY2lzZTJfdGJsIDwtIGV4ZXJjaXNlMl90YmwgJT4lIAogIG11dGF0ZSh2YWx1ZSA9IEFnZSAqIHN0cl9sZW5ndGgoTmFtZSkpICU+JSAKICBhcnJhbmdlKGRlc2ModmFsdWUpKQoKZXhlcmNpc2UyX3RibApgYGAKCiMgRXhlcmNpc2UgMwojIyBgc3RyX2NgIC0gY29uY2F0ZW5hdGUKYGBge3J9CmFyZWFfY29kZXMgPC0gYyg3MDMsIDg2MywgNDA0LCAyMDIpCnBob25lX251bXMgPC0gYyg1NTUxMjEyLCAxMjM0NTY3LCA3ODkxMjM0LCA0Nzk5NzQ3KQoKc3RyX2MoIigiLCBhcmVhX2NvZGVzLCAiKSAiLCBwaG9uZV9udW1zLCBzZXAgPSAiIikKYGBgCgojIEV4ZXJjaXNlIDQKIyMgYHN0cl9zdWIoKWAgLSBleHRyYWN0IGNoYXJhY3RlciBzdWJzZXRzCiMjIGBzdHJfdHJpbSgpYCAtIHJlbW92ZXMgd2hpdGVzcGFjZSBmcm9tIHN0YXJ0IGFuZC9vciBlbmQKIyMgYHN0cl9zcXVpc2goKWAgLSByZWR1Y2VzIHJlcGVhdGVkIHdoaXRlc3BhY2UgaW5zaWRlIGEgc3RyaW5nCgpgYGB7cn0KeCA8LSAiICAgIEhlbHAgbWUgdG8gICAgIGdldCByaWQgICAgIG9mIGV4dHJhIHNwYWNlcz8gICAgICAiCgpzdHJfdHJpbSh4LCBzaWRlID0gImxlZnQiKQpzdHJfdHJpbSh4LCBzaWRlID0gInJpZ2h0IikKc3RyX3RyaW0oeCwgc2lkZSA9ICJib3RoIikKCnN0cl9zcXVpc2goeCkKYGBgCgojIEV4ZXJjaXNlIDUKIyMgVXNlIGBzdHJfbGVuZ3RoKClgIGFuZCBgc3RyX3N1YigpYCB0byBleHRyYWN0IHRoZSBtaWRkbGUgY2hhcmFjdGVyIGZyb20gYSBzdHJpbmcuCgpgYGB7cn0KbWlkZGxlX2NoYXJhY3RlciA8LSBmdW5jdGlvbih3b3JkKSB7CiAgCiAgIyBHZXQgbGVuZ3RoIG9mIHdvcmQKICBsZW4gPC0gc3RyX2xlbmd0aCh3b3JkKQogIAogICMgRGl2aWRlIGJ5IHR3byB0byBmaW5kIG1pZGRsZSBsZXR0ZXIKICBtaWRkbGUgPC0gKGxlbiArIDEpIC8gMgogIGV2ZW5fbWlkIDwtIChsZW4pIC8gMiArIDEKICAKICAjIENhc2UgZm9yIGV2ZW4gbnVtYmVyCiAgaWYgKGxlbiAlJSAyID09IDApIHsKICAgIHN0cl9zdWIod29yZCwgbWlkZGxlLCBldmVuX21pZCkKICB9CiAgZWxzZSB7CiAgICAjIEV4dHJhY3QgbWlkZGxlIGNoYXJhY3RlcgogIHN0cl9zdWIod29yZCwgbWlkZGxlLCBtaWRkbGUpCiAgfQp9CmBgYAoKYGBge3J9Cm1pZGRsZV9jaGFyYWN0ZXIoImhhbWJ1cmdlciIpCm1pZGRsZV9jaGFyYWN0ZXIoImhvdGRvZyIpCmBgYAoKIyAzLiBNYXRjaGluZyBQYXR0ZXJucwojIyBgc3RyX3ZpZXcoKWAgYW5kIGBzdHJfdmlld19hbGwoKWAgLSBmaW5kIGEgZ2l2ZW4gcGF0dGVybgojIEV4ZXJjaXNlIDYKTWF0Y2ggdGhpcyBzZXF1ZW5jZTogIidcPwoKYGBge3J9CnMgPC0gc3RyX2MoInNvbWUgc3R1ZmYiLCAiXCInXFw/IiwgIm1vcmUhIikKYGBgCgpgYGB7cn0Kc3RyX3ZpZXcocywgIlwiXCdcXFxcLiIpCmBgYAoKIyBFeGVyY2lzZSA3CiMjIF4gLSBzdGFydHMgd2l0aAojIyAkIC0gZW5kIHdpdGgKIyMgXnN0YXJ0IGFuZCBlbmQgd2l0aCQKQ3JlYXRlIHJlZ3VsYXIgZXhwcmVzc2lvbnMgdGhhdCBmaW5kIGFsbCB3b3JkcyB0aGF0IHN0YXJ0IHdpdGggInkiIGFuZCBlbmQgd2l0aCAieCIgdXNpbmcgYHN0cmluZ3I6OndvcmRzYC4KCmBgYHtyfQp3b3JkcyAlPiUgCiAgc3RyX3ZpZXdfYWxsKCJeeSIsIG1hdGNoID0gVFJVRSkKCndvcmRzICU+JSAKICBzdHJfdmlld19hbGwoIngkIiwgbWF0Y2ggPSBUUlVFKQpgYGAKCg==</div>
 
 
 

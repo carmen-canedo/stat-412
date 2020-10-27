@@ -5,3 +5,116 @@ editor_options:
   chunk_output_type: inline
 ---
 
+```{r, message=FALSE}
+library(tidyverse)
+```
+
+
+# Exercise 1
+```{r}
+new_string <- "Jane says \"thanks!\""
+
+print(new_string)
+
+writeLines(new_string)
+
+writeLines("\\\"\\")
+```
+
+# Exercise 2
+## `str_length()` - get length
+```{r}
+exercise2_tbl <- tribble(
+                         ~Name, ~Age, 
+                         "Alice", 25,
+                         "Bob",   30,
+                         "Chris", 35
+)
+
+exercise2_tbl <- exercise2_tbl %>% 
+  mutate(value = Age * str_length(Name)) %>% 
+  arrange(desc(value))
+
+exercise2_tbl
+```
+
+# Exercise 3
+## `str_c` - concatenate
+```{r}
+area_codes <- c(703, 863, 404, 202)
+phone_nums <- c(5551212, 1234567, 7891234, 4799747)
+
+str_c("(", area_codes, ") ", phone_nums, sep = "")
+```
+
+# Exercise 4
+## `str_sub()` - extract character subsets
+## `str_trim()` - removes whitespace from start and/or end
+## `str_squish()` - reduces repeated whitespace inside a string
+
+```{r}
+x <- "    Help me to     get rid     of extra spaces?      "
+
+str_trim(x, side = "left")
+str_trim(x, side = "right")
+str_trim(x, side = "both")
+
+str_squish(x)
+```
+
+# Exercise 5
+## Use `str_length()` and `str_sub()` to extract the middle character from a string.
+
+```{r}
+middle_character <- function(word) {
+  
+  # Get length of word
+  len <- str_length(word)
+  
+  # Divide by two to find middle letter
+  middle <- (len + 1) / 2
+  even_mid <- (len) / 2 + 1
+  
+  # Case for even number
+  if (len %% 2 == 0) {
+    str_sub(word, middle, even_mid)
+  }
+  else {
+    # Extract middle character
+  str_sub(word, middle, middle)
+  }
+}
+```
+
+```{r}
+middle_character("hamburger")
+middle_character("hotdog")
+```
+
+# 3. Matching Patterns
+## `str_view()` and `str_view_all()` - find a given pattern
+# Exercise 6
+Match this sequence: "'\?
+
+```{r}
+s <- str_c("some stuff", "\"'\\?", "more!")
+```
+
+```{r}
+str_view(s, "\"\'\\\\.")
+```
+
+# Exercise 7
+## ^ - starts with
+## $ - end with
+## ^start and end with$
+Create regular expressions that find all words that start with "y" and end with "x" using `stringr::words`.
+
+```{r}
+words %>% 
+  str_view_all("^y", match = TRUE)
+
+words %>% 
+  str_view_all("x$", match = TRUE)
+```
+
