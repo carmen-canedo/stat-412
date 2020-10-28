@@ -1,0 +1,81 @@
+---
+title: "Homework 8"
+author: "Carmen Canedo"
+date: "27 October 2020"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r, message=FALSE}
+source("setup.R")
+```
+
+
+# Exercise 8
+Create regular expressions to find all words that:
+
+  + End with "ed" but not "eed"
+  + End with "ing" or "ise"
+  + Words that do not follow the rule "i before e except after c"
+  
+```{r}
+# Words that end with 'ed', but not 'eed'
+words %>% 
+  str_view("[^e]ed$", match = TRUE)
+```
+
+```{r}
+# End with -ing or -ise
+words %>% 
+  str_view("(ing|ise)$", match = TRUE)
+```
+
+```{r}
+# Doesn't follow 'i before e'
+words %>% 
+  str_view(".*cei.*", match = TRUE)
+```
+
+# Exercise 9
+Create regular expressions to find all words that:
+
+  + start or end with the letter x
+  + start with at least two vowels and end with at least two consonants
+  + Contains three or more vowels in a row
+  
+```{r}
+# Starts or end with x
+words %>% 
+  str_view("x^|x$", match = TRUE)
+```
+  
+```{r}
+# Starts with at least two vowels
+# Ends with at least two consonants
+words %>% 
+  str_view("^[aeiouy]{2,}.*[^aeiouy]${2,}", match = TRUE)
+```
+  
+```{r}
+# Contains three or more vowels in a row
+words %>% 
+  str_view("[aeiouy]{3}", match = TRUE)
+```
+
+# Exercise 10
+Construct regular expressions to find words that:
+
+  + Start and end with the same character
+  + Contain a repeated pair of letters (e.g. "church" contains "ch" repeated twice)
+  + Contain one letter other than e that is repeated in at least three places (e.g. appropriate contains three "p's")
+  
+```{r}
+words %>% 
+  str_view("", match = TRUE)
+```
+
+```{r}
+
+```
+
