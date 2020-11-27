@@ -51,15 +51,31 @@ flightskey <- flights %>%
 glimpse(flightskey)
 ```
 
-## Exercise 1 Identify the primary keys in Batting, Babynames, and Atmos. 
+## Exercise 1 Identify the primary keys in three datasets. 
 Be sure to show that you have the primary key by showing there are no duplicate entries.
 
-### Lahman Batting Primary Key
+### a. Lahman Batting Primary Key
 ```{r Lahman::Batting PK}
+# Loading Library
 library(Lahman)
 
+#View(Batting)
+
+# Finding primary key
 Batting %>% 
   count(playerID, stint, yearID) %>% 
   filter(n > 1)
 ```
 The primary key for `Lahman::Batting` is `playerID`, `stint`, and `yearID`.
+
+### b. Babynames Primary key
+```{r babynames::babynames PK}
+library(babynames)
+
+#View(babynames)
+
+babynames %>% 
+  count(name, year, sex) %>% 
+  filter(n > 1)
+```
+The primary key for `babynames` is `name`, `year`, and `sex`.

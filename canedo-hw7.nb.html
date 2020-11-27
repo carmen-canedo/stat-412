@@ -1797,29 +1797,30 @@ summary {
 <!-- rnb-chunk-begin -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<div id="exercise-1-identify-the-primary-keys-in-batting-babynames-and-atmos." class="section level2">
-<h2>Exercise 1 Identify the primary keys in Batting, Babynames, and Atmos.</h2>
+<div id="exercise-1-identify-the-primary-keys-in-three-datasets." class="section level2">
+<h2>Exercise 1 Identify the primary keys in three datasets.</h2>
 <p>Be sure to show that you have the primary key by showing there are no duplicate entries.</p>
-<div id="lahman-batting-primary-key" class="section level3">
-<h3>Lahman Batting Primary Key</h3>
+<div id="a.-lahman-batting-primary-key" class="section level3">
+<h3>a. Lahman Batting Primary Key</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MCwibmNvbCI6NH0sInJkZiI6Ikg0c0lBQUFBQUFBQUEyMVF3V3JETUF4VkVudHREUzFqL1lIK3dITFpaZlE0U21GMGh6Rlc2RlZ0dlRUZzJzRXhiUDM1dGtwaUUyWmlFSktlOUNROWY2MTJMMkluQUNBRFJwWnhDb0Z2djlmUHJ3QXNwU1Nod3FUeGY5UTBwNENSUFVMM3BzUCtINUZyUE12YWs1Z0h4NVhDaTdUdnE5QlV1MUk3bnp4Y0pQYWxSRWNESjliODVtSG80TWFEd2pwc0RLQTRvc1A4eHhLUHNtdEVHWm5LbFVZVEtXMDA4b2ljMkFoNCtzRFRHZlZ5K1lhT0xpOFduNXRtUjl2UmYwVWNzMjVyZXZQVGVCQXNkVkZxR2M1WHVKZktKek1TMjJyTks5di9rQ0MwenAxeEdQckV3YWlBdFBMZ2VnZnhacHFTM1FFQUFBPT0ifQ== -->
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["playerID"],"name":[1],"type":["chr"],"align":["left"]},{"label":["stint"],"name":[2],"type":["int"],"align":["right"]},{"label":["yearID"],"name":[3],"type":["int"],"align":["right"]},{"label":["n"],"name":[4],"type":["int"],"align":["right"]}],"data":[],"options":{"columns":{"min":{},"max":[10],"total":[4]},"rows":{"min":[10],"max":[10],"total":[0]},"pages":{}}}
-  </script>
-</div>
-<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>The primary key for <code>Lahman::Batting</code> is <code>playerID</code>, <code>stint</code>, and <code>yearID</code>.</p>
+</div>
+<div id="b.-babynames-primary-key" class="section level3">
+<h3>b. Babynames Primary key</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>The primary key for <code>babynames</code> is <code>name</code>, <code>year</code>, and <code>sex</code>.</p>
 <!-- rnb-text-end -->
 </div>
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiSG9tZXdvcmsgNyIKYXV0aG9yOiAiQ2FybWVuIENhbmVkbyIKZGF0ZTogIjI3IE5vdmVtYmVyIDIwMjAiCm91dHB1dDogaHRtbF9ub3RlYm9vawplZGl0b3Jfb3B0aW9uczogCiAgY2h1bmtfb3V0cHV0X3R5cGU6IGlubGluZQotLS0KCiMgTG9hZGluZyBMaWJyYXJpZXMKYGBge3IgTG9hZCBEYXRhLCBtZXNzYWdlPUZBTFNFfQpzb3VyY2UoInNldHVwLlIiKQoKbGlicmFyeShueWNmbGlnaHRzMTMpCgpueWNmbGlnaHRzMTNfZGF0YSA8LSBkYXRhKHBhY2thZ2UgPSAibnljZmxpZ2h0czEzIikKYGBgCgpgYGB7ciBFeHBsb3JpbmcgZGF0YX0KbnljZmxpZ2h0czEzX2RhdGEkcmVzdWx0c1ssIGMoIkl0ZW0iLCAiVGl0bGUiKV0KaGVhZChhaXJsaW5lcykKaGVhZChhaXJwb3J0cykKaGVhZChmbGlnaHRzKQpoZWFkKHBsYW5lcykKaGVhZCh3ZWF0aGVyKQpgYGAKCiMgS2V5cwoqUHJpbWFyeSBrZXlzKiB1bmlxdWVseSBpZGVudGlmeSBhbiBvYnNlcnZhdGlvbiB3aXRoaW4gaXRzIG93biB0YWJsZS4gKkZvcmVpZ24ga2V5cyogdW5pcXVlbHkgaWRlbnRpZnkgYW4gb2JzZXJ2YXRpb24gaW4gYW5vdGhlciB0YWJsZS4KClRvIGJlIHN1cmUgdGhlIGlkZW50aWZpY2F0aW9uIGlzIHVuaXF1ZSwgY291bnQgdGhlIHByaW1hcnkga2V5cyBhbmQgc2VlIGlmIGFueSBhcmUgZ3JlYXRlciB0aGFuIDEuCgpgYGB7ciBDb25maXJtIHVuaXF1ZSBrZXkgMX0KcGxhbmVzICU+JSAKICBjb3VudCh0YWlsbnVtKSAlPiUgCiAgZmlsdGVyKG4gPiAxKQpgYGAKCmBgYHtyIENvbmZpcm0gdW5pcXVlIGtleSAyfQpmbGlnaHRzICU+JSAKICBjb3VudCh5ZWFyLCBtb250aCwgZGF5LCBmbGlnaHQpICU+JSAKICBmaWx0ZXIobiA+IDEpCmBgYApUaGVyZSBpcyBub3QgYSBwcmltYXJ5IGtleSBpbiB0aGUgZmxpZ2h0cyB0aWJibGUgYmVjYXVzZSB0aGUgdmFsdWVzIHJlcGVhdC4gV2UgbmVlZCB0byBhZGQgYSAqc3Vycm9nYXRlIGtleSogdG8gZmxpZ2h0cy4KCmBgYHtyIEFkZCBzdXJyb2dhdGUga2V5fQpmbGlnaHRza2V5IDwtIGZsaWdodHMgJT4lIAogIHJvd2lkX3RvX2NvbHVtbigiSUQiKSAlPiUgCiAgc2VsZWN0KElELCBldmVyeXRoaW5nKCkpCgpnbGltcHNlKGZsaWdodHNrZXkpCmBgYAoKIyMgRXhlcmNpc2UgMSBJZGVudGlmeSB0aGUgcHJpbWFyeSBrZXlzIGluIEJhdHRpbmcsIEJhYnluYW1lcywgYW5kIEF0bW9zLiAKQmUgc3VyZSB0byBzaG93IHRoYXQgeW91IGhhdmUgdGhlIHByaW1hcnkga2V5IGJ5IHNob3dpbmcgdGhlcmUgYXJlIG5vIGR1cGxpY2F0ZSBlbnRyaWVzLgoKIyMjIExhaG1hbiBCYXR0aW5nIFByaW1hcnkgS2V5CmBgYHtyIExhaG1hbjo6QmF0dGluZyBQS30KbGlicmFyeShMYWhtYW4pCgpCYXR0aW5nICU+JSAKICBjb3VudChwbGF5ZXJJRCwgc3RpbnQsIHllYXJJRCkgJT4lIAogIGZpbHRlcihuID4gMSkKYGBgClRoZSBwcmltYXJ5IGtleSBmb3IgYExhaG1hbjo6QmF0dGluZ2AgaXMgYHBsYXllcklEYCwgYHN0aW50YCwgYW5kIGB5ZWFySURgLgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiSG9tZXdvcmsgNyIKYXV0aG9yOiAiQ2FybWVuIENhbmVkbyIKZGF0ZTogIjI3IE5vdmVtYmVyIDIwMjAiCm91dHB1dDogaHRtbF9ub3RlYm9vawplZGl0b3Jfb3B0aW9uczogCiAgY2h1bmtfb3V0cHV0X3R5cGU6IGlubGluZQotLS0KCiMgTG9hZGluZyBMaWJyYXJpZXMKYGBge3IgTG9hZCBEYXRhLCBtZXNzYWdlPUZBTFNFfQpzb3VyY2UoInNldHVwLlIiKQoKbGlicmFyeShueWNmbGlnaHRzMTMpCgpueWNmbGlnaHRzMTNfZGF0YSA8LSBkYXRhKHBhY2thZ2UgPSAibnljZmxpZ2h0czEzIikKYGBgCgpgYGB7ciBFeHBsb3JpbmcgZGF0YX0KbnljZmxpZ2h0czEzX2RhdGEkcmVzdWx0c1ssIGMoIkl0ZW0iLCAiVGl0bGUiKV0KaGVhZChhaXJsaW5lcykKaGVhZChhaXJwb3J0cykKaGVhZChmbGlnaHRzKQpoZWFkKHBsYW5lcykKaGVhZCh3ZWF0aGVyKQpgYGAKCiMgS2V5cwoqUHJpbWFyeSBrZXlzKiB1bmlxdWVseSBpZGVudGlmeSBhbiBvYnNlcnZhdGlvbiB3aXRoaW4gaXRzIG93biB0YWJsZS4gKkZvcmVpZ24ga2V5cyogdW5pcXVlbHkgaWRlbnRpZnkgYW4gb2JzZXJ2YXRpb24gaW4gYW5vdGhlciB0YWJsZS4KClRvIGJlIHN1cmUgdGhlIGlkZW50aWZpY2F0aW9uIGlzIHVuaXF1ZSwgY291bnQgdGhlIHByaW1hcnkga2V5cyBhbmQgc2VlIGlmIGFueSBhcmUgZ3JlYXRlciB0aGFuIDEuCgpgYGB7ciBDb25maXJtIHVuaXF1ZSBrZXkgMX0KcGxhbmVzICU+JSAKICBjb3VudCh0YWlsbnVtKSAlPiUgCiAgZmlsdGVyKG4gPiAxKQpgYGAKCmBgYHtyIENvbmZpcm0gdW5pcXVlIGtleSAyfQpmbGlnaHRzICU+JSAKICBjb3VudCh5ZWFyLCBtb250aCwgZGF5LCBmbGlnaHQpICU+JSAKICBmaWx0ZXIobiA+IDEpCmBgYApUaGVyZSBpcyBub3QgYSBwcmltYXJ5IGtleSBpbiB0aGUgZmxpZ2h0cyB0aWJibGUgYmVjYXVzZSB0aGUgdmFsdWVzIHJlcGVhdC4gV2UgbmVlZCB0byBhZGQgYSAqc3Vycm9nYXRlIGtleSogdG8gZmxpZ2h0cy4KCmBgYHtyIEFkZCBzdXJyb2dhdGUga2V5fQpmbGlnaHRza2V5IDwtIGZsaWdodHMgJT4lIAogIHJvd2lkX3RvX2NvbHVtbigiSUQiKSAlPiUgCiAgc2VsZWN0KElELCBldmVyeXRoaW5nKCkpCgpnbGltcHNlKGZsaWdodHNrZXkpCmBgYAoKIyMgRXhlcmNpc2UgMSBJZGVudGlmeSB0aGUgcHJpbWFyeSBrZXlzIGluIHRocmVlIGRhdGFzZXRzLiAKQmUgc3VyZSB0byBzaG93IHRoYXQgeW91IGhhdmUgdGhlIHByaW1hcnkga2V5IGJ5IHNob3dpbmcgdGhlcmUgYXJlIG5vIGR1cGxpY2F0ZSBlbnRyaWVzLgoKIyMjIGEuIExhaG1hbiBCYXR0aW5nIFByaW1hcnkgS2V5CmBgYHtyIExhaG1hbjo6QmF0dGluZyBQS30KIyBMb2FkaW5nIExpYnJhcnkKbGlicmFyeShMYWhtYW4pCgojVmlldyhCYXR0aW5nKQoKIyBGaW5kaW5nIHByaW1hcnkga2V5CkJhdHRpbmcgJT4lIAogIGNvdW50KHBsYXllcklELCBzdGludCwgeWVhcklEKSAlPiUgCiAgZmlsdGVyKG4gPiAxKQpgYGAKVGhlIHByaW1hcnkga2V5IGZvciBgTGFobWFuOjpCYXR0aW5nYCBpcyBgcGxheWVySURgLCBgc3RpbnRgLCBhbmQgYHllYXJJRGAuCgojIyMgYi4gQmFieW5hbWVzIFByaW1hcnkga2V5CmBgYHtyIGJhYnluYW1lczo6YmFieW5hbWVzIFBLfQpsaWJyYXJ5KGJhYnluYW1lcykKCiNWaWV3KGJhYnluYW1lcykKCmJhYnluYW1lcyAlPiUgCiAgY291bnQobmFtZSwgeWVhciwgc2V4KSAlPiUgCiAgZmlsdGVyKG4gPiAxKQpgYGAKVGhlIHByaW1hcnkga2V5IGZvciBgYmFieW5hbWVzYCBpcyBgbmFtZWAsIGB5ZWFyYCwgYW5kIGBzZXhgLg==</div>
 
 
 
