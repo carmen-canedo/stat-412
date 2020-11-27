@@ -132,7 +132,17 @@ flights2 <- flights %>%
 ## Exercise 4 Use an appropriate join to add the airport name to the `flights2` dataset.
 The codes and names of the airports are in the airports dataset of `nycflights13` package.
 ```{r}
+# Getting rid of unnecessary columns
+airport_names <- airports %>% 
+  select(faa, name) %>% 
+  rename(airport = name)
 
+# Joining to flights2
+flights2 %>% 
+  left_join(airport_names, by = c("origin" = "faa")) %>% 
+  left_join(airport_names, by = c("dest" = "faa"),
+            suffix = c("_origin", "_dest")) %>% 
+  select(carrier, name, origin, airport_origin, dest, airport_dest, everything())
 ```
 
 
