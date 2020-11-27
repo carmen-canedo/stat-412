@@ -2,27 +2,20 @@
 title: "Homework 7"
 author: "Carmen Canedo"
 date: "27 November 2020"
-output: html_notebook
-editor_options: 
+output:
+  pdf_document: default
+  html_notebook: default
+editor_options:
   chunk_output_type: inline
 ---
 
 # Loading Libraries
-```{r Load Data, message=FALSE}
+```{r Load Data, message=FALSE, echo=FALSE}
 source("setup.R")
 
 library(nycflights13)
 
 nycflights13_data <- data(package = "nycflights13")
-```
-
-```{r Exploring data}
-nycflights13_data$results[, c("Item", "Title")]
-head(airlines)
-head(airports)
-head(flights)
-head(planes)
-head(weather)
 ```
 
 # Keys
@@ -31,13 +24,13 @@ head(weather)
 To be sure the identification is unique, count the primary keys and see if any are greater than 1.
 
 ```{r Confirm unique key 1}
-planes %>% 
+planes_test <- planes %>% 
   count(tailnum) %>% 
   filter(n > 1)
 ```
 
 ```{r Confirm unique key 2}
-flights %>% 
+flights_test <- flights %>% 
   count(year, month, day, flight) %>% 
   filter(n > 1)
 ```
@@ -47,8 +40,6 @@ There is not a primary key in the flights tibble because the values repeat. We n
 flightskey <- flights %>% 
   rowid_to_column("ID") %>% 
   select(ID, everything())
-
-glimpse(flightskey)
 ```
 
 ## Exercise 1 Identify the primary keys in three datasets. 
@@ -79,7 +70,7 @@ library(babynames)
 #   count(name, year, sex) %>% 
 #   filter(n > 1)
 ```
-The primary key for `babynames` is `name`, `year`, and `sex`.
+The primary key for `babynames` is `name`, `year`, and `sex`. 
 
 ### c. Atmos Primary Key
 ```{r nasaweather::atmos PK}
@@ -92,9 +83,9 @@ the primary key for `atmos` is `lat`, `long`, `year`, `month`.
 ## Exercise 2 What is the relationship between the Batting, Master, and Salaries tables in the Lahman package? What are the keys for ech dataset and how do they relate to each other?
 
 ```{r Explore Lahman data}
-View(Batting)
-View(Master)
-View(Salaries)
+# View(Batting)
+# View(Master)
+# View(Salaries)
 ```
 
 ```{r Master PK}
