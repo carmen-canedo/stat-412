@@ -74,8 +74,42 @@ library(babynames)
 
 #View(babynames)
 
-babynames %>% 
-  count(name, year, sex) %>% 
-  filter(n > 1)
+# For some reason, when compiling, the code lags here, so I'm commenting it out. This is how I got my answer for this question.
+# babynames::babynames %>% 
+#   count(name, year, sex) %>% 
+#   filter(n > 1)
 ```
 The primary key for `babynames` is `name`, `year`, and `sex`.
+
+### c. Atmos Primary Key
+```{r nasaweather::atmos PK}
+nasaweather::atmos %>% 
+  count(lat, long, year, month) %>% 
+  filter(n > 1)
+```
+the primary key for `atmos` is `lat`, `long`, `year`, `month`.
+
+## Exercise 2 What is the relationship between the Batting, Master, and Salaries tables in the Lahman package? What are the keys for ech dataset and how do they relate to each other?
+
+```{r Explore Lahman data}
+View(Batting)
+View(Master)
+View(Salaries)
+```
+
+```{r Master PK}
+Master %>% 
+  count(playerID) %>% 
+  filter(n > 1)
+```
+
+```{r Salaries PK}
+Salaries %>% 
+  count(playerID, teamID, yearID) %>% 
+  filter(n > 1)
+```
+
+
+As we know from above, the primary key for `Batting` is `playerID`, `stint`, and `yearID`. The primary key for `Master` is `playerID`, and for `Salaries` it is `playerID`, `teamID`, and `yearID`.
+
+`playerID` in `Master` has a 1 to many relationship in Salaries and Batting.
