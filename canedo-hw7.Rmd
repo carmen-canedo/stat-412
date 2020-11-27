@@ -104,3 +104,71 @@ Salaries %>%
 As we know from above, the primary key for `Batting` is `playerID`, `stint`, and `yearID`. The primary key for `Master` is `playerID`, and for `Salaries` it is `playerID`, `teamID`, and `yearID`.
 
 `playerID` in `Master` has a 1 to many relationship in Salaries and Batting.
+
+# Mutating Joins
+*Inner Joins* connect pairs of observations when their keys are equal. Unmatched rows will not be included in the result. 
+
+*Outer Joins* keep observations that appear in at least one of the tables:
+
+  + `left_join(x, y)` keeps all observations in `x`
+  + `right_join(x, y)` keeps all observations in `y`
+  + `full_join(x, y)` keeps all observations
+  
+*Natural join* is the default and uses all variables with the same name in both tables.
+
+Using `by = "variable_name` joins by specified variables only.
+
+You can also use `by = c("variable_a" = "variable_b")` to use a key with a different name in each table
+
+## Exercise 3 Use an appropriate join to add a column containing the airline name to the flights dataset.
+Be sure to put the carrier code and name in the first two columns of the result. **Save as `flights2`**
+```{r}
+flights2 <- flights %>% 
+  left_join(airlines, by = "carrier") %>% 
+  select(carrier, name, everything())
+```
+
+
+## Exercise 4 Use an appropriate join to add the airport name to the `flights2` dataset.
+The codes and names of the airports are in the airports dataset of `nycflights13` package.
+```{r}
+
+```
+
+
+# Filtering Joins
+You can use *filter joins* to filter observations from one tibble based on whether or not they match an observation in another tibble.
+
+A *semi join* between `x` and `y`:
+
+  + Keeps all observations in `x` that have a match in `y`
+  + Is useful for matchinf filtered summary back to original row
+  
+An *anti join* between `x` and `y` is the inverse of the semi join:
+
+  + *Drops* all observations in `x` that have a match in `y`
+  + Useful for diagnosing join mismatches
+  
+## Exercise 5 Compute the average delay by destination, then join the airports data frame so you can show the spatial distribution of delays.
+
+  + Use the size or color of the points to display the average delay for each airport.
+  + Add the location of the origin and destination (lat and lon) to flights
+  + Compute the average delay by destination
+  
+```{r}
+
+```
+
+  
+# Set Operations
+`dplyr` provides functions for performing standard set operations:
+
+  + `intersect(x, y)` returns the intersection of datasets `x` and `y`
+  + `union(x, y)` returns the union of datasets `x` and `y`
+  + `setdiff(x, y)` returns set members in `x` that are not in `y`.
+  
+## Exercise 6 Use a set operation function to find which airport codes from flights are not in the airports datset
+```{r}
+
+```
+
