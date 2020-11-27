@@ -1,0 +1,65 @@
+---
+title: "Homework 7"
+author: "Carmen Canedo"
+date: "27 November 2020"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+# Loading Libraries
+```{r Load Data, message=FALSE}
+source("setup.R")
+
+library(nycflights13)
+
+nycflights13_data <- data(package = "nycflights13")
+```
+
+```{r Exploring data}
+nycflights13_data$results[, c("Item", "Title")]
+head(airlines)
+head(airports)
+head(flights)
+head(planes)
+head(weather)
+```
+
+# Keys
+*Primary keys* uniquely identify an observation within its own table. *Foreign keys* uniquely identify an observation in another table.
+
+To be sure the identification is unique, count the primary keys and see if any are greater than 1.
+
+```{r Confirm unique key 1}
+planes %>% 
+  count(tailnum) %>% 
+  filter(n > 1)
+```
+
+```{r Confirm unique key 2}
+flights %>% 
+  count(year, month, day, flight) %>% 
+  filter(n > 1)
+```
+There is not a primary key in the flights tibble because the values repeat. We need to add a *surrogate key* to flights.
+
+```{r Add surrogate key}
+flightskey <- flights %>% 
+  rowid_to_column("ID") %>% 
+  select(ID, everything())
+
+glimpse(flightskey)
+```
+
+## Exercise 1 Identify the primary keys in Batting, Babynames, and Atmos. 
+Be sure to show that you have the primary key by showing there are no duplicate entries.
+
+### Lahman Batting Primary Key
+```{r Lahman::Batting PK}
+library(Lahman)
+
+Batting %>% 
+  count(playerID, stint, yearID) %>% 
+  filter(n > 1)
+```
+The primary key for `Lahman::Batting` is `playerID`, `stint`, and `yearID`.
