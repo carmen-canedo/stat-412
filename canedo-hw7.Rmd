@@ -122,7 +122,7 @@ You can also use `by = c("variable_a" = "variable_b")` to use a key with a diffe
 
 ## Exercise 3 Use an appropriate join to add a column containing the airline name to the flights dataset.
 Be sure to put the carrier code and name in the first two columns of the result. **Save as `flights2`**
-```{r}
+```{r Making flights2}
 flights2 <- flights %>% 
   left_join(airlines, by = "carrier") %>% 
   select(carrier, name, everything())
@@ -131,7 +131,7 @@ flights2 <- flights %>%
 
 ## Exercise 4 Use an appropriate join to add the airport name to the `flights2` dataset.
 The codes and names of the airports are in the airports dataset of `nycflights13` package.
-```{r}
+```{r Adding airport names}
 # Getting rid of unnecessary columns
 airport_names <- airports %>% 
   select(faa, name) %>% 
@@ -165,8 +165,25 @@ An *anti join* between `x` and `y` is the inverse of the semi join:
   + Add the location of the origin and destination (lat and lon) to flights
   + Compute the average delay by destination
   
-```{r}
+```{r Mapping delays}
+# Finding average delay by destination
+delayed <- flights %>%
+  group_by(dest) %>% 
+  summarise(avg_delay = mean(arr_delay, na.rm = TRUE))
 
+# Joining to airports dataset
+airports <- left_join(airports, delayed, by = c("faa" = "dest"))
+
+# Joining to flights and plotting
+flights3 <- airports %>% 
+  semi_join(flights, by = c("faa" = "dest")) %>% 
+  ggplot(aes(x = lon, y = lat, color = avg_delay)) +
+  borders("state", size = 0.25, fill = "light grey") +
+  geom_point(pch = 21) +
+  coord_quickmap() +
+  theme_minimal()
+
+flights3
 ```
 
   
