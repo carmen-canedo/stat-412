@@ -126,6 +126,8 @@ Be sure to put the carrier code and name in the first two columns of the result.
 flights2 <- flights %>% 
   left_join(airlines, by = "carrier") %>% 
   select(carrier, name, everything())
+
+flights2
 ```
 
 
