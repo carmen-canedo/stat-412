@@ -54,9 +54,23 @@ gss_cat %>%
 
 
 ## Question 3: Which `relig` does `denom` apply to? How can you find out with a table? How can you find out with a vizualization?
-```{r}
 
+To find out what `relig` `denom` belongs to, we can check the levels to see if they give us any further details.
+```{r}
+levels(gss_cat$denom)
 ```
+
+The levels are all Protestant denominations, so we can assume that `denom` belongs to `Protestant`.
+
+To find out with a visualization, a scatterplot can show the count of each denomination by religion, so we will use that below.
+```{r}
+gss_cat %>%
+  count(relig, denom) %>%
+  ggplot(aes(x = relig, y = denom, size = n)) +
+  geom_point() +
+  theme_minimal()
+```
+
 
 ## Question 4: How have the proportions of people identifying as Democrat, Republican, and Independent changed over time?
 ```{r}
