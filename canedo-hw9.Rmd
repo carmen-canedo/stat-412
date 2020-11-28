@@ -36,9 +36,22 @@ To improve it, I would use `coord_flip()` so that the labels are legible, remove
 
 
 ## Question 2: What is the most common religion? Most common `partyid`?
+The most common religion is Protestantism.
 ```{r}
-
+gss_cat %>%
+  count(relig) %>%
+  arrange(desc(n)) %>% 
+  head(3)
 ```
+
+The most common political party is Independent.
+```{r}
+gss_cat %>%
+  count(partyid) %>%
+  arrange(desc(n)) %>% 
+  head(5)
+```
+
 
 ## Question 3: Which `relig` does `denom` apply to? How can you find out with a table? How can you find out with a vizualization?
 ```{r}
