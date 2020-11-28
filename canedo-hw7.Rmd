@@ -195,7 +195,7 @@ flights3
   + `setdiff(x, y)` returns set members in `x` that are not in `y`.
   
 ## Exercise 6 Use a set operation function to find which airport codes from flights are not in the airports datset
-```{r}
-
+```{r Codes not in airport dataset}
+setdiff(flights$dest, airports$faa)
 ```
 
