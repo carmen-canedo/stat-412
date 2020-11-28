@@ -2,8 +2,10 @@
 title: "Homework 9"
 author: "Carmen Canedo"
 date: "28 November 2020"
-output: html_notebook
-editor_options: 
+output:
+  pdf_document: default
+  html_notebook: default
+editor_options:
   chunk_output_type: inline
 ---
 
@@ -67,7 +69,11 @@ To find out with a visualization, a scatterplot can show the count of each denom
 gss_cat %>%
   count(relig, denom) %>%
   ggplot(aes(x = relig, y = denom, size = n)) +
-  geom_point() +
+  geom_point(color = "light green") +
+  labs(title = "Denominations by Religion",
+       x = "Religion",
+       y = "Denomination",
+       size = "Count") +
   theme_minimal()
 ```
 
@@ -105,8 +111,41 @@ party_prop %>%
 It appears that there has been an increase in individuals identifying as Independent, a decrease of people identifying as Republican, and the proportion of Democrats has remained relatively the same. 
 
 ## Question 5: How could you collapse `rincome` into a small set of categories?
-```{r}
 
+The levels for `rincome` are not broken down into even groups, so decrease the number of categories, I am going to try to aim for each category to increase by about $5000.
+
+The first thing to do would be to collapse the non-responses into a group called `Other`. Then we will need to use `str_c()` from the  `stringr` package to dilineate the new levels.
+
+I will be using the following levels:
+
+  + \$0 to \$5000
+  + \$5000 to \$10000
+  
+```{r}
+income_intervals <- gss_cat %>%
+  mutate(rincome = fct_collapse(rincome,
+                                # Combiine missing values
+                                `Unknown` = c("No answer", "Don't know", "Refused", "Not applicable"),
+                                # First interval of 5000
+                                `$0 to $5000` = c("Lt $1000", str_c("$", c("1000", "3000", "4000"),
+                                                                    " to ", c("2999", "3999", "4999"))),
+                                # Second interval of 5000
+                                `$5000 to 10000` = str_c("$", c("5000", "6000", "7000", "8000"),
+                                                         " to ", c("5999", "6999", "7999", "9999")))) 
+
+income_intervals %>% 
+  head(10)
+```
+Using the recommendations for what I would change in Question 1, this is what our graph looks like now.
+```{r}
+income_intervals %>%
+  ggplot(aes(x = rincome)) +
+  geom_bar(fill = "light blue") +
+  labs(title = "Reported Income",
+       x = "Income in US Dollars",
+       y = "Count") +
+  coord_flip() +
+  theme_minimal()
 ```
 
 
@@ -115,7 +154,9 @@ It appears that there has been an increase in individuals identifying as Indepen
 "05/26/2004 UTC 11:11:11.444"
 "26 2004 05 UTC 11/11/11.444"
 ```{r}
+parse_datetime("05/26/2004 UTC 11:11:11.444", format = "%m/%d/%Y %Z %H:%M:%S")
 
+parse_datetime("26 2004 05 UTC 11/11/11.444", format = "%d %Y %m %Z %H/%M/%S")
 ```
 
 ## Question 2: Use the appropriate `lubridate` function to parse each of the following dates.
@@ -123,8 +164,18 @@ It appears that there has been an increase in individuals identifying as Indepen
 d1 <- "January 1, 2010"
 d2 <- "2015-Mar-07"
 d3 <- "06-Jun-2017"
-d4 <- c("August 19 (2015)", "July 1 (2015)") d5 <- "12/30/14" # Dec 30, 2014
+d4 <- c("August 19 (2015)", "July 1 (2015)")
+d5 <- "12/30/14" # Dec 30, 2014
 ```
+
+```{r}
+mdy(d1)
+ymd(d2)
+dmy(d3)
+mdy(d4)
+mdy(d5)
+```
+
 
 ## Question 3: For each month in `wmata_ridership`, calculate the proportion of rides made on a given day of the month. Then make box plots of the proportions of ridership vs. day of the week, *excluding any days from 2004*.
 ```{r}
