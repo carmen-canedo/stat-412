@@ -9,6 +9,7 @@ editor_options:
 
 ```{r, message=FALSE}
 source("setup.R")
+library(ISLR)
 ```
 
 
@@ -198,3 +199,19 @@ bad <- str_replace_all(sentences, " bad ", " horrible ")
   
 # Exercise 16
 Install `ISLR` package. Then take `Names <- row.names(College)`. Show the first twenty rows that result if you split `Names` at each space into 3 parts. Do the same by splitting the first 20 rows on every word boundary.
+```{r}
+Names <- row.names(College)
+```
+
+```{r}
+Names %>% 
+  str_split(" ", n = 3) %>% 
+  head(20)
+```
+
+```{r}
+Names %>% 
+  head(20) %>% 
+  str_view_all(boundary("word"))
+```
+
