@@ -1,0 +1,70 @@
+---
+title: "Homework 9"
+author: "Carmen Canedo"
+date: "28 November 2020"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r, message=FALSE}
+# Loading librarie
+source("setup.R")
+library(lubridate)
+```
+
+
+# Exercise 1
+## Question 1: Explore the distribution of `rincome` (reported income). What makes the default bar chart hard to understand? How could you improve the plot?
+```{r}
+
+```
+
+
+## Question 2: What is the most common religion? Most common `partyid`?
+```{r}
+
+```
+
+## Question 3: Which `relig` does `denom` apply to? How can you find out with a table? How can you find out with a vizualization?
+```{r}
+
+```
+
+## Question 4: How have the proportions of people identifying as Democrat, Republican, and Independent changed over time?
+```{r}
+
+```
+
+## Question 5: How could you collapse `rincome` into a small set of categories?
+```{r}
+
+```
+
+
+# Exercise 2
+## Question 1: Parse the following date-times
+"05/26/2004 UTC 11:11:11.444"
+"26 2004 05 UTC 11/11/11.444"
+```{r}
+
+```
+
+## Question 2: Use the appropriate `lubridate` function to parse each of the following dates.
+```{r}
+d1 <- "January 1, 2010"
+d2 <- "2015-Mar-07"
+d3 <- "06-Jun-2017"
+d4 <- c("August 19 (2015)", "July 1 (2015)") d5 <- "12/30/14" # Dec 30, 2014
+```
+
+## Question 3: For each month in `wmata_ridership`, calculate the proportion of rides made on a given day of the month. Then make box plots of the proportions of ridership vs. day of the week, *excluding any days from 2004*.
+```{r}
+
+```
+
+## Question 4: How long of a time-span is covered in the WMATA ridership dataset?
+```{r}
+
+```
+
