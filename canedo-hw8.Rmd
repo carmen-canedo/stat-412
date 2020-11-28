@@ -181,12 +181,18 @@ sentences[str_detect(sentences, numbers)] %>%
 
   1. View all sentences that contain the word "good" or the word "bad". Get the sentence numbers where those occur.
 ```{r}
+# Pattern
+words_to_find <- " good | bad "
 
+# Matching in dataset
+sentences[str_detect(sentences, words_to_find)] %>% 
+  str_view_all(words_to_find)
 ```
 
-  2. Use `str_replace_all()` to replace the word "bad" with "horrible and the word "good" with "great. Look at the sentence numbers you found before to verify the words were replaced correctly.
+  2. Use `str_replace_all()` to replace the word "bad" with "horrible and the word "good" with "great". Look at the sentence numbers you found before to verify the words were replaced correctly.
 ```{r}
-
+good <- str_replace_all(sentences, " good ", " great ")
+bad <- str_replace_all(sentences, " bad ", " horrible ")
 ```
   
   
