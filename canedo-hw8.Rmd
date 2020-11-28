@@ -125,23 +125,56 @@ swap <- str_replace_all(words, "^([A-Za-z])(.*)([A-Za-z])$", "\\3\\2\\1")
 str_replace_all(words, "^([A-Za-z])(.*)([A-Za-z])$", "\\3\\2\\1") %>% 
   intersect(words)
 ```
+
 # Exercise 13
 Modify the regex so it no longer picks up the word flickered as a color.
 ```{r}
-
+# Regex to look for colors
+colors <- c("red", "Red","orange", "yellow", "green", "blue", "purple")
+color_match <- str_c(colors, collapse = "| ")
 ```
+
+```{r}
+# Sentences with more than 1 color
+# Select the sentences that contain a color, and then extract the color to figure out which one it is
+has_color <- str_subset(sentences, color_match)
+matches <- str_extract(has_color, color_match)
+# Select all the sentences that have more than 1 match
+more <- sentences[str_count(sentences, color_match) > 1]
+str_view_all(more, color_match)
+```
+To make sure the regex doesn't highlight "flickered" our `str_c()` should be modified to the following...
+```{r}
+# New regex pattern
+color_match <- str_c(str_c("\\b", colors, "\\b"), collapse = "|")
+
+# New result
+str_view_all(more, color_match)
+```
+
 
   1. Show all the sentences that contain at least one color with the word highlighted using `str_view_all()`.
 ```{r}
-
+has_color <- sentences[str_count(sentences, color_match) >= 1]
+str_view_all(has_color, color_match)
 ```
 
   2. Use `str_extract_all()` to produce an array with the colors that appear multiple times in a sentence
+```{r}
+has_color <- sentences[str_count(sentences, color_match) > 1]
+str_extract_all(has_color, color_match)
+```
+  
   
 # Exercise 14
 Find all words that come after a "number" like "one", "two",... "twelve". Pull out both the number and the word.
 ```{r}
+# Regex pattern
+numbers <- "\\b(one|two|three|four|five|six|seven|eight|nine|ten) +(\\w+)"
 
+# Extract the words
+sentences[str_detect(sentences, numbers)] %>%
+  str_extract(numbers)
 ```
 
 # Exercise 15
@@ -152,6 +185,10 @@ Find all words that come after a "number" like "one", "two",... "twelve". Pull o
 ```
 
   2. Use `str_replace_all()` to replace the word "bad" with "horrible and the word "good" with "great. Look at the sentence numbers you found before to verify the words were replaced correctly.
+```{r}
+
+```
+  
   
 # Exercise 16
 Install `ISLR` package. Then take `Names <- row.names(College)`. Show the first twenty rows that result if you split `Names` at each space into 3 parts. Do the same by splitting the first 20 rows on every word boundary.
