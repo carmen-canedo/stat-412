@@ -44,7 +44,7 @@ gss_cat %>%
   head(3)
 ```
 
-The most common political party is Independent.
+The most common political party is Independent. However, the levels for each party are split, so I wonder if they are combined if it would change which is the most common political party.
 ```{r}
 gss_cat %>%
   count(partyid) %>%
@@ -73,9 +73,36 @@ gss_cat %>%
 
 
 ## Question 4: How have the proportions of people identifying as Democrat, Republican, and Independent changed over time?
-```{r}
 
+The levels for the parties are split, so if we are going to look at their overall change, we need to combine them using `fct_collapse()`, and then we need to calculate the proportion of them by year.
+```{r}
+party_prop <- gss_cat %>%
+  # Collapse levels
+  mutate(partyid = fct_collapse(partyid,
+                                Other = c("No answer", "Don't know", "Other party"),
+                                Republican = c("Strong republican", "Not str republican"),
+                                Independent = c("Ind,near rep", "Independent", "Ind,near dem"),
+                                Democrat = c("Not str democrat", "Strong democrat"))) %>%
+  # Count party membership across years
+  count(year, partyid) %>% 
+  # Calculate proportions
+  group_by(year) %>% 
+  mutate(proportion = n / sum(n))
 ```
+
+
+Then we can create a line graph that plots the proportion of party membership overtime.
+```{r}
+party_prop %>% 
+  ggplot(aes(x = year, y = proportion, color = fct_reorder2(partyid, year, proportion))) +
+  geom_line() +
+  labs(title = "U.S. Political Party Membership over Time", 
+       x = "Year",
+       y = "Proportion",
+       color = "Party") +
+  theme_minimal()
+```
+It appears that there has been an increase in individuals identifying as Independent, a decrease of people identifying as Republican, and the proportion of Democrats has remained relatively the same. 
 
 ## Question 5: How could you collapse `rincome` into a small set of categories?
 ```{r}
