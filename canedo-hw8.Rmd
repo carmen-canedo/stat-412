@@ -72,10 +72,86 @@ Construct regular expressions to find words that:
   
 ```{r}
 words %>% 
-  str_view("", match = TRUE)
+  str_subset("^(.)((.*\\1$)|\\1?$)")
 ```
 
+```{r}
+words %>% 
+  str_subset("([A-Za-z][A-Za-z]).*\\1")
+```
+
+```{r}
+words %>% 
+  str_subset("([a-z]).*\\1.*\\1")
+```
+
+# Exercise 11
+Use `str_detect()` to find any words that contain at least one of each different vowel.
+```{r}
+pattern <-
+  cross(rerun(5, c("a", "e", "i", "o", "u")),
+    .filter = function(...) {
+      x <- as.character(unlist(list(...)))
+      length(x) != length(unique(x))
+    }
+  ) %>%
+  map_chr(~str_c(unlist(.x), collapse = ".*")) %>%
+  str_c(collapse = "|")
+
+pattern
+```
+
+```{r}
+str_subset(words, pattern)
+
+words[str_detect(words, "a") &
+  str_detect(words, "e") &
+  str_detect(words, "i") &
+  str_detect(words, "o") &
+  str_detect(words, "u")]
+```
+
+
+# Exercise 12
+Switch the first and last letters in each word of words. Which of those strings are still words?
+```{r}
+# Switching all words
+swap <- str_replace_all(words, "^([A-Za-z])(.*)([A-Za-z])$", "\\3\\2\\1")
+```
+
+
+```{r}
+# Finding ones that are still actual words
+str_replace_all(words, "^([A-Za-z])(.*)([A-Za-z])$", "\\3\\2\\1") %>% 
+  intersect(words)
+```
+# Exercise 13
+Modify the regex so it no longer picks up the word flickered as a color.
 ```{r}
 
 ```
 
+  1. Show all the sentences that contain at least one color with the word highlighted using `str_view_all()`.
+```{r}
+
+```
+
+  2. Use `str_extract_all()` to produce an array with the colors that appear multiple times in a sentence
+  
+# Exercise 14
+Find all words that come after a "number" like "one", "two",... "twelve". Pull out both the number and the word.
+```{r}
+
+```
+
+# Exercise 15
+
+  1. View all sentences that contain the word "good" or the word "bad". Get the sentence numbers where those occur.
+```{r}
+
+```
+
+  2. Use `str_replace_all()` to replace the word "bad" with "horrible and the word "good" with "great. Look at the sentence numbers you found before to verify the words were replaced correctly.
+  
+# Exercise 16
+Install `ISLR` package. Then take `Names <- row.names(College)`. Show the first twenty rows that result if you split `Names` at each space into 3 parts. Do the same by splitting the first 20 rows on every word boundary.
