@@ -10,7 +10,7 @@ editor_options:
 ---
 
 ```{r, message=FALSE}
-# Loading librarie
+# Loading libraries
 source("setup.R")
 library(lubridate)
 ```
@@ -20,14 +20,14 @@ library(lubridate)
 ## Question 1: Explore the distribution of `rincome` (reported income). What makes the default bar chart hard to understand? How could you improve the plot?
 
 Here is a default bar graph of `rincome`.
-```{r}
-gss_cat %>%
-  ggplot(aes(x = rincome)) +
-  geom_bar() +
-  labs(title = "Reported Income",
-       x = "Income",
-       y = "Count") +
-  theme_minimal()
+```{r Q1, fig.align='center'}
+ gss_cat %>%
+   ggplot(aes(x = rincome)) +
+   geom_bar() +
+   labs(title = "Reported Income",
+        x = "Income",
+        y = "Count") +
+   theme_minimal()
 ```
 This is hard to understand because:
 
@@ -39,7 +39,7 @@ To improve it, I would use `coord_flip()` so that the labels are legible, remove
 
 ## Question 2: What is the most common religion? Most common `partyid`?
 The most common religion is Protestantism.
-```{r}
+```{r Q2}
 gss_cat %>%
   count(relig) %>%
   arrange(desc(n)) %>% 
@@ -47,7 +47,7 @@ gss_cat %>%
 ```
 
 The most common political party is Independent. However, the levels for each party are split, so I wonder if they are combined if it would change which is the most common political party.
-```{r}
+```{r Q2a}
 gss_cat %>%
   count(partyid) %>%
   arrange(desc(n)) %>% 
@@ -58,14 +58,15 @@ gss_cat %>%
 ## Question 3: Which `relig` does `denom` apply to? How can you find out with a table? How can you find out with a vizualization?
 
 To find out what `relig` `denom` belongs to, we can check the levels to see if they give us any further details.
-```{r}
+```{r Q3}
 levels(gss_cat$denom)
 ```
 
 The levels are all Protestant denominations, so we can assume that `denom` belongs to `Protestant`.
 
 To find out with a visualization, a scatterplot can show the count of each denomination by religion, so we will use that below.
-```{r}
+
+```{r Q3a, fig.align='center'}
 gss_cat %>%
   count(relig, denom) %>%
   ggplot(aes(x = relig, y = denom, size = n)) +
@@ -81,7 +82,7 @@ gss_cat %>%
 ## Question 4: How have the proportions of people identifying as Democrat, Republican, and Independent changed over time?
 
 The levels for the parties are split, so if we are going to look at their overall change, we need to combine them using `fct_collapse()`, and then we need to calculate the proportion of them by year.
-```{r}
+```{r Q4}
 party_prop <- gss_cat %>%
   # Collapse levels
   mutate(partyid = fct_collapse(partyid,
@@ -98,7 +99,7 @@ party_prop <- gss_cat %>%
 
 
 Then we can create a line graph that plots the proportion of party membership overtime.
-```{r}
+```{r Q4a, fig.align='center'}
 party_prop %>% 
   ggplot(aes(x = year, y = proportion, color = fct_reorder2(partyid, year, proportion))) +
   geom_line() +
@@ -112,7 +113,7 @@ It appears that there has been an increase in individuals identifying as Indepen
 
 ## Question 5: How could you collapse `rincome` into a small set of categories?
 
-The levels for `rincome` are not broken down into even groups, so decrease the number of categories, I am going to try to aim for each category to increase by about $5000.
+The levels for `rincome` are not broken down into even groups, so to decrease the number of categories, I am going to try to aim for each category to increase by about $5000.
 
 The first thing to do would be to collapse the non-responses into a group called `Other`. Then we will need to use `str_c()` from the  `stringr` package to dilineate the new levels.
 
@@ -121,7 +122,7 @@ I will be using the following levels:
   + \$0 to \$5000
   + \$5000 to \$10000
   
-```{r}
+```{r Q5}
 income_intervals <- gss_cat %>%
   mutate(rincome = fct_collapse(rincome,
                                 # Combiine missing values
@@ -137,7 +138,7 @@ income_intervals %>%
   head(10)
 ```
 Using the recommendations for what I would change in Question 1, this is what our graph looks like now.
-```{r}
+```{r Q5a}
 income_intervals %>%
   ggplot(aes(x = rincome)) +
   geom_bar(fill = "light blue") +
@@ -153,14 +154,14 @@ income_intervals %>%
 ## Question 1: Parse the following date-times
 "05/26/2004 UTC 11:11:11.444"\
 "26 2004 05 UTC 11/11/11.444"
-```{r}
+```{r Q6}
 parse_datetime("05/26/2004 UTC 11:11:11.444", format = "%m/%d/%Y %Z %H:%M:%S")
 
 parse_datetime("26 2004 05 UTC 11/11/11.444", format = "%d %Y %m %Z %H/%M/%S")
 ```
 
 ## Question 2: Use the appropriate `lubridate` function to parse each of the following dates.
-```{r}
+```{r Q7}
 d1 <- "January 1, 2010"
 d2 <- "2015-Mar-07"
 d3 <- "06-Jun-2017"
@@ -168,7 +169,7 @@ d4 <- c("August 19 (2015)", "July 1 (2015)")
 d5 <- "12/30/14" # Dec 30, 2014
 ```
 
-```{r}
+```{r Q7a}
 mdy(d1)
 ymd(d2)
 dmy(d3)
@@ -179,19 +180,19 @@ mdy(d5)
 
 ## Question 3: For each month in `wmata_ridership`, calculate the proportion of rides made on a given day of the month. Then make box plots of the proportions of ridership vs. day of the week, *excluding any days from 2004*.
 
-```{r, message=FALSE}
+```{r Q8, message=FALSE}
 # Loading .csv
 wmata_ridership <- read_csv("wmata_ridership.csv")
 ```
 
 
-```{r}
+```{r Q8a}
 # Changing to class date
 wmata_ridership$Date <- wmata_ridership$Date %>% 
   ymd()
 ```
 
-```{r}
+```{r Q8b}
 wmata_ridership <- wmata_ridership %>% 
   # Exclude 2004
   filter(Date >= as.Date("2005-01-01")) %>%
@@ -201,7 +202,7 @@ wmata_ridership <- wmata_ridership %>%
   mutate(day_of_week = wday(Date, label = TRUE))
 ```
 
-```{r}
+```{r Q8c}
 wmata_ridership %>% 
   ggplot(aes(x = day_of_week, y = proportion)) +
   geom_boxplot(fill = "light pink") +
@@ -214,7 +215,7 @@ wmata_ridership %>%
 
 
 ## Question 4: How long of a time-span is covered in the WMATA ridership dataset?
-```{r}
+```{r Q9}
 beginning <- ymd("2004-01-01")
 end <- ymd("2018-12-21")
 as.duration(end - beginning)
