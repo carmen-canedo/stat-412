@@ -196,12 +196,20 @@ wmata_ridership <- wmata_ridership %>%
   # Exclude 2004
   filter(Date >= as.Date("2005-01-01")) %>%
   # Proportion of rides for each day of every month
-  mutate(proportion = Total / sum(Total))
+  mutate(proportion = Total / sum(Total)) %>% 
+  # Add column for day of the week
+  mutate(day_of_week = wday(Date, label = TRUE))
 ```
 
 ```{r}
-wmata_ridership$Total %>% 
-  round(2)
+wmata_ridership %>% 
+  ggplot(aes(x = day_of_week, y = proportion)) +
+  geom_boxplot(fill = "light pink") +
+  labs(title = "WMATA Ridership Proportions by Day of The Week",
+       subtitle = "2005 - 2018",
+       x = "Day",
+       y = "Proportion") +
+  theme_minimal()
 ```
 
 
