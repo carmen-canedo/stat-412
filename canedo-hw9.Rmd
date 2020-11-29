@@ -151,7 +151,7 @@ income_intervals %>%
 
 # Exercise 2
 ## Question 1: Parse the following date-times
-"05/26/2004 UTC 11:11:11.444"
+"05/26/2004 UTC 11:11:11.444"\
 "26 2004 05 UTC 11/11/11.444"
 ```{r}
 parse_datetime("05/26/2004 UTC 11:11:11.444", format = "%m/%d/%Y %Z %H:%M:%S")
@@ -178,12 +178,37 @@ mdy(d5)
 
 
 ## Question 3: For each month in `wmata_ridership`, calculate the proportion of rides made on a given day of the month. Then make box plots of the proportions of ridership vs. day of the week, *excluding any days from 2004*.
-```{r}
 
+```{r, message=FALSE}
+# Loading .csv
+wmata_ridership <- read_csv("wmata_ridership.csv")
 ```
+
+
+```{r}
+# Changing to class date
+wmata_ridership$Date <- wmata_ridership$Date %>% 
+  ymd()
+```
+
+```{r}
+wmata_ridership <- wmata_ridership %>% 
+  # Exclude 2004
+  filter(Date >= as.Date("2005-01-01")) %>%
+  # Proportion of rides for each day of every month
+  mutate(proportion = Total / sum(Total))
+```
+
+```{r}
+wmata_ridership$Total %>% 
+  round(2)
+```
+
 
 ## Question 4: How long of a time-span is covered in the WMATA ridership dataset?
 ```{r}
-
+beginning <- ymd("2004-01-01")
+end <- ymd("2018-12-21")
+as.duration(end - beginning)
 ```
 
