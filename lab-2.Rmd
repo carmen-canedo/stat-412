@@ -1,0 +1,17 @@
+---
+title: "Lab 2"
+author: "Carmen Canedo"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r, message=FALSE}
+# Load libraries
+source("setup.R")
+```
+
+```{r}
+corona_stats <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv")
+```
+
