@@ -20,15 +20,19 @@ us_counties <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data
 ```
 
 ```{r, message=FALSE}
+# Total cases and deaths by state
 us_totals <- us_counties %>% 
   group_by(state) %>% 
   summarise(total_cases = sum(cases),
             total_deaths = sum(deaths)) %>% 
   arrange(desc(total_deaths))
-
-us_totals
 ```
 
+```{r}
+# First 6 rows of `us_totals`
+us_totals %>% 
+  head()
+```
 
 # Question 2:
 Get county names for DC, Maryland, and VA.
@@ -38,15 +42,25 @@ dmv_counties <- c("Anne Arundel", "Charles", "Frederick", "Howard", "Montgomery"
 
 # Vector of state names
 dmv_states <- c("District of Columbia", "Maryland", "Virginia")
+```
 
-# 
+```{r, message=FALSE}
+# DMV counties only, total cases and deaths
 dmv <- us_counties %>% 
   filter(state %in% dmv_states) %>% 
   filter(county %in% dmv_counties) %>% 
   group_by(county) %>% 
   summarise(total_cases = sum(cases),
-           total_deaths = sum(deaths))
+           total_deaths = sum(deaths)) %>% 
+  arrange(desc(total_deaths))
 ```
+
+```{r}
+# First 6 rows of `dmv`
+dmv %>% 
+  head()
+```
+
 
 # Question 3:
 Make a plot of the total number of cases by date, and the total of deaths by date, for counties in the DMV area. *Make sure to use facets and aesthetics* to convery results, and that the plot is titled, axes are labeled, and text is legible.
