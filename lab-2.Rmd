@@ -11,6 +11,7 @@ editor_options:
 ```{r Loading Libraries, message=FALSE}
 # Load libraries
 source("setup.R")
+library(lubridate)
 ```
 
 
@@ -156,6 +157,12 @@ US_by_state <- US_by_state %>%
   filter(location != "Grand Princess")
 ```
 
+```{r}
+# Cleaning up memory
+rm(long_cases_US, long_deaths_US, confirmed_US, deaths_US)
+```
+
+
 # Questoin 5:
 For the global data, create a new tidy data frame called `global` that has the total confirmed cases and deaths per country by data. Add global population data and replace the US observations in `global` with the US data.
 
@@ -212,6 +219,15 @@ global <- global %>%
 # Adding US states
 global <- global %>% 
   bind_rows(US_by_state)
+
+# Correcting year
+global$date <- paste(global$date, "20", sep = "")
+```
+
+
+```{r}
+# Making space in memory
+rm(confirmed_global, deaths_global, long_cases_global, long_deaths_global, deaths_global, country_info)
 ```
 
 
@@ -262,7 +278,19 @@ global_line <- global %>%
     location %in% c("Brazil", "Peru", "Colombia", "Argentina", "Chile") ~ "South America",
     location %in% c("Spain", "United Kingdom", "Germany", "Italy") ~ "Europe",
     location == "South Africa" ~ "Africa",
-    location %in% c("India", "Iran", "Turkey", "Bangladesh", "Saudi Arabia", "Pakistan", "Iraq", "Russia") ~ "Asia"))
+    location %in% c("India", "Iran", "Turkey", "Bangladesh", "Saudi Arabia", "Pakistan", "Iraq", "Russia") ~ "Asia")) %>%
+  drop_na()
+```
+
+```{r}
+# Memory
+rm(top_countries)
+```
+
+
+```{r}
+# Convert to date
+global_line$date <- as_date(global_line$date, format = "%m/%d/%Y")
 ```
 
 
