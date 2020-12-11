@@ -78,21 +78,26 @@ dmv_totals %>%
 Make a plot of the total number of cases by date, and the total of deaths by date, for counties in the DMV area. *Make sure to use facets and aesthetics* to convey results, and that the plot is titled, axes are labeled, and text is legible.
 ```{r}
 # Subsetting data
-dmv_line <- us_counties %>% 
-  filter(state %in% dmv_states) %>% 
-  filter(county %in% dmv_counties)
-
-
-
-temp_frederick <- 
+dmv_line <- dmv %>% 
+  pivot_longer(cols = c(cases, deaths), names_to = "type", values_to = "count")
 ```
 
 ```{r}
 # Initial plot
-dmv_line %>% 
-  ggplot(aes(x = date, y = cases)) +
+dmv_line_plot <- dmv_line %>% 
+  ggplot(aes(x = date, y = count, color = county)) +
   geom_line() +
-  facet_wrap( ~ county, scales = "free_y")
+  facet_wrap( ~ type, scales = "free_y") +
+  theme_minimal()
+```
+
+```{r}
+# Adding title, axes, other labels
+dmv_line_plot + 
+  labs(title = "Total Number of Cases and Deaths Per Day in the DMV Area",
+       subtitle = "March through December 2020",
+       x = "Date",
+       y = "Count")
 ```
 
 
