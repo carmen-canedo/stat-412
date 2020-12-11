@@ -77,7 +77,7 @@ dmv_totals %>%
 # Question 3:
 Make a plot of the total number of cases by date, and the total of deaths by date, for counties in the DMV area. *Make sure to use facets and aesthetics* to convey results, and that the plot is titled, axes are labeled, and text is legible.
 ```{r}
-# Subsetting data
+# Lengthening data to make facets in graph
 dmv_line <- dmv %>% 
   pivot_longer(cols = c(cases, deaths), names_to = "type", values_to = "count")
 ```
@@ -109,17 +109,37 @@ Read in and tidy the global and US COVID-19 data contained in the four fields be
   + "time_series_covid19_confirmed_US.csv"
   + "time_series_covid19_deaths_US.csv"
   
-```{r}
-confrimed_global <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_ covid_19_time_series_confirmed_global.csv")
-deaths_global <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_ covid_19_time_series/time_series_covid19_deaths_global.csv")
-confirmed_US <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_ covid_19_time_series/time_series_covid19_confirmed_US.csv")
-deaths_US <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_ covid_19_time_series/time_series_covid19_deaths_US.csv")
+```{r, message=FALSE}
+confrimed_global <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv")
+deaths_global <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv")
+confirmed_US <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv")
+deaths_US <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_US.csv")
 ```
   
 For the US data, *produce a second* tidy data frame called `US_by_state` that has the total of confirmed cases, deaths, population, and deaths per million people for each date for each state.
 
 ```{r}
+# Making space for memory
+rm(dmv, dmv_line, dmv_line_plot, dmv_totals, us_counties, us_totals)
+```
 
+
+```{r}
+# Lengthening US cases
+totals_cases_US <- confirmed_US %>% 
+  pivot_longer(cols = ends_with("20"), names_to = "date", values_to = "cases_count") %>% 
+  group_by(Province_State) %>% 
+  mutate(total_cases = cumsum(cases_count))
+
+# Lengthening US deaths
+deaths_US <- deaths_US %>% 
+  pivot_longer(cols = ends_with("20"), names_to = "date", values_to = "deaths_count") %>% 
+  group_by(state) %>% 
+  mutate(total_deaths = sum(deaths_count) / 1000000)
+
+
+US_by_state <- confirmed_US %>% 
+  left_join(deaths_US, by = "date")
 ```
 
 # Questoin 5:
