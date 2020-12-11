@@ -222,6 +222,9 @@ global <- global %>%
 
 # Correcting year
 global$date <- paste(global$date, "20", sep = "")
+
+# Converting to date
+global$date <- as_date(global$date, format = "%m/%d/%Y")
 ```
 
 
@@ -291,6 +294,13 @@ rm(top_countries)
 ```{r}
 # Convert to date
 global_line$date <- as_date(global_line$date, format = "%m/%d/%Y")
+
+# Grouping by continent
+global_line <- global_line %>% 
+  group_by(continent, date) %>% 
+  summarize(daily_case_count = sum(daily_case_count),
+            daily_deaths_count = sum(daily_deaths_count),
+            deaths_millions = sum(deaths_millions))
 ```
 
 
@@ -358,8 +368,121 @@ Get the data for the state of NY from the csse dataset and compare the growth of
 # Question 10:
 Plot the number of confirmed cases, deaths, and deaths per million inhabitants for Sweden, Denmark, and Finland.
 
+## Sweden
 ```{r Q10}
-
+sweden <- global %>% 
+  filter(location == "Sweden")
 ```
+
+```{r}
+sweden %>% 
+  ggplot(aes(x = daily_case_count)) +
+  geom_boxplot(fill = "light blue") +
+  theme_minimal() +
+  labs(title = "Distribution of Daily COVID-19 Case Counts in Sweden",
+       subtitle = "2020",
+       x = "Case Count")
+```
+
+```{r}
+sweden %>% 
+  ggplot(aes(x = date, y = daily_deaths_count)) +
+  geom_line(color = "light blue") +
+  theme_minimal() +
+  labs(title = "Counts of Daily Deaths due to COVID-19 in Sweden",
+       subtitle = "2020",
+       x = "Date",
+       y = "Count")
+```
+
+```{r}
+sweden %>% 
+  ggplot(aes(x = date, y = deaths_millions)) +
+  geom_line(color = "light blue") +
+  theme_minimal() +
+  labs(title = "Daily Deaths in Millions due to COVID-19 in Sweden",
+       subtitle = "2020",
+       x = "Date",
+       y = "Count in Millions")
+```
+
+
+## Denmark
+```{r}
+denmark <- global %>% 
+  filter(location == "Denmark")
+```
+
+```{r}
+denmark %>% 
+  ggplot(aes(x = daily_case_count)) +
+  geom_boxplot(fill = "light yellow") +
+  theme_minimal() +
+  labs(title = "Distribution of Daily COVID-19 Case Counts in Denmark",
+       subtitle = "2020",
+       x = "Case Count")
+```
+
+```{r}
+denmark %>% 
+  ggplot(aes(x = date, y = daily_deaths_count)) +
+  geom_line(color = "orange") +
+  theme_minimal() +
+  labs(title = "Counts of Daily Deaths due to COVID-19 in Denmark",
+       subtitle = "2020",
+       x = "Date",
+       y = "Count")
+```
+
+```{r}
+denmark %>% 
+  ggplot(aes(x = date, y = deaths_millions)) +
+  geom_line(color = "Orange") +
+  theme_minimal() +
+  labs(title = "Daily Deaths in Millions due to COVID-19 in Denmark",
+       subtitle = "2020",
+       x = "Date",
+       y = "Count in Millions")
+```
+
+
+## Finland
+```{r}
+finland <- global %>% 
+  filter(location == "Finland")
+```
+
+```{r}
+finland %>% 
+  ggplot(aes(x = daily_case_count)) +
+  geom_boxplot(fill = "light green") +
+  theme_minimal() +
+  labs(title = "Distribution of Daily COVID-19 Case Counts in Finland",
+       subtitle = "2020",
+       x = "Case Count")
+```
+
+```{r}
+finland %>% 
+  ggplot(aes(x = date, y = daily_deaths_count)) +
+  geom_line(color = "light green") +
+  theme_minimal() +
+  labs(title = "Counts of Daily Deaths due to COVID-19 in Finland",
+       subtitle = "2020",
+       x = "Date",
+       y = "Count")
+```
+
+```{r}
+finland %>% 
+  ggplot(aes(x = date, y = deaths_millions)) +
+  geom_line(color = "light green") +
+  theme_minimal() +
+  labs(title = "Daily Deaths in Millions due to COVID-19 in Finland",
+       subtitle = "2020",
+       x = "Date",
+       y = "Count in Millions")
+```
+
 
 How do the number of deaths per million residents compare? What are some possible explanations for any differences you observe?
