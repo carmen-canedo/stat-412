@@ -1,12 +1,14 @@
 ---
 title: "Lab 2"
 author: "Carmen Canedo"
-output: html_notebook
-editor_options: 
+output:
+  pdf_document: default
+  html_notebook: default
+editor_options:
   chunk_output_type: inline
 ---
 
-```{r, message=FALSE}
+```{r Loading Libraries, message=FALSE}
 # Load libraries
 source("setup.R")
 ```
@@ -14,12 +16,12 @@ source("setup.R")
 
 # Question 1:
 Read in `us-counties.csv` and create a tibble data frame that contains both deaths and total cases per state, arranged by total number of deaths in descending order.
-```{r, message=FALSE}
+```{r Load US data, message=FALSE}
 # Loading data
 us_counties <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv")
 ```
 
-```{r, message=FALSE}
+```{r Q1 US dataframe, message=FALSE}
 # Total cases and deaths by state, arranged by deaths
 us_totals <- us_counties %>% 
   group_by(state) %>% 
@@ -28,7 +30,7 @@ us_totals <- us_counties %>%
   arrange(desc(total_deaths))
 ```
 
-```{r}
+```{r Q1 View data frame}
 # First 6 rows of `us_totals`
 us_totals %>% 
   head()
@@ -36,7 +38,7 @@ us_totals %>%
 
 # Question 2:
 Get county names for DC, Maryland, and VA.
-```{r, message=FALSE}
+```{r Q2, message=FALSE}
 # Vector of country names
 dmv_counties <- c("Anne Arundel", "Charles", "Frederick", "Howard", "Montgomery", "Prince George's", "District of Columbia", "Alexandria city", "Arlington", "Fairfax", "Loudoun", "Prince William", "Falls Church city")
 
@@ -44,7 +46,7 @@ dmv_counties <- c("Anne Arundel", "Charles", "Frederick", "Howard", "Montgomery"
 dmv_states <- c("District of Columbia", "Maryland", "Virginia")
 ```
 
-```{r, message=FALSE}
+```{r Q2, message=FALSE}
 # Subsetting to states and counties only in DMV
 dmv <- us_counties %>% 
   # Filters to states in counties from vectors above
@@ -57,7 +59,7 @@ dmv <- us_counties %>%
   filter(fips != "51069")
 ```
 
-```{r, message=FALSE}
+```{r Q2, message=FALSE}
 # DMV counties only, total cases and deaths, arranged by deaths
 dmv_totals <- dmv %>% 
   group_by(county) %>% 
@@ -66,7 +68,7 @@ dmv_totals <- dmv %>%
   arrange(desc(total_deaths))
 ```
 
-```{r}
+```{r Q2}
 # First 6 rows of `dmv_totals`
 dmv_totals %>% 
   head()
@@ -74,13 +76,13 @@ dmv_totals %>%
 
 # Question 3:
 Make a plot of the total number of cases by date, and the total of deaths by date, for counties in the DMV area. *Make sure to use facets and aesthetics* to convey results, and that the plot is titled, axes are labeled, and text is legible.
-```{r}
+```{r Q3}
 # Lengthening data to make facets in graph
 dmv_line <- dmv %>% 
   pivot_longer(cols = c(cases, deaths), names_to = "type", values_to = "count")
 ```
 
-```{r}
+```{r Q3}
 # Initial plot
 dmv_line_plot <- dmv_line %>% 
   ggplot(aes(x = date, y = count, color = county)) +
@@ -89,7 +91,7 @@ dmv_line_plot <- dmv_line %>%
   theme_minimal()
 ```
 
-```{r}
+```{r Q3}
 # Adding title, axes, other labels
 dmv_line_plot + 
   labs(title = "Total Number of Cases and Deaths Per Day in the DMV Area",
@@ -106,7 +108,7 @@ Read in and tidy the global and US COVID-19 data contained in the four fields be
   + "time_series_covid19_confirmed_US.csv"
   + "time_series_covid19_deaths_US.csv"
   
-```{r, message=FALSE}
+```{r Q4, message=FALSE}
 confirmed_global <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv")
 deaths_global <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv")
 confirmed_US <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv")
@@ -115,13 +117,13 @@ deaths_US <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19
   
 For the US data, *produce a second* tidy data frame called `US_by_state` that has the total of confirmed cases, deaths, population, and deaths per million people for each date for each state.
 
-```{r}
+```{r Q4}
 # Making space for memory
 rm(dmv, dmv_line, dmv_line_plot, dmv_totals, us_counties, us_totals)
 ```
 
 
-```{r}
+```{r Q4, message=FALSE}
 # Lengthening US cases
 long_cases_US <- confirmed_US %>% 
   pivot_longer(cols = ends_with("20"), names_to = "date", values_to = "cases_count") %>% 
@@ -143,24 +145,26 @@ US_by_state <- long_cases_US %>%
 
 # Fixing order of columns and renaming columns
 US_by_state <- US_by_state %>% 
-  rename(state = Province_State,
+  rename(location = Province_State,
          date = date.x) %>% 
-  select(state, population, date, daily_case_count, daily_deaths_count,-date.y)
+  select(location, population, date, daily_case_count, daily_deaths_count,-date.y)
 
-# Adding deaths per million column
+# Adding deaths per million column and dropping NA's
 US_by_state <- US_by_state %>% 
-  mutate(deaths_millions = (daily_deaths_count / population) * 1000000)
+  mutate(deaths_millions = (daily_deaths_count / population) * 1000000) %>% 
+  drop_na() %>% 
+  filter(location != "Grand Princess")
 ```
 
 # Questoin 5:
 For the global data, create a new tidy data frame called `global` that has the total confirmed cases and deaths per country by data. Add global population data and replace the US observations in `global` with the US data.
 
-```{r}
+```{r Q5}
 # Reading new global data
 country_info <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/UID_ISO_FIPS_LookUp_Table.csv")
 ```
 
-```{r, message=FALSE}
+```{r Q5, message=FALSE}
 # Lengthening US cases
 long_cases_global <- confirmed_global %>% 
   pivot_longer(cols = ends_with("20"), names_to = "date", values_to = "cases_count") %>% 
@@ -177,12 +181,12 @@ deaths_global <- deaths_global %>%
 long_deaths_global <- deaths_global %>% 
   pivot_longer(cols = ends_with("20"), names_to = "date", values_to = "deaths_count") %>% 
   group_by(`Country/Region`, date) %>% 
-  summarise(daily_deaths_count = sum(deaths_count), population = sum(Population.y)) %>% 
+  summarise(daily_deaths_count = sum(deaths_count), population = sum(Population)) %>% 
   arrange(date) %>% 
   rename(country_region = `Country/Region`)
 ```
 
-```{r}
+```{r Q5}
 # Creating global dataframe
 global <- long_deaths_global %>% 
   left_join(long_cases_global, by = "country_region") %>% 
@@ -190,28 +194,53 @@ global <- long_deaths_global %>%
 
 # Fixing order of columns and renaming columns
 global <- global %>% 
-  rename(date = date.x) %>% 
-  select(country_region, population, date, daily_case_count, daily_deaths_count,-date.y)
+  rename(date = date.x,
+         location = country_region) %>% 
+  select(location, population, date, daily_case_count, daily_deaths_count,-date.y)
+
+# Adding deaths per million column
+global <- global %>% 
+  mutate(deaths_millions = (daily_deaths_count / population) * 1000000) %>% 
+  drop_na()
 ```
 
-```{r}
+```{r Q5}
 # Replace US data
+global <- global %>% 
+  filter(location != "US")
+
+# Adding US states
+global <- global %>% 
+  bind_rows(US_by_state)
 ```
 
 
 # Question 6:
 Create a new variable in `global` representing the deaths per million per country by date, and remove any rows with no confirmed cases.
 
-```{r}
+Included in code above.
 
+```{r}
+global %>% 
+  head()
 ```
+
 
 # Question 7:
 Find the 25 countries or US states with the most confirmed cases (**use `group_by()`, `summarise()`, and `ungroup()`**). What are some possible explanations for the difference in number of deaths per million people among these groups?
 
-```{r}
+```{r Q7}
+top_countries <-  global %>% 
+  group_by(location) %>% 
+  summarise(total_case_count = sum(daily_case_count),
+            total_death_millions = sum(deaths_millions)) %>% 
+  ungroup() %>%
+  arrange(desc(total_case_count)) %>% 
+  head(25)
 
+top_countries
 ```
+Some potential explanations for high confirmed cases of COVID-19 could be due to the country or state having a large population and low restrictions on social distancing. The differences between case count and number of deaths per millions could be the result of varying qualities of healthcare infrastructure. 
 
 # Question 8:
 For the 25 countries/US states with the highest number of confirmed cases, construct plots for:
@@ -220,21 +249,56 @@ For the 25 countries/US states with the highest number of confirmed cases, const
   2. Deaths over time
   3. Deaths per million over time
   
-**Facet each plot by continet** and use appropriate scales for the axes.
+**Facet each plot by continent** and use appropriate scales for the axes.
+```{r Q8}
+# Saving vector of country names for reference
+countries <- top_countries$location
+
+# Subset of global data for graph, adding continent using `case_when()`
+global_line <- global %>% 
+  filter(location %in% countries) %>% 
+   mutate(continent = case_when(
+    location %in% c("Texas", "California", "Florida", "New York", "Illinois", "Georgia", "Mexico") ~ "North America",
+    location %in% c("Brazil", "Peru", "Colombia", "Argentina", "Chile") ~ "South America",
+    location %in% c("Spain", "United Kingdom", "Germany", "Italy") ~ "Europe",
+    location == "South Africa" ~ "Africa",
+    location %in% c("India", "Iran", "Turkey", "Bangladesh", "Saudi Arabia", "Pakistan", "Iraq", "Russia") ~ "Asia"))
+```
+
+
+## Confirmed Cases over time
+```{r}
+# Initial Plot
+cases_line_plot <- global_line %>% 
+  ggplot(aes(x = date, y = daily_case_count)) +
+  geom_point() +
+  #facet_wrap( ~ continent, scales = "free") +
+  theme_minimal()
+
+cases_line_plot
+```
+
+## Deaths over time
 ```{r}
 
 ```
 
+## Deaths per million over time
+```{r}
+
+```
+
+
 # Question 9:
 Get the data for the state of NY from the csse dataset and compare the growth of cases to the growth rate shown in the nytimes data. Does the data match? If not, how is it different?
-```{r}
+```{r Q9}
 
 ```
 
 # Question 10:
 Plot the number of confirmed cases, deaths, and deaths per million inhabitants for Sweden, Denmark, and Finland.
 
-```{r}
+```{r Q10}
 
 ```
 
