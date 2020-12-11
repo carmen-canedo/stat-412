@@ -20,7 +20,7 @@ us_counties <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data
 ```
 
 ```{r, message=FALSE}
-# Total cases and deaths by state
+# Total cases and deaths by state, arranged by deaths
 us_totals <- us_counties %>% 
   group_by(state) %>% 
   summarise(total_cases = sum(cases),
@@ -45,28 +45,56 @@ dmv_states <- c("District of Columbia", "Maryland", "Virginia")
 ```
 
 ```{r, message=FALSE}
-# DMV counties only, total cases and deaths
+# Subsetting to states and counties only in DMV
 dmv <- us_counties %>% 
+  # Filters to states in counties from vectors above
   filter(state %in% dmv_states) %>% 
   filter(county %in% dmv_counties) %>% 
+  # Getting rid of duplicate counties:
+    ## Montgomery VA fips = 51121
+    ## Frederick VA fips = 51069
+  filter(fips != "51121") %>% 
+  filter(fips != "51069")
+```
+
+```{r, message=FALSE}
+# DMV counties only, total cases and deaths, arranged by deaths
+dmv_totals <- dmv %>% 
   group_by(county) %>% 
   summarise(total_cases = sum(cases),
-           total_deaths = sum(deaths)) %>% 
+            total_deaths = sum(deaths)) %>% 
   arrange(desc(total_deaths))
 ```
 
+
 ```{r}
-# First 6 rows of `dmv`
-dmv %>% 
+# First 6 rows of `dmv_totals`
+dmv_totals %>% 
   head()
 ```
 
 
 # Question 3:
-Make a plot of the total number of cases by date, and the total of deaths by date, for counties in the DMV area. *Make sure to use facets and aesthetics* to convery results, and that the plot is titled, axes are labeled, and text is legible.
+Make a plot of the total number of cases by date, and the total of deaths by date, for counties in the DMV area. *Make sure to use facets and aesthetics* to convey results, and that the plot is titled, axes are labeled, and text is legible.
 ```{r}
+# Subsetting data
+dmv_line <- us_counties %>% 
+  filter(state %in% dmv_states) %>% 
+  filter(county %in% dmv_counties)
 
+
+
+temp_frederick <- 
 ```
+
+```{r}
+# Initial plot
+dmv_line %>% 
+  ggplot(aes(x = date, y = cases)) +
+  geom_line() +
+  facet_wrap( ~ county, scales = "free_y")
+```
+
 
 # Question 4:
 Read in and tidy the global and US COVID-19 data contained in the four fields below:
