@@ -11,7 +11,114 @@ editor_options:
 source("setup.R")
 ```
 
-```{r}
-corona_stats <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv")
+
+# Question 1:
+Read in `us-counties.csv` and create a tibble data frame that contains both deaths and total cases per state, arranged by total number of deaths in descending order.
+```{r, message=FALSE}
+# Loading data
+us_counties <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv")
 ```
 
+```{r, message=FALSE}
+us_totals <- us_counties %>% 
+  group_by(state) %>% 
+  summarise(total_cases = sum(cases),
+            total_deaths = sum(deaths)) %>% 
+  arrange(desc(total_deaths))
+
+us_totals
+```
+
+
+# Question 2:
+Get county names for DC, Maryland, and VA.
+```{r, message=FALSE}
+# Vector of country names
+dmv_counties <- c("Anne Arundel", "Charles", "Frederick", "Howard", "Montgomery", "Prince George's", "District of Columbia", "Alexandria city", "Arlington", "Fairfax", "Loudoun", "Prince William", "Falls Church city")
+
+# Vector of state names
+dmv_states <- c("District of Columbia", "Maryland", "Virginia")
+
+# 
+dmv <- us_counties %>% 
+  filter(state %in% dmv_states) %>% 
+  filter(county %in% dmv_counties) %>% 
+  group_by(county) %>% 
+  summarise(total_cases = sum(cases),
+           total_deaths = sum(deaths))
+```
+
+# Question 3:
+Make a plot of the total number of cases by date, and the total of deaths by date, for counties in the DMV area. *Make sure to use facets and aesthetics* to convery results, and that the plot is titled, axes are labeled, and text is legible.
+```{r}
+
+```
+
+# Question 4:
+Read in and tidy the global and US COVID-19 data contained in the four fields below:
+
+  + "time_series_covid19_confirmed_global.csv"
+  + "time_series_covid19_deaths_global.csv"
+  + "time_series_covid19_confirmed_US.csv"
+  + "time_series_covid19_deaths_US.csv"
+  
+```{r}
+confrimed_global <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_ covid_19_time_series_confirmed_global.csv")
+deaths_global <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_ covid_19_time_series/time_series_covid19_deaths_global.csv")
+confirmed_US <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_ covid_19_time_series/time_series_covid19_confirmed_US.csv")
+deaths_US <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_ covid_19_time_series/time_series_covid19_deaths_US.csv")
+```
+  
+For the US data, *produce a second* tidy data frame called `US_by_state` that has the total of confirmed cases, deaths, population, and deaths per million people for each date for each state.
+
+```{r}
+
+```
+
+# Questoin 5:
+For the global data, create a new tidy data frame called `global` that has the total confirmed cases and deaths per country by data. Add global population data and replace the US observations in `global` with the US data.
+
+```{r}
+global <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/UID_ISO_FIPS_LookUp_Table.csv")
+```
+
+# Question 6:
+Create a new variable in `global` representing the deaths per million per country by date, and remove any rows with no confirmed cases.
+
+```{r}
+
+```
+
+# Question 7:
+Find the 25 countries or US states with the most confirmed cases (**use `group_by()`, `summarise()`, and `ungroup()`**). What are some possible explanations for the difference in number of deaths per million people among these groups?
+
+```{r}
+
+```
+
+# Question 8:
+For the 25 countries/US states with the highest number of confirmed cases, construct plots for:
+
+  1. Confirmed cases over time
+  2. Deaths over time
+  3. Deaths per million over time
+  
+**Facet each plot by continet** and use appropriate scales for the axes.
+```{r}
+
+```
+
+# Question 9:
+Get the data for the state of NY from the csse dataset and compare the growth of cases to the growth rate shown in the nytimes data. Does the data match? If not, how is it different?
+```{r}
+
+```
+
+# Question 10:
+Plot the number of confirmed cases, deaths, and deaths per million inhabitants for Sweden, Denmark, and Finland.
+
+```{r}
+
+```
+
+How do the number of deaths per million residents compare? What are some possible explanations for any differences you observe?
