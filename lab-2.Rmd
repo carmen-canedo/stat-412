@@ -126,20 +126,33 @@ rm(dmv, dmv_line, dmv_line_plot, dmv_totals, us_counties, us_totals)
 
 ```{r}
 # Lengthening US cases
-totals_cases_US <- confirmed_US %>% 
+long_cases_US <- confirmed_US %>% 
   pivot_longer(cols = ends_with("20"), names_to = "date", values_to = "cases_count") %>% 
-  group_by(Province_State) %>% 
-  mutate(total_cases = cumsum(cases_count))
+  group_by(Province_State, date) %>% 
+  summarise(daily_case_count = sum(cases_count))  %>% 
+  arrange(date)
 
 # Lengthening US deaths
-deaths_US <- deaths_US %>% 
+long_deaths_US <- deaths_US %>% 
   pivot_longer(cols = ends_with("20"), names_to = "date", values_to = "deaths_count") %>% 
-  group_by(state) %>% 
-  mutate(total_deaths = sum(deaths_count) / 1000000)
+  group_by(Province_State, date) %>% 
+  summarise(daily_deaths_count = sum(deaths_count), population = sum(Population)) %>% 
+  arrange(date)
 
+# Joining tables
+US_by_state <- long_cases_US %>% 
+  left_join(long_deaths_US, by = "Province_State") %>% 
+  arrange(date.x, date.y)
 
-US_by_state <- confirmed_US %>% 
-  left_join(deaths_US, by = "date")
+# Fixing order of columns and renaming columns
+US_by_state <- US_by_state %>% 
+  rename(state = Province_State,
+         date = date.x) %>% 
+  select(state, population, date, daily_case_count, daily_deaths_count,-date.y)
+
+# Adding deaths per million column
+US_by_state <- US_by_state %>% 
+  mutate(deaths_millions = (daily_deaths_count / population) * 1000000)
 ```
 
 # Questoin 5:
