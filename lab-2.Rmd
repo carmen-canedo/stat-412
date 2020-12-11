@@ -38,7 +38,7 @@ us_totals %>%
 
 # Question 2:
 Get county names for DC, Maryland, and VA.
-```{r Q2, message=FALSE}
+```{r Q2 County names, message=FALSE}
 # Vector of country names
 dmv_counties <- c("Anne Arundel", "Charles", "Frederick", "Howard", "Montgomery", "Prince George's", "District of Columbia", "Alexandria city", "Arlington", "Fairfax", "Loudoun", "Prince William", "Falls Church city")
 
@@ -46,7 +46,7 @@ dmv_counties <- c("Anne Arundel", "Charles", "Frederick", "Howard", "Montgomery"
 dmv_states <- c("District of Columbia", "Maryland", "Virginia")
 ```
 
-```{r Q2, message=FALSE}
+```{r Q2 Subset to DMV, message=FALSE}
 # Subsetting to states and counties only in DMV
 dmv <- us_counties %>% 
   # Filters to states in counties from vectors above
@@ -59,7 +59,7 @@ dmv <- us_counties %>%
   filter(fips != "51069")
 ```
 
-```{r Q2, message=FALSE}
+```{r Q2 DMV df, message=FALSE}
 # DMV counties only, total cases and deaths, arranged by deaths
 dmv_totals <- dmv %>% 
   group_by(county) %>% 
@@ -68,7 +68,7 @@ dmv_totals <- dmv %>%
   arrange(desc(total_deaths))
 ```
 
-```{r Q2}
+```{r Q2 DMV}
 # First 6 rows of `dmv_totals`
 dmv_totals %>% 
   head()
@@ -76,13 +76,13 @@ dmv_totals %>%
 
 # Question 3:
 Make a plot of the total number of cases by date, and the total of deaths by date, for counties in the DMV area. *Make sure to use facets and aesthetics* to convey results, and that the plot is titled, axes are labeled, and text is legible.
-```{r Q3}
+```{r Q3 DMV long}
 # Lengthening data to make facets in graph
 dmv_line <- dmv %>% 
   pivot_longer(cols = c(cases, deaths), names_to = "type", values_to = "count")
 ```
 
-```{r Q3}
+```{r Q3 DMV inital plot}
 # Initial plot
 dmv_line_plot <- dmv_line %>% 
   ggplot(aes(x = date, y = count, color = county)) +
@@ -91,7 +91,7 @@ dmv_line_plot <- dmv_line %>%
   theme_minimal()
 ```
 
-```{r Q3}
+```{r Q3 DMV final plot}
 # Adding title, axes, other labels
 dmv_line_plot + 
   labs(title = "Total Number of Cases and Deaths Per Day in the DMV Area",
@@ -108,7 +108,7 @@ Read in and tidy the global and US COVID-19 data contained in the four fields be
   + "time_series_covid19_confirmed_US.csv"
   + "time_series_covid19_deaths_US.csv"
   
-```{r Q4, message=FALSE}
+```{r Q4 Loading data, message=FALSE}
 confirmed_global <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv")
 deaths_global <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv")
 confirmed_US <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv")
@@ -117,13 +117,13 @@ deaths_US <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19
   
 For the US data, *produce a second* tidy data frame called `US_by_state` that has the total of confirmed cases, deaths, population, and deaths per million people for each date for each state.
 
-```{r Q4}
+```{r Q4 Removing old objects}
 # Making space for memory
 rm(dmv, dmv_line, dmv_line_plot, dmv_totals, us_counties, us_totals)
 ```
 
 
-```{r Q4, message=FALSE}
+```{r Q4 Joining US dfs, message=FALSE}
 # Lengthening US cases
 long_cases_US <- confirmed_US %>% 
   pivot_longer(cols = ends_with("20"), names_to = "date", values_to = "cases_count") %>% 
@@ -159,12 +159,12 @@ US_by_state <- US_by_state %>%
 # Questoin 5:
 For the global data, create a new tidy data frame called `global` that has the total confirmed cases and deaths per country by data. Add global population data and replace the US observations in `global` with the US data.
 
-```{r Q5}
+```{r Q5 Loading country info}
 # Reading new global data
 country_info <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/UID_ISO_FIPS_LookUp_Table.csv")
 ```
 
-```{r Q5, message=FALSE}
+```{r Q5 US pivot longer, message=FALSE}
 # Lengthening US cases
 long_cases_global <- confirmed_global %>% 
   pivot_longer(cols = ends_with("20"), names_to = "date", values_to = "cases_count") %>% 
@@ -186,7 +186,7 @@ long_deaths_global <- deaths_global %>%
   rename(country_region = `Country/Region`)
 ```
 
-```{r Q5}
+```{r Q5 Global joins}
 # Creating global dataframe
 global <- long_deaths_global %>% 
   left_join(long_cases_global, by = "country_region") %>% 
@@ -204,7 +204,7 @@ global <- global %>%
   drop_na()
 ```
 
-```{r Q5}
+```{r Q5 Adding state data}
 # Replace US data
 global <- global %>% 
   filter(location != "US")
@@ -220,7 +220,7 @@ Create a new variable in `global` representing the deaths per million per countr
 
 Included in code above.
 
-```{r}
+```{r Global df}
 global %>% 
   head()
 ```
@@ -229,7 +229,7 @@ global %>%
 # Question 7:
 Find the 25 countries or US states with the most confirmed cases (**use `group_by()`, `summarise()`, and `ungroup()`**). What are some possible explanations for the difference in number of deaths per million people among these groups?
 
-```{r Q7}
+```{r Q7 Top 25 countries}
 top_countries <-  global %>% 
   group_by(location) %>% 
   summarise(total_case_count = sum(daily_case_count),
@@ -250,7 +250,7 @@ For the 25 countries/US states with the highest number of confirmed cases, const
   3. Deaths per million over time
   
 **Facet each plot by continent** and use appropriate scales for the axes.
-```{r Q8}
+```{r Q8 Adding continent}
 # Saving vector of country names for reference
 countries <- top_countries$location
 
@@ -267,25 +267,57 @@ global_line <- global %>%
 
 
 ## Confirmed Cases over time
-```{r}
+```{r Q8 Cases plot}
 # Initial Plot
 cases_line_plot <- global_line %>% 
   ggplot(aes(x = date, y = daily_case_count)) +
-  geom_point() +
-  #facet_wrap( ~ continent, scales = "free") +
+  geom_line() +
+  facet_wrap( ~ continent, scales = "free") +
   theme_minimal()
+
+cases_line_plot <- cases_line_plot +
+  labs(title = "Confirmed COVID-19 Cases Over Time",
+       subtitle = "2020",
+       x = "Date",
+       y = "Confirmed Cases")
 
 cases_line_plot
 ```
 
 ## Deaths over time
-```{r}
+```{r Q8 Death plot}
+# Initial Plot
+deaths_line_plot <- global_line %>% 
+  ggplot(aes(x = date, y = daily_deaths_count)) +
+  geom_line() +
+  facet_wrap( ~ continent, scales = "free") +
+  theme_minimal()
 
+deaths_line_plot <- deaths_line_plot +
+  labs(title = "Confirmed Deaths from COVID-19 Cases Over Time",
+       subtitle = "2020",
+       x = "Date",
+       y = "Deaths")
+
+deaths_line_plot
 ```
 
 ## Deaths per million over time
-```{r}
+```{r Q8 Deaths per million plot}
+# Initial Plot
+millions_line_plot <- global_line %>% 
+  ggplot(aes(x = date, y = deaths_millions)) +
+  geom_line() +
+  facet_wrap( ~ continent, scales = "free") +
+  theme_minimal()
 
+millions_line_plot <- millions_line_plot +
+  labs(title = "Confirmed Deaths in Millions from COVID-19 Cases Over Time",
+       subtitle = "2020",
+       x = "Date",
+       y = "Deaths in Millions")
+
+millions_line_plot
 ```
 
 
