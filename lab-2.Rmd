@@ -66,13 +66,11 @@ dmv_totals <- dmv %>%
   arrange(desc(total_deaths))
 ```
 
-
 ```{r}
 # First 6 rows of `dmv_totals`
 dmv_totals %>% 
   head()
 ```
-
 
 # Question 3:
 Make a plot of the total number of cases by date, and the total of deaths by date, for counties in the DMV area. *Make sure to use facets and aesthetics* to convey results, and that the plot is titled, axes are labeled, and text is legible.
@@ -100,7 +98,6 @@ dmv_line_plot +
        y = "Count")
 ```
 
-
 # Question 4:
 Read in and tidy the global and US COVID-19 data contained in the four fields below:
 
@@ -110,7 +107,7 @@ Read in and tidy the global and US COVID-19 data contained in the four fields be
   + "time_series_covid19_deaths_US.csv"
   
 ```{r, message=FALSE}
-confrimed_global <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv")
+confirmed_global <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv")
 deaths_global <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv")
 confirmed_US <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv")
 deaths_US <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_US.csv")
@@ -159,8 +156,48 @@ US_by_state <- US_by_state %>%
 For the global data, create a new tidy data frame called `global` that has the total confirmed cases and deaths per country by data. Add global population data and replace the US observations in `global` with the US data.
 
 ```{r}
-global <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/UID_ISO_FIPS_LookUp_Table.csv")
+# Reading new global data
+country_info <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/UID_ISO_FIPS_LookUp_Table.csv")
 ```
+
+```{r, message=FALSE}
+# Lengthening US cases
+long_cases_global <- confirmed_global %>% 
+  pivot_longer(cols = ends_with("20"), names_to = "date", values_to = "cases_count") %>% 
+  group_by(`Country/Region`, date) %>% 
+  summarise(daily_case_count = sum(cases_count))  %>% 
+  arrange(date) %>% 
+  rename(country_region = `Country/Region`)
+
+# Joining population data
+deaths_global <- deaths_global %>% 
+  left_join(country_info, by = "Lat")
+
+# Lengthening US deaths
+long_deaths_global <- deaths_global %>% 
+  pivot_longer(cols = ends_with("20"), names_to = "date", values_to = "deaths_count") %>% 
+  group_by(`Country/Region`, date) %>% 
+  summarise(daily_deaths_count = sum(deaths_count), population = sum(Population.y)) %>% 
+  arrange(date) %>% 
+  rename(country_region = `Country/Region`)
+```
+
+```{r}
+# Creating global dataframe
+global <- long_deaths_global %>% 
+  left_join(long_cases_global, by = "country_region") %>% 
+  arrange(date.x, date.y)
+
+# Fixing order of columns and renaming columns
+global <- global %>% 
+  rename(date = date.x) %>% 
+  select(country_region, population, date, daily_case_count, daily_deaths_count,-date.y)
+```
+
+```{r}
+# Replace US data
+```
+
 
 # Question 6:
 Create a new variable in `global` representing the deaths per million per country by date, and remove any rows with no confirmed cases.
