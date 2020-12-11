@@ -120,7 +120,7 @@ For the US data, *produce a second* tidy data frame called `US_by_state` that ha
 
 ```{r Q4 Removing old objects}
 # Making space for memory
-rm(dmv, dmv_line, dmv_line_plot, dmv_totals, us_counties, us_totals)
+rm(dmv, dmv_line, dmv_line_plot, dmv_totals, us_totals)
 ```
 
 
@@ -156,6 +156,12 @@ US_by_state <- US_by_state %>%
   drop_na() %>% 
   filter(location != "Grand Princess")
 ```
+
+```{r}
+US_by_state %>% 
+  head()
+```
+
 
 ```{r}
 # Cleaning up memory
@@ -249,6 +255,7 @@ global %>%
 Find the 25 countries or US states with the most confirmed cases (**use `group_by()`, `summarise()`, and `ungroup()`**). What are some possible explanations for the difference in number of deaths per million people among these groups?
 
 ```{r Q7 Top 25 countries}
+# Creating data frame with top 25 countries
 top_countries <-  global %>% 
   group_by(location) %>% 
   summarise(total_case_count = sum(daily_case_count),
@@ -326,10 +333,11 @@ cases_line_plot
 ```{r Q8 Death plot}
 # Initial Plot
 deaths_line_plot <- global_line %>% 
-  ggplot(aes(x = date, y = daily_deaths_count)) +
+  ggplot(aes(x = date, y = daily_deaths_count, color = continent)) +
   geom_line() +
   facet_wrap( ~ continent, scales = "free") +
-  theme_minimal()
+  theme_minimal() +
+  theme(legend.position = "none")
 
 deaths_line_plot <- deaths_line_plot +
   labs(title = "Confirmed Deaths from COVID-19 Cases Over Time",
@@ -344,10 +352,11 @@ deaths_line_plot
 ```{r Q8 Deaths per million plot}
 # Initial Plot
 millions_line_plot <- global_line %>% 
-  ggplot(aes(x = date, y = deaths_millions)) +
+  ggplot(aes(x = date, y = deaths_millions, color = continent)) +
   geom_line() +
   facet_wrap( ~ continent, scales = "free") +
-  theme_minimal()
+  theme_minimal() +
+  theme(legend.position = "none")
 
 millions_line_plot <- millions_line_plot +
   labs(title = "Confirmed Deaths in Millions from COVID-19 Cases Over Time",
@@ -361,20 +370,58 @@ millions_line_plot
 
 # Question 9:
 Get the data for the state of NY from the csse dataset and compare the growth of cases to the growth rate shown in the nytimes data. Does the data match? If not, how is it different?
-```{r Q9}
+```{r Q9 Comparing NY data}
+# Growth for NYT data
+nyt_ny <- us_counties %>% 
+  filter(state == "New York") %>% 
+  group_by(state, date) %>% 
+  summarise(cases = cumsum(cases))
 
+# Plot of New York Times data
+nyt_ny %>% 
+  ggplot(aes(x = date, y = cases)) +
+  geom_line(color = "light pink") +
+  theme_minimal() +
+  labs(title = "New York Cases Counts",
+       subtitle = "Source: New York Times",
+       x = "Date",
+       y = "Number of Cases")
+
+# Growth for CSSE data
+csse_ny <- US_by_state %>% 
+  filter(location == "New York")
+
+# Formatting date column
+csse_ny$date <- paste(csse_ny$date, 20, sep = "")
+csse_ny$date <- as_date(csse_ny$date, format = "%m/%d/%Y")
+
+# Calculating growth
+csse_ny <- csse_ny %>% 
+  group_by(location, date) %>% 
+  summarise(cases = cumsum(daily_case_count))
+
+# Plot of CSSE data
+csse_ny %>% 
+  ggplot(aes(x = date, y = cases)) +
+  geom_line(color = "hot pink") +
+  theme_minimal() +
+  labs(title = "New York Cases Counts",
+       subtitle = "Source: CSSE",
+       x = "Date",
+       y = "Number of Cases")
 ```
+The plots of the two data have an overall similar shape, but the CSSE has calculated a much higher number of cases.
 
 # Question 10:
 Plot the number of confirmed cases, deaths, and deaths per million inhabitants for Sweden, Denmark, and Finland.
 
 ## Sweden
-```{r Q10}
+```{r Q10 Sweden df}
 sweden <- global %>% 
   filter(location == "Sweden")
 ```
 
-```{r}
+```{r Sweden plot 1}
 sweden %>% 
   ggplot(aes(x = daily_case_count)) +
   geom_boxplot(fill = "light blue") +
@@ -384,7 +431,7 @@ sweden %>%
        x = "Case Count")
 ```
 
-```{r}
+```{r Sweden plot 2}
 sweden %>% 
   ggplot(aes(x = date, y = daily_deaths_count)) +
   geom_line(color = "light blue") +
@@ -395,7 +442,7 @@ sweden %>%
        y = "Count")
 ```
 
-```{r}
+```{r Sweden plot 3}
 sweden %>% 
   ggplot(aes(x = date, y = deaths_millions)) +
   geom_line(color = "light blue") +
@@ -408,12 +455,12 @@ sweden %>%
 
 
 ## Denmark
-```{r}
+```{r Denmark df}
 denmark <- global %>% 
   filter(location == "Denmark")
 ```
 
-```{r}
+```{r Denmark plot 1}
 denmark %>% 
   ggplot(aes(x = daily_case_count)) +
   geom_boxplot(fill = "light yellow") +
@@ -423,7 +470,7 @@ denmark %>%
        x = "Case Count")
 ```
 
-```{r}
+```{r Denmark plot 2}
 denmark %>% 
   ggplot(aes(x = date, y = daily_deaths_count)) +
   geom_line(color = "orange") +
@@ -434,7 +481,7 @@ denmark %>%
        y = "Count")
 ```
 
-```{r}
+```{r Denmark plot 3}
 denmark %>% 
   ggplot(aes(x = date, y = deaths_millions)) +
   geom_line(color = "Orange") +
@@ -447,12 +494,12 @@ denmark %>%
 
 
 ## Finland
-```{r}
+```{r Finland df}
 finland <- global %>% 
   filter(location == "Finland")
 ```
 
-```{r}
+```{r Finland plot 1}
 finland %>% 
   ggplot(aes(x = daily_case_count)) +
   geom_boxplot(fill = "light green") +
@@ -462,7 +509,7 @@ finland %>%
        x = "Case Count")
 ```
 
-```{r}
+```{r Finland plot 2}
 finland %>% 
   ggplot(aes(x = date, y = daily_deaths_count)) +
   geom_line(color = "light green") +
@@ -473,7 +520,7 @@ finland %>%
        y = "Count")
 ```
 
-```{r}
+```{r Finland plot 3}
 finland %>% 
   ggplot(aes(x = date, y = deaths_millions)) +
   geom_line(color = "light green") +
@@ -484,5 +531,11 @@ finland %>%
        y = "Count in Millions")
 ```
 
+```{r}
+rm(finland, denmark, sweden, temp)
+```
+
 
 How do the number of deaths per million residents compare? What are some possible explanations for any differences you observe?
+
+It appears that the deaths per million increased at the fastest rate in April and May for Finland and Denmark. Whereas, in Sweden, the growth rate was more gradual and lasted mostly from Aprily through July. However, the overall number of people dying is higher overall for Sweden. The differences between these countries could be explained by their respective governments response to handling social distancing and the size of the countries populations.
